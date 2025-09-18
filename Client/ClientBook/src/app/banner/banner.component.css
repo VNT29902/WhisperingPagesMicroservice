@@ -1,0 +1,85 @@
+.slide-content {
+  position: relative;
+}
+
+/* Slide image chung */
+.slide-image {
+  width: 100%;
+  height: 420px; /* desktop mặc định */
+}
+
+.slide-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* ✅ lấp kín khung mà không méo */
+  display: block;
+}
+
+/* Nút điều hướng */
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 2rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: none;
+  color: white;
+  padding: 10px 16px;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+  z-index: 2;
+}
+
+.nav-btn:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.nav-btn.left {
+  left: 20px;
+}
+
+.nav-btn.right {
+  right: 20px;
+}
+
+/* Tablet (≤768px) */
+@media (max-width: 768px) {
+  .slide-image {
+    height: 250px; /* giảm chiều cao cho tablet */
+  }
+}
+
+/* Mobile & Tablet (≤1280px) → Banner full width */
+@media (max-width: 1280px) {
+  .section-container.hero-container {
+    padding: 0 !important;
+    margin: 0 !important;
+    max-width: 100% !important;
+  }
+
+  .slide-image {
+    width: 100vw;
+    margin: 0;
+  }
+
+  .slide-image img {
+    width: 100vw;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+
+/* Mobile nhỏ (≤480px) → chiều cao slide thấp hơn */
+@media (max-width: 480px) {
+  .slide-image {
+    height: 180px; /* banner nhỏ gọn trên mobile */
+  }
+
+  .nav-btn {
+    font-size: 1.5rem;
+    padding: 6px 10px;
+  }
+}

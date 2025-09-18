@@ -1,0 +1,156 @@
+<app-header></app-header>
+
+<section class="section-wrapper product-list-page">
+  <div class="section-container product-layout">
+    <!-- Sidebar filter -->
+    <aside class="filter-bar">
+      <!-- Nhóm sản phẩm -->
+      <div class="filter-group category-list">
+        <h3>Nhóm sản phẩm</h3>
+        <ul>
+          <li
+            *ngFor="let cat of categories"
+            (click)="changeCategory(cat.key)"
+            [class.active]="selectedCategory === cat.key"
+          >
+            {{ cat.label }}
+          </li>
+        </ul>
+      </div>
+
+      <!-- Lọc theo giá -->
+      <!-- Lọc theo giá -->
+      <!-- Lọc theo giá -->
+      <div class="filter-group">
+        <h3>Giá</h3>
+        <div *ngFor="let range of priceRanges">
+          <label>
+            <input
+              type="radio"
+              name="priceRange"
+              [value]="range"
+              [(ngModel)]="selectedPriceRange"
+              (click)="togglePriceRange(range)"
+            />
+            {{ range.label }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Sắp xếp -->
+      <div class="filter-group">
+        <h3>Sắp xếp</h3>
+        <select [(ngModel)]="sortOption" (change)="onFilterChange()">
+          <option value="priceAsc">Giá tăng dần</option>
+          <option value="priceDesc">Giá giảm dần</option>
+          <option value="newest">Mới nhất</option>
+          <option value="bestseller">Bán chạy</option>
+        </select>
+      </div>
+    </aside>
+
+    <!-- Product content -->
+    <div class="product-content">
+      <h2 class="section-title">
+        {{ getCurrentTitle() }}
+      </h2>
+
+      <!-- Grid -->
+      <div class="book-grid">
+        <div class="book-card" *ngFor="let bp of books">
+          <!-- Cover -->
+          <div class="book-cover-wrapper">
+            <a [routerLink]="['/books', bp.bookResponseDto.id]">
+              <img
+                [src]="bp.bookResponseDto.image"
+                [alt]="bp.bookResponseDto.title"
+              />
+            </a>
+            <app-add-to-cart-button
+              class="add-to-cart-hover"
+              [productId]="bp.bookResponseDto.id"
+              [title]="bp.bookResponseDto.title"
+              [image]="bp.bookResponseDto.image"
+              [price]="bp.bookResponseDto.price"
+            >
+            </app-add-to-cart-button>
+          </div>
+
+          <!-- Title -->
+          <h3 class="book-title">
+            <a [routerLink]="['/books', bp.bookResponseDto.id]">
+              {{ bp.bookResponseDto.title }}
+            </a>
+          </h3>
+
+          <!-- Giá -->
+          <p class="book-price">
+            <span class="discounted-price">
+              {{
+                bp.bookResponseDto.price * (1 - bp.promotionPercent / 100)
+                  | currency : "VND" : "symbol" : "1.0-0"
+              }}
+            </span>
+            <span *ngIf="bp.promotionPercent > 0" class="original-price">
+              {{
+                bp.bookResponseDto.price | currency : "VND" : "symbol" : "1.0-0"
+              }}
+            </span>
+          </p>
+
+          <!-- Thanh tồn kho -->
+          <!-- Stock -->
+          <div class="book-stock">
+            <div class="stock-bar">
+              <div
+                class="stock-progress"
+                [style.width.%]="getStockWidth(bp)"
+                [ngClass]="{
+                  'low-stock':
+                    bp.bookResponseDto.stock < 10 &&
+                    bp.bookResponseDto.stock > 0,
+                  'out-stock': bp.bookResponseDto.stock === 0
+                }"
+              ></div>
+
+              <span class="stock-label">
+                {{
+                  bp.bookResponseDto.stock === 0
+                    ? "Hết hàng"
+                    : bp.bookResponseDto.stock < 10
+                    ? "Gần hết hàng"
+                    : "Sold " + bp.bookResponseDto.saleStock
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button
+          class="page-btn"
+          (click)="goToPage(page - 1)"
+          [disabled]="page === 0"
+        >
+          «
+        </button>
+
+        <button class="page-btn active">
+          {{ page + 1 }} / {{ totalPages }}
+        </button>
+
+        <button
+          class="page-btn"
+          (click)="goToPage(page + 1)"
+          [disabled]="page === totalPages - 1"
+        >
+          »
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

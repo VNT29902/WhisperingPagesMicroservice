@@ -1,0 +1,83 @@
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.table-wrapper {
+  margin-top: 20px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  border: 1px solid #ddd;
+  padding: 10px;           /* giữ padding đồng nhất */
+  text-align: center;      /* căn giữa nội dung */
+  vertical-align: middle;  /* căn giữa theo chiều dọc */
+  white-space: nowrap;     /* tránh xuống dòng khi có nhiều nút */
+}
+
+/* Badge trạng thái */
+.badge {
+  padding: 5px 10px;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+}
+
+.badge.active {
+  background: green;
+}
+
+.badge.inactive {
+  background: gray;
+}
+
+/* Pagination */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination button {
+  margin: 0 5px;
+}
+
+/* Nút trong Actions */
+.action-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* căn giữa trong cell */
+  gap: 8px;                /* khoảng cách giữa các nút */
+}
+
+.action-buttons button {
+  padding: 5px 12px;
+  font-size: 14px;
+  line-height: 1.2;
+  cursor: pointer;
+  min-width: 50px;         /* ✅ nút có cùng chiều rộng */
+  height: 34px;            /* ✅ chiều cao đồng nhất */
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;   /* ✅ tạo thanh scroll ngang */
+  overflow-y: hidden; /* ẩn scroll dọc nếu không cần */
+}
+
+.table {
+  min-width: 1000px; /* đảm bảo có độ rộng tối thiểu để scrollbar xuất hiện */
+  border-collapse: collapse;
+}

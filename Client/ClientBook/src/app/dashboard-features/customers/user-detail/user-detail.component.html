@@ -1,0 +1,55 @@
+<div class="user-detail">
+  <h2>User Detail</h2>
+
+  <div *ngIf="user" class="user-info">
+    <p><strong>Name:</strong> {{ user.firstName }} {{ user.lastName }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Phone:</strong> {{ user.phone }}</p>
+    <p><strong>Username:</strong> {{ user.userName }}</p>
+    <p>
+      <strong>Created At:</strong>
+      {{ user.createdAt | date : "dd/MM/yyyy HH:mm" }}
+    </p>
+  </div>
+
+  <h3>Shipping Addresses</h3>
+  <table class="table" *ngIf="shippingAddresses.length > 0; else noAddress">
+    <thead>
+      <tr>
+        <th>Recipient</th>
+        <th>Phone</th>
+        <th>Province</th>
+        <th>Ward</th>
+        <th>Street</th>
+        <th>Note</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let addr of shippingAddresses">
+        <td>{{ addr.recipientFirstName }} {{ addr.recipientLastName }}</td>
+        <td>{{ addr.phoneNumber }}</td>
+        <td>{{ addr.street }}</td>
+
+        <td>{{ addr.ward }}</td>
+        <td>{{ addr.province }}</td>
+        <td>{{ addr.note || "-" }}</td>
+        <td>
+          <span class="badge" [ngClass]="{ 'badge-default': addr.isDefault }">
+            {{ addr.isDefault ? "Yes" : "No" }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noAddress>
+    <p>No shipping addresses found for this user.</p>
+  </ng-template>
+
+  <div style="margin-top: 16px">
+    <button class="btn btn-secondary" routerLink="/dashboard/users">
+      ← Back to Users
+    </button>
+  </div>
+</div>

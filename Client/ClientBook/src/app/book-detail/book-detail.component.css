@@ -1,0 +1,216 @@
+.book-detail-container {
+  display: flex;
+  gap: 40px;
+  padding: 20px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+.book-detail {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+
+.book-detail .book-cover-wrapper {
+  flex: 0 0 320px;   /* ảnh chiếm 320px */
+  height: auto;      /* bỏ fixed height 190px */
+}
+
+.book-detail .book-cover-wrapper img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.book-detail .book-card {
+  flex: 1;
+}
+
+.book-image img {
+  max-width: 320px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.book-info {
+  flex: 1;
+}
+
+.book-title {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.book-author {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.book-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* căn trái */
+  margin-bottom: 16px;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #888;
+  font-size: 16px;
+}
+
+.discounted-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #e53935;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.discount-badge {
+  background: #e53935;
+  color: white;
+  font-size: 14px;
+  padding: 3px 8px;
+  border-radius: 6px;
+}
+
+.normal-price {
+  font-size: 20px;
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+.stock {
+  font-size: 15px;
+  margin-bottom: 20px;
+}
+
+.stock.out-of-stock {
+  color: red;
+  font-weight: bold;
+}
+
+.book-description {
+  margin-bottom: 25px;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Nút thêm vào giỏ */
+.btn-cart {
+  background: #2e7d32;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.btn-cart:hover {
+  background: #1b5e20;
+}
+
+.btn-cart:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+/* Nút mua ngay */
+.btn-buy-now {
+  background: #ff4d4d;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.btn-buy-now:hover {
+  background: #d32f2f;
+}
+
+.btn-buy-now:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .book-detail {
+    flex-direction: column;   /* 2 cột → 1 cột */
+    gap: 20px;
+    align-items: center;      /* căn giữa các phần tử con */
+  }
+
+  .book-detail .book-cover-wrapper {
+    flex: unset;
+    max-width: 100%;
+    text-align: left;
+  }
+
+  .book-detail .book-cover-wrapper img {
+    max-width: 220px;  /* ảnh vừa mobile */
+    margin: 0 auto;
+  }
+
+  /* Các khối chiếm toàn bộ width và căn giữa nội dung */
+  
+  .book-author,
+  .book-price,
+  .stock,
+  .action-buttons {
+    width: 100%;              /* full width book-detail */
+    text-align: left;       /* căn giữa text */
+  }
+
+  /* Ẩn mô tả trên mobile */
+  .book-description {
+    display: none;
+  }
+
+  /* Nút chiếm toàn bộ width */
+  .btn-cart,
+  .btn-buy-now {
+    width: 100%;
+  }
+
+ .book-title {
+    font-size: 20px;          /* vừa với mobile */
+    font-weight: bold;
+    line-height: 1.4;
+    width: 100%;              /* chiếm full width container */
+    white-space: normal;      /* cho phép xuống dòng */
+    word-break: break-word;   /* xuống dòng khi quá dài */
+    overflow: visible;        /* không ẩn chữ */
+    text-overflow: unset;
+    height: auto;             /* không giới hạn chiều cao */
+    margin: 8px 0;
+  }
+
+}
+
+/* chỉ áp dụng style cho nút trong book-detail */
+:host ::ng-deep app-add-to-cart-button .add-to-cart-btn {
+  background-color: #2e7d32 !important;
+  color: #fff !important;
+  border: none !important;
+  font-weight: bold;
+}
+
+
+
+
+

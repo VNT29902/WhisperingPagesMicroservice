@@ -1,0 +1,138 @@
+.promotion-create {
+  max-width: 650px;
+  margin: 10px auto;
+  padding: 24px;
+  background: #f9f9fb;
+  border-radius: 10px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  font-family: Arial, sans-serif;
+}
+
+/* Title */
+.promotion-create h2 {
+  font-size: 28px;   /* lớn hơn nữa */
+  margin-bottom: 15px;
+  color: #333;
+  text-align: center;
+  margin-top: 10px; 
+}
+
+/* Form layout */
+.promotion-create form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  color: #444;
+  font-size: 16px;  /* tăng size label */
+}
+
+/* Input & select */
+input,
+select {
+  margin-top: 8px;
+  padding: 14px 12px;   /* tăng padding cho to */
+  font-size: 16px;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  box-sizing: border-box;
+  height: auto;         /* để tự giãn */
+  min-height: 46px;     /* đảm bảo cao tối thiểu */
+}
+
+
+/* Date picker cũng theo input */
+input[type='date'] {
+  font-size: 16px;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  justify-content: space-between;
+
+}
+
+button {
+  padding: 12px 20px;    /* nút to hơn */
+  font-size: 15px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button[type='submit'] {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+button[type='submit']:disabled {
+  background-color: #9bcf9b;
+  cursor: not-allowed;
+}
+
+button[type='button'] {
+  background-color: #f44336;
+  color: #fff;
+}
+
+/* Custom checkbox */
+label[for='active'] {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;   /* chữ Active cũng lớn */
+}
+
+input[type='checkbox'] {
+  appearance: none;
+  width: 18px;       /* to hơn */
+  height: 18px;
+  border: 2px solid #4caf50;
+  border-radius: 4px;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type='checkbox']:checked {
+  background-color: #4caf50;
+}
+
+input[type='checkbox']:checked::after {
+  content: '✔';
+  color: #fff;
+  font-size: 14px;
+  position: absolute;
+  top: 1px;
+  left: 4px;
+}
+
+
+.alert-success {
+  background-color: #dff0d8;
+  color: #3c763d;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.alert-box {
+  background: #dff0d8;
+  border: 1px solid #3c763d;
+  border-radius: 6px;
+  padding: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #2e7d32;
+  font-weight: bold;
+}
+

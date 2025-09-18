@@ -1,0 +1,99 @@
+<div *ngIf="!route.firstChild">
+  <div class="section-header">
+    <h1 class="section-title">Product Management</h1>
+    <div class="actions">
+      <!-- keyword -->
+      <input
+        type="text"
+        placeholder="Search product..."
+        [(ngModel)]="keyword"
+        (keyup.enter)="onFilterChange()"
+      />
+
+      <!-- category -->
+      <select [(ngModel)]="selectedCategory" (change)="onFilterChange()">
+        <option value="">All Categories</option>
+        <option value="lich-su">Lịch Sử</option>
+        <option value="triet-hoc">Triết Học</option>
+        <option value="khoa-hoc">Khoa Học</option>
+        <option value="nghe-thuat">Nghệ Thuật</option>
+        <option value="kinh-doanh">Kinh Doanh</option>
+      </select>
+
+      <!-- price -->
+      <select [(ngModel)]="selectedPriceRange" (change)="onFilterChange()">
+        <option value="">All Prices</option>
+        <option value="0-150000">0đ - 150,000đ</option>
+        <option value="150000-300000">150,000đ - 300,000đ</option>
+        <option value="300000-500000">300,000đ - 500,000đ</option>
+        <option value="500000-700000">500,000đ - 700,000đ</option>
+        <option value="700000-1000000">700,000đ - 1,000,000đ</option>
+      </select>
+
+      <!-- Add one product -->
+      <button class="btn btn-primary" [routerLink]="['add']">
+        + Add Product
+      </button>
+
+      <!-- Import by Excel -->
+      <button class="btn btn-secondary" [routerLink]="['import-excel']">
+        📂 Import from Excel
+      </button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tên sách</th>
+          <th>Tác giả</th>
+          <th>Giá</th>
+          <th>Tồn kho</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of books">
+          <td>{{ book.bookResponseDto.id }}</td>
+          <td class="title">{{ book.bookResponseDto.title }}</td>
+          <td class="author">{{ book.bookResponseDto.author }}</td>
+
+          <td>{{ book.bookResponseDto.price | number }}₫</td>
+          <td>{{ book.bookResponseDto.stock }}</td>
+          <td>
+            <button
+              class="btn btn-secondary"
+              [routerLink]="[book.bookResponseDto.id, 'edit']"
+            >
+              Edit
+            </button>
+
+            <button
+              class="btn btn-danger"
+              (click)="deleteBook(book.bookResponseDto.id)"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="page === 0">&laquo; Prev</button>
+    <button
+      *ngFor="let p of [].constructor(totalPages); let i = index"
+      (click)="goToPage(i)"
+      [class.active]="i === page"
+    >
+      {{ i + 1 }}
+    </button>
+    <button (click)="nextPage()" [disabled]="page === totalPages - 1">
+      Next &raquo;
+    </button>
+  </div>
+</div>
+<router-outlet></router-outlet>

@@ -1,0 +1,69 @@
+<div class="promotion-create">
+  <h2>Create New Promotion</h2>
+
+  <!-- Alert thành công hiển thị thêm, form vẫn giữ nguyên -->
+ <div class="alert-box" *ngIf="showSuccessAlert">
+  <h3>🎉 Promotion created successfully!</h3>
+  <p>Redirecting to promotions...</p>
+</div>
+
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <label>
+      Name:
+      <input type="text" formControlName="name" />
+    </label>
+
+    <label>
+      Discount Type:
+      <select formControlName="discountType">
+        <option value="PERCENT">Percent</option>
+        <option value="AMOUNT">Amount</option>
+      </select>
+    </label>
+
+    <label>
+      Discount Value:
+      <input type="number" formControlName="discountValue" />
+    </label>
+
+    <label>
+      Target Type:
+      <select formControlName="targetType">
+        <option value="GLOBAL">Global</option>
+        <option value="CATEGORY">Category</option>
+      </select>
+    </label>
+
+    <label>
+      Target Value:
+      <select formControlName="targetValue">
+        <option *ngIf="form.value.targetType === 'GLOBAL'" value="ALL">
+          All
+        </option>
+        <ng-container *ngIf="form.value.targetType === 'CATEGORY'">
+          <option *ngFor="let cat of categories" [value]="cat.key">
+            {{ cat.label }}
+          </option>
+        </ng-container>
+      </select>
+    </label>
+
+    <label>
+      Start Date:
+      <input type="date" formControlName="startDate" />
+    </label>
+
+    <label>
+      End Date:
+      <input type="date" formControlName="endDate" />
+    </label>
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid">➕ Create</button>
+      <button type="button" (click)="router.navigate(['/dashboard/promotions'])">
+        ❌ Cancel
+      </button>
+    </div>
+  </form>
+</div>

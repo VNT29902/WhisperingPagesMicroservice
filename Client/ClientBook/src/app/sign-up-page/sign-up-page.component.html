@@ -1,0 +1,54 @@
+<app-header></app-header>
+
+
+<section class="login_page">
+  <div class="container">
+  <div class="login-wrapper">
+    <div class="login-card">
+      <h2>Sign Up</h2>
+
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="First name" formControlName="firstName" />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input type="text" placeholder="Last name" formControlName="lastName" />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-envelope"></i>
+          <input type="email" placeholder="Email address" formControlName="email" />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-phone"></i>
+          <input type="text" placeholder="Phone number" formControlName="phone" />
+        </div>
+
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input type="password" placeholder="Password" formControlName="password" />
+        </div>
+
+        <button type="submit" class="login-btn" [disabled]="signupForm.invalid">SIGN UP</button>
+
+        <p class="social-text">Or Sign Up Using</p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-google"></i></a>
+        </div>
+
+        <p class="login-link">
+          Already have an account?
+          <a [routerLink]="['/login']">SIGN IN</a>
+        </p>
+      </form>
+    </div>
+  </div>
+  </div>
+</section>
+<app-footer></app-footer>

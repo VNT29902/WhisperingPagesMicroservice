@@ -1,0 +1,209 @@
+:host {
+  display: block;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+h2 {
+  font-size: 20px;
+  margin: 12px 0 16px;
+}
+
+h3 {
+  font-size: 18px;
+  margin: 20px 0 12px;
+}
+
+.col {
+  background: #fff;
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.row {
+  margin-bottom: 12px;
+}
+
+label {
+  display: block;
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 6px;
+}
+
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  outline: none;
+  background: #fff;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #0aa06e;
+  box-shadow: 0 0 0 3px #0aa06e25;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr 300px 380px;
+  gap: 20px;
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.radio-card {
+  border: 1px solid #e6e6e6;
+  border-radius: 8px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+}
+
+.radio {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.radio .price,
+.icon-money {
+  margin-left: auto;
+}
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  gap: 12px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.cart-item img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.cart-item .title {
+  font-weight: 600;
+  margin: 0;
+}
+
+.line-price {
+  font-weight: 600;
+}
+
+.summary {
+  border-top: 1px solid #eee;
+  padding-top: 10px;
+}
+
+.summary .row {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+.summary .total {
+  font-size: 18px;
+}
+
+.col.order .actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.col.order .btn {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 4px;
+}
+
+.col.order .back-cart {
+  background-color: #ddd;
+  color: #333;
+}
+
+.col.order .place-order {
+  background-color: #4CAF50;
+  color: white;
+}
+
+
+/* 🔹 Responsive */
+/* Tablet/Laptop nhỏ <1280px: từ 3 cột → 2 cột */
+/* Tablet/Laptop nhỏ <1280px */
+/* Tablet/Laptop nhỏ <1280px */
+@media (max-width: 1280px) {
+  .grid-3 {
+    grid-template-columns: 1fr 1fr; /* info + shipping */
+    grid-template-rows: auto auto;
+  }
+
+  .col:nth-child(2) {
+    order: 2; /* shipping */
+  }
+
+  .col.order {
+    grid-column: 1 / span 2; /* đơn hàng chiếm đủ hàng dưới */
+    order: 3;
+  }
+
+  .col.order .actions {
+    flex-direction: row;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .col.order .btn {
+    flex: 1;
+    padding: 16px;
+    font-size: 16px;
+    border-radius: 6px;
+  }
+}
+
+/* Mobile <768px */
+@media (max-width: 768px) {
+  .grid-3 {
+    grid-template-columns: 1fr; /* tất cả xếp dọc */
+    padding: 12px;
+  }
+
+  .col {
+    margin-bottom: 16px;
+  }
+
+  .col.order {
+    grid-column: 1; /* đơn hàng riêng một cột */
+  }
+
+  /* Nút hành động full width, xếp dọc */
+  .col.order .actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .col.order .btn {
+    width: 100%;
+      padding: 80px 22px;     /* to hơn cho mobile */
+    font-size: 28px;      /* chữ lớn hơn dễ bấm */
+    border-radius: 8px;
+  }
+}
+
+

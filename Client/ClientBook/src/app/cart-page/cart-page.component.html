@@ -1,0 +1,67 @@
+<app-header></app-header>
+
+<section class="section-wrapper cart-page">
+  <div class="section-container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      Trang chủ <i class="fa-solid fa-angle-right"></i> Giỏ hàng
+    </div>
+
+    <!-- Tiêu đề -->
+    <h2 class="section-title">Giỏ hàng của bạn</h2>
+
+    <!-- Bảng sản phẩm -->
+    <table class="table cart-table" *ngIf="cartData && cartData.items.length > 0">
+      <thead>
+        <tr>
+          <th>Thông tin sản phẩm</th>
+          <th>Đơn giá</th>
+          <th>Số lượng</th>
+          <th>Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of cartData.items">
+          <td class="product-info">
+          <img [src]="item.image" class="product-image" />
+            <div class="product-details">
+              <p class="product-name">{{ item.title }}</p>
+              <button type="button" class="btn-outline-danger" (click)="removeItem(item)">
+                Xóa
+              </button>
+            </div>
+          </td>
+          <td class="price">
+            {{ item.price | currency : "VND" : "symbol" : "1.0-0" }}
+          </td>
+          <td>
+            <div class="quantity">
+              <button class="btn-qty" (click)="decreaseQuantity(item)">-</button>
+              <input type="text" [value]="item.quantity" readonly />
+              <button class="btn-qty" (click)="increaseQuantity(item)">+</button>
+            </div>
+          </td>
+          <td class="price">
+            {{ item.price * item.quantity | currency : "VND" : "symbol" : "1.0-0" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Footer -->
+    <div *ngIf="cartData && cartData.items.length > 0" class="cart-footer row space-between">
+      <div class="total">
+        Tổng tiền:
+        <span>{{ cartData.totalAmount | currency : "VND" : "symbol" : "1.0-0" }}</span>
+      </div>
+      <button class="btn btn-primary checkout-btn" (click)="checkout()">Thanh toán</button>
+    </div>
+
+    <!-- Empty -->
+    <div *ngIf="cartData && cartData.items.length === 0" class="empty-cart">
+      <p>🛒 Giỏ hàng của bạn đang trống.</p>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

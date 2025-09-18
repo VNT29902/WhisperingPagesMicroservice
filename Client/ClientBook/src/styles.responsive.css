@@ -1,0 +1,72 @@
+/* Tablet (<= 768px) */
+@media (max-width: 768px) {
+  /* Logo nhỏ lại */
+  .logo img {
+    height: 60px;
+  }
+
+  /* Search box gọn hơn */
+  .search-box input {
+    width: 120px;
+    font-size: 13px;
+  }
+
+  /* Section bên phải (search + icon) căn giữa */
+  .right-section {
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+    flex-wrap: wrap; /* để khi thiếu chỗ thì xuống dòng */
+  }
+
+  /* Grid sách */
+  .book-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+  }
+
+  /* Banner */
+  .banner-image img,
+  .slide-image {
+    height: 280px;
+  }
+}
+
+/* Mobile (<= 480px) */
+@media (max-width: 480px) {
+  /* Logo thu nhỏ */
+  .logo img {
+    height: 40px;
+    max-width: 140px;
+  }
+
+  /* Grid sách co lại vừa màn hình nhỏ */
+  .book-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+
+  /* Banner nhỏ gọn */
+  .banner-image img,
+  .slide-image {
+    height: 180px;
+    object-fit: cover;
+  }
+
+  /* Footer logo căn giữa */
+  .footer-logo {
+    text-align: center;
+  }
+
+  /* Search bar full width */
+  .right-section {
+    width: 100%;
+    justify-content: space-between;
+    padding: 0 8px;
+  }
+
+  .search-box input {
+    flex: 1;
+    width: 100%;
+  }
+}

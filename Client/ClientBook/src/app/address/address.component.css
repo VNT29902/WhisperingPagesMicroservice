@@ -1,0 +1,231 @@
+/* Khung ngoài */
+.address-section {
+  background-color: #f2f2f2;
+  padding: 20px 0;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Vùng chứa chính */
+.address-container {
+  margin: 0 auto;
+  padding: 20px;
+  background: #fff;
+  width: 1200px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: sans-serif;
+}
+
+/* Tiêu đề */
+.address-container h2 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #333;
+}
+
+/* Nút thêm */
+.add-btn {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 16px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.add-btn:hover {
+  background-color: #45a049;
+}
+
+/* Khối hiển thị địa chỉ */
+.address-block {
+  padding: 15px 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #fafafa;
+  margin-bottom: 20px;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.default-label {
+  color: green;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+/* Link sửa/xoá */
+.edit-link, .delete-link {
+  color: #007bff;
+  cursor: pointer;
+  text-decoration: underline;
+}
+.edit-link:hover, .delete-link:hover {
+  opacity: 0.8;
+}
+.separator {
+  margin: 0 6px;
+  color: #ccc;
+}
+
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+/* Modal content */
+.modal {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  position: relative;
+}
+.modal h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #444;
+}
+
+/* Form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+input, select {
+  padding: 10px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Row: province + ward */
+.row {
+  display: flex;
+  gap: 10px;
+}
+.row select {
+  flex: 1;
+}
+
+/* Nút */
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 10px;
+}
+.cancel-btn, .submit-btn {
+  padding: 10px 18px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.cancel-btn {
+  background-color: #ccc;
+}
+.submit-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+.submit-btn:hover {
+  background-color: #45a049;
+}
+
+/* Thông báo */
+.success-message {
+  color: green;
+  margin-top: 12px;
+  font-weight: 500;
+}
+
+/* ================================ */
+/* 🔹 Tablet <1280px */
+@media (max-width: 1280px) {
+  .address-container {
+    width: 95%;
+    padding: 16px;
+    margin: 0 auto;
+    min-height: 550px;              /* cho khung cao hơn một chút */
+    
+    display: flex;                  /* bật flexbox */
+    flex-direction: column;         /* xếp dọc */
+    align-items: center;            /* căn giữa ngang */
+    justify-content: center;        /* căn giữa dọc */
+    text-align: center;             /* tiêu đề + nút căn giữa */
+  }
+
+  .address-container h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+
+  .add-btn {
+    font-size: 14px;
+    padding: 8px 14px;
+    margin-bottom: 20px;
+  }
+
+  .address-block {
+    font-size: 15px;
+    padding: 12px 16px;
+    text-align: left;              /* chữ bên trong vẫn căn trái cho dễ đọc */
+    max-width: 700px;
+    width: 100%;
+  }
+}
+
+
+/* 🔹 Mobile <768px */
+@media (max-width: 768px) {
+  .address-container {
+    width: 100%;
+    padding: 12px;
+  }
+
+  .address-container h2 {
+    font-size: 20px;
+    margin-bottom: 15px;
+  }
+
+  .address-block {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .row {
+    flex-direction: column;  /* province & ward xuống hàng */
+    gap: 8px;
+  }
+
+  .add-btn, .cancel-btn, .submit-btn {
+    width: 120px;    /* full width cho dễ bấm */
+    font-size: 15px;
+  }
+
+  .btn-group {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

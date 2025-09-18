@@ -1,0 +1,108 @@
+<div>
+  <div class="section-header">
+    <h1 class="section-title">Users Management</h1>
+
+    <div class="actions">
+      <!-- Search by username/email -->
+      <input
+        type="text"
+        [(ngModel)]="keyword"
+        placeholder="Search by username, email or phone..."
+        (keyup.enter)="applyFilters()"
+        style="margin-right: 10px; padding: 5px"
+      />
+
+      <!-- Active filter -->
+      <select [(ngModel)]="activeFilter" (change)="applyFilters()">
+        <option value="">All</option>
+        <option value="true">Active</option>
+        <option value="false">Inactive</option>
+      </select>
+
+      <!-- Add button -->
+      <!-- <button class="btn btn-primary" [routerLink]="['/dashboard/users/new']">
+        + Add User
+      </button> -->
+
+      <!-- Reset -->
+      <button class="btn btn-secondary" (click)="resetFilters()">Reset</button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Username</th>
+          <th>Email</th>
+          <th>Phone</th>
+          <th>Roles</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ i + 1 + page * pageSize }}</td>
+          <td>{{ user.username }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone || "-" }}</td>
+          <td>
+            <!-- roles là array -->
+            <span *ngFor="let r of user.roles; let j = index">
+              {{ r }}<span *ngIf="j < user.roles.length - 1">, </span>
+            </span>
+          </td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{ active: user.enabled, inactive: !user.enabled }"
+            >
+              {{ user.enabled ? "Active" : "Inactive" }}
+            </span>
+          </td>
+          <td class="action-buttons">
+            <!-- Edit -->
+            <button
+              class="btn btn-secondary"
+              [routerLink]="['/dashboard/users/resetPass', user.username]"
+            >
+              Reset Pass
+            </button>
+
+            <!-- Active / Inactive -->
+            <button class="btn btn-warning" (click)="confirmChangeStatus(user)">
+              {{ user.enabled ? "Deactivate" : "Activate" }}
+            </button>
+
+            <!-- Detail -->
+            <button
+              class="btn btn-secondary"
+              [routerLink]="['/dashboard/users/detail', user.username]"
+            >
+              Detail
+            </button>
+
+            <!-- Remove -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="page === 0">&laquo; Prev</button>
+    <button
+      *ngFor="let p of [].constructor(totalPages); let i = index"
+      (click)="goToPage(i)"
+      [class.active]="i === page"
+    >
+      {{ i + 1 }}
+    </button>
+    <button (click)="nextPage()" [disabled]="page === totalPages - 1">
+      Next &raquo;
+    </button>
+  </div>
+</div>

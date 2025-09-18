@@ -1,0 +1,59 @@
+/* ===== GENRE TABS ===== */
+.genre-tabs {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  list-style: none;
+  padding: 0;
+  margin-bottom: 50px;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.genre-item {
+  cursor: pointer;
+  color: #666;
+  position: relative;
+  transition: color 0.3s;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.genre-item:hover {
+  color: #222;
+}
+
+.genre-item.active {
+  color: #000;
+}
+
+.genre-item.active::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -8px;
+  width: 100%;
+  height: 2px;
+  background-color: #b49d5b;
+}
+
+/* Card PopularBooks có border + màu nền riêng */
+.book-card {
+  background-color: #faf9f4;
+  border-radius: 8px;
+  border: 1px solid #4caf50;
+  text-align: center;
+  padding: 0;
+}
+
+.book-title a {
+  text-decoration: none;   /* bỏ gạch chân */
+  color: #000;             /* chữ đen */
+  font-weight: 500;        /* tuỳ chỉnh, cho chữ đậm vừa */
+  transition: color 0.3s ease;
+}
+
+.book-title a:hover {
+  color: #2e7d32;          /* màu khi hover (xanh lá đậm) */
+}

@@ -1,0 +1,467 @@
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+
+.logo img {
+  height: 80px;
+  /* Desktop */
+  object-fit: contain;
+}
+
+/* === Menu desktop === */
+.main-nav {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  white-space: nowrap;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #222;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.main-nav a:hover,
+.main-nav a.active {
+  color: #2e7d32;
+}
+
+/* === Right section desktop === */
+.right-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 999px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.search-box input {
+  border: none;
+  padding: 6px 10px;
+  outline: none;
+  width: 150px;
+}
+
+.search-box button {
+  background: none;
+  border: none;
+  padding: 6px 10px;
+  cursor: pointer;
+}
+
+/* === Icon === */
+.icon {
+  font-size: 18px;
+  color: #000;
+  position: relative;
+  cursor: pointer;
+}
+
+.cart-icon {
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  background: #2e7d32;
+  color: white;
+  font-size: 12px;
+  padding: 2px 6px;
+  border-radius: 50%;
+  font-weight: bold;
+}
+
+/* === Dropdown tài khoản === */
+.user-account-wrapper {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.user-account-wrapper .icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f2f2f2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.user-account-wrapper .icon:hover {
+  background: #e0e0e0;
+}
+
+.user-account-wrapper .icon i {
+  font-size: 16px;
+  color: #333;
+}
+
+
+.account-dropdown {
+  position: absolute;
+  top: 42px; /* ngay dưới icon */
+  right: 0;
+  background: #fff;
+  border-radius: 8px;
+  min-width: 160px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 8px 0;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.account-dropdown a,
+.account-dropdown button {
+  display: block;
+  width: 100%;
+  padding: 10px 16px;
+  text-align: left;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #333;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.account-dropdown a:hover,
+.account-dropdown button:hover {
+  background: #f9f9f9;
+  color: #000;
+}
+/* Mặc định: Desktop hiển thị, Mobile ẩn */
+.section-wrapper {
+  display: block;
+}
+
+.mobile-header {
+  display: none;
+  z-index: 3001; 
+}
+
+/* Tablet + Mobile + Laptop nhỏ (<=1280px) */
+@media screen and (max-width: 1280px) {
+
+  /* Ẩn header desktop */
+  .section-wrapper {
+    display: none !important;
+  }
+
+  /* Override container cha không giới hạn max-width */
+  .section-container,
+  .section-wrapper {
+    max-width: none !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Header Mobile */
+  .mobile-header {
+    display: flex !important;
+
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100vw !important;
+    /* full viewport width */
+    max-width: 100% !important;
+    /* bỏ max-width cha */
+    height: 80px;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #1e1e24;
+    color: #fff;
+    padding: 0 16px;
+    z-index: 3000;
+    box-sizing: border-box;
+
+  }
+
+  /* Icon trái & phải */
+  .menu-icon,
+  .search-icon {
+    font-size: 28px;
+    padding: 10px;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+
+  .menu-icon {
+  width: 40px;             /* 👈 khung cố định */
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-icon i {
+  font-size: 22px;         /* 👈 fix kích thước icon */
+  line-height: 1;          /* tránh nhảy */
+  width: 22px;             /* ép width bằng font-size */
+  height: 22px;            /* ép height bằng font-size */
+  text-align: center;
+}
+
+
+  /* Logo giữa */
+  .logo-mobile {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    /* căn trái */
+  }
+
+  .logo-text {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    /* bỏ gạch chân */
+    cursor: pointer;
+  }
+
+  .logo-text .title {
+    font-family: sans-serif;
+    /* font trang trọng */
+    font-size: 18px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+
+  .logo-text .subtitle {
+    font-size: 12px;
+    font-weight: 400;
+    color: #d1d1d1;
+    margin-top: 2px;
+    letter-spacing: 0.5px;
+  }
+
+  .logo-text:hover .title {
+    color: #f7e7ce;
+    /* đổi màu khi hover */
+  }
+
+
+  /* Text logo */
+  .brand {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .brand .title {
+    font-weight: 600;
+    font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .brand .subtitle {
+    font-size: 13px;
+    color: #d1d1d1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* Mobile nhỏ (<=480px): tinh chỉnh */
+@media (max-width: 480px) {
+  .mobile-header {
+    height: 64px;
+    padding: 0 12px;
+  }
+
+  .menu-icon,
+  .search-icon {
+    font-size: 26px;
+    padding: 8px;
+  }
+
+  .logo img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .brand .subtitle {
+    display: none;
+    /* ẩn slogan cho gọn */
+  }
+}
+
+
+/* Search box trên mobile */
+.mobile-search-box {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  background: #f3f3f3;
+  border-radius: 20px;
+  padding: 4px 8px;
+
+  input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+
+  button {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    color: #333;
+  }
+}
+
+.mobile-search-suggestions {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  right: 0;
+  background: #f3f3f3;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  z-index: 3000;
+  padding: 8px;
+  /* Không scroll, auto giãn chiều cao */
+  max-height: none;
+  overflow: hidden;
+}
+
+
+.mobile-search-suggestions ul {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 cột đều nhau */
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.mobile-search-suggestions li {
+  text-align: center;
+}
+
+.suggestion-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.suggestion-item img {
+  width: 100%;
+  max-width: 120px;
+  /* ép cùng kích thước */
+  height: 160px;
+  /* ép chiều cao cố định */
+  object-fit: cover;
+  /* crop ảnh cho đều */
+  border-radius: 4px;
+  margin-bottom: 5px;
+}
+
+.suggestion-item .title {
+  font-size: 14px;
+  width: 100%;
+  font-weight: 600;
+  text-align: left;
+  /* căn trái */
+  color: #333;
+  margin-top: 4px;
+
+  display: -webkit-box;
+  /* dùng flexbox ẩn dòng */
+  -webkit-line-clamp: 2;
+  /* tối đa 2 dòng */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-word;
+  /* xuống hàng nếu gặp từ dài */
+}
+
+.mobile-side-menu {
+  position: absolute;    /* 👈 overlay */
+  top: 64px;             /* bằng chiều cao header */
+  left: 0;
+  right: 0;
+  background: #2c387e;
+  z-index: 1500;         /* nổi trên các component dưới */
+  padding: 12px;
+}
+.menu-account-item {
+  background: #f1f2f7;
+  color: #111;
+  border-radius: 999px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;      /* căn giữa theo dọc */
+  justify-content: center;  /* căn giữa theo ngang */
+  gap: 8px;
+  margin: 0 auto 10px auto; /* căn giữa block trong container */
+  width: 90%;               /* giới hạn chiều ngang */
+  max-width: 300px;         /* không quá to trên tablet */
+  cursor: pointer;
+}
+
+.menu-account-item i {
+  font-size: 16px;
+}
+
+.menu-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.menu-links a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.menu-links a.active,
+.menu-links a:hover {
+  color: #f7e7ce;
+}
+
+@media (min-width: 769px) and (max-width: 1280px) {
+  .mobile-search-suggestions .suggestion-item .title {
+    text-align: center;
+  }
+}
+
+
+header a {
+  text-decoration: none;
+}

@@ -1,0 +1,290 @@
+/* Layout: sidebar + content */
+.product-list-layout {
+  display: flex;
+  gap: 20px;
+}
+
+/* Sidebar filter */
+.filter-sidebar {
+  flex: 0 0 220px;
+  background: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  padding: 16px;
+}
+
+.filter-title {
+  font-size: 18px;
+  margin-bottom: 12px;
+  font-weight: bold;
+}
+
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group h4 {
+  margin-bottom: 8px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+/* Product content */
+.product-list-content {
+  flex: 1;
+}
+
+/* Grid: 4 sp / hàng */
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* Pagination */
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.page-btn {
+  border: 1px solid #ddd;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.page-btn.active {
+  background: #2e7d32;
+  color: #fff;
+  font-weight: bold;
+}
+
+
+.book-title a {
+  text-decoration: none;
+  /* bỏ gạch chân */
+  color: #000;
+  /* chữ đen */
+  font-weight: 500;
+  /* tuỳ chỉnh, cho chữ đậm vừa */
+  transition: color 0.3s ease;
+}
+
+.book-title a:hover {
+  color: #2e7d32;
+  /* màu khi hover (xanh lá đậm) */
+}
+
+
+/* filter bar */
+
+
+/* Bố cục 2 cột */
+.product-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Sidebar filter */
+/* Sidebar chung */
+.filter-bar {
+  flex: 0 0 250px;
+  background: #fafafa;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px;
+}
+
+/* Nhóm filter */
+.filter-group {
+  margin-bottom: 20px;
+}
+
+.filter-group h3 {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Nhóm sản phẩm */
+.category-list ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-list li {
+  padding: 8px 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.category-list li:hover {
+  background: #eee;
+}
+
+.category-list li.active {
+  background: #2e7d32;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Input & select */
+
+
+.book-card {
+  position: relative;
+  /* giữ mọi phần tử con ở trong */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+
+.book-stock {
+  margin-top: 8px;
+  width: 100%;
+}
+
+.stock-bar {
+  width: 100%;
+  height: 20px;
+  /* tăng chiều cao để dễ đọc chữ */
+  background: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  /* để chứa label */
+}
+
+.stock-progress {
+  height: 100%;
+  background: #4caf50;
+  transition: width 0.3s ease;
+}
+
+.stock-progress.low-stock {
+  background: #f57c00;
+}
+
+.stock-progress.out-stock {
+  background: #e53935;
+  width: 100% !important;
+}
+
+/* Label nằm trong bar */
+.stock-label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px;
+  font-weight: 600;
+  color: #000;
+  /* chữ đen */
+  pointer-events: none;
+  /* tránh bị block click */
+}
+
+.filter-group label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* ép tất cả nằm bên trái */
+  gap: 8px;
+  /* khoảng cách giữa radio và text */
+  cursor: pointer;
+  margin-bottom: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left;
+  /* text luôn căn trái */
+  width: 100%;
+  /* label chiếm full width để không bị lệch */
+}
+
+.filter-group input[type="radio"] {
+  accent-color: #2e7d32;
+  /* màu xanh lá */
+  transform: scale(1.1);
+  margin: 0;
+}
+
+
+.filter-group:nth-of-type(2) select {
+  /* full width */
+  max-width: 220px;
+  /* hoặc set rộng hơn tuỳ ý */
+}
+
+
+/* Responsive: tablet, mobile -> sidebar chuyển lên trên */
+@media (max-width: 1024px) {
+  .product-layout {
+    flex-direction: column;
+  }
+
+
+}
+
+
+
+/* --- Stock bar container --- */
+
+/* --- Responsive: màn hình dưới 1280px (tablet ngang / laptop nhỏ) --- */
+@media (max-width: 1280px) {
+  .book-grid {
+    grid-template-columns: repeat(3, 1fr); /* 3 sp / hàng thay vì 4 */
+    gap: 16px;
+  }
+
+  .filter-bar {
+    flex: 0 0 220px; /* hẹp sidebar lại */
+    padding: 12px;
+  }
+
+  .filter-group h3 {
+    font-size: 14px;
+  }
+
+  .book-title a {
+    font-size: 14px; /* thu nhỏ text */
+  }
+}
+
+/* --- Responsive: màn hình dưới 768px (mobile) --- */
+@media (max-width: 768px) {
+  .product-layout {
+    flex-direction: column; /* Sidebar nhảy lên trên */
+  }
+
+  .filter-bar {
+    width: 100%;
+    order: -1;           /* ép filter lên đầu */
+    margin-bottom: 20px;
+  }
+
+  .book-grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 sp / hàng */
+    gap: 12px;
+  }
+
+  .page-btn {
+    padding: 4px 8px;
+    font-size: 13px;
+  }
+
+  .book-title a {
+    font-size: 13px;
+  }
+
+  .stock-label {
+    font-size: 11px;
+  }
+}

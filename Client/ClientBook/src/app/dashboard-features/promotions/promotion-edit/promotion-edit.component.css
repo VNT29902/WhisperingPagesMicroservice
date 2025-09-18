@@ -1,0 +1,57 @@
+.promotion-edit {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 16px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.promotion-edit h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+}
+
+.promotion-edit form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.promotion-edit label {
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+}
+
+.promotion-edit input,
+.promotion-edit select {
+  padding: 8px;
+  font-size: 14px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.actions button {
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.actions button:first-child {
+  background: #28a745;
+  color: #fff;
+}
+
+.actions button:last-child {
+  background: #dc3545;
+  color: #fff;
+}

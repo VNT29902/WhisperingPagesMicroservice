@@ -1,0 +1,122 @@
+<div>
+  <div class="section-header">
+    <h1 class="section-title">Promotions Management</h1>
+
+    <div class="actions">
+      <!-- Search -->
+      <input
+        type="text"
+        [(ngModel)]="keyword"
+        placeholder="Search by name or target..."
+        (keyup.enter)="applyFilters()"
+        style="margin-right: 10px; padding: 5px"
+      />
+
+      <!-- Filter theo tháng -->
+      <input
+        type="month"
+        [(ngModel)]="selectedMonth"
+        (change)="applyFilters()"
+        style="margin-right: 10px; padding: 5px"
+      />
+
+      <!-- Active filter -->
+      <select [(ngModel)]="activeFilter" (change)="applyFilters()">
+        <option value="">All</option>
+        <option value="true">Active</option>
+        <option value="false">Inactive</option>
+      </select>
+
+      <!-- Add button -->
+      <button
+        class="btn btn-primary"
+        [routerLink]="['/dashboard/promotions/new']"
+      >
+        + Add Promotion
+      </button>
+
+      <!-- Reset -->
+      <button class="btn btn-secondary" (click)="resetFilters()">Reset</button>
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+
+     <div class="table-responsive">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>STT</th>
+          <th>Name</th>
+          <th>Discount</th>
+          <th>Target</th>
+          <th>Start</th>
+          <th>End</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let promo of promotions; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ promo.name }}</td>
+          <td>{{ promo.discountType }} - {{ promo.discountValue | number }}</td>
+          <td>{{ promo.targetType }}: {{ promo.targetValue }}</td>
+          <td>{{ promo.startDate | date : "dd/MM/yyyy" }}</td>
+          <td>{{ promo.endDate | date : "dd/MM/yyyy" }}</td>
+          <td>
+            <span
+              class="badge"
+              [ngClass]="{ active: promo.active, inactive: !promo.active }"
+            >
+              {{ promo.active ? "Active" : "Inactive" }}
+            </span>
+          </td>
+          <td class="action-buttons">
+  <!-- Edit -->
+  <button
+    class="btn btn-secondary"
+    [routerLink]="['/dashboard/promotions', promo.id, 'edit']"
+  >
+    Edit
+  </button>
+
+  <!-- Active / Inactive -->
+  <button
+    class="btn btn-warning"
+    (click)="confirmChangeStatus(promo)"
+  >
+    {{ promo.active ? "Deactivate" : "Activate" }}
+  </button>
+
+   <!-- Remove -->
+  <button class="btn btn-danger" (click)="confirmDelete(promo)">
+    Remove
+  </button>
+
+  <div *ngIf="deleteSuccessMessage" class="alert-success">
+  {{ deleteSuccessMessage }}
+</div>
+</td>
+
+        </tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="page === 0">&laquo; Prev</button>
+    <button
+      *ngFor="let p of [].constructor(totalPages); let i = index"
+      (click)="goToPage(i)"
+      [class.active]="i === page"
+    >
+      {{ i + 1 }}
+    </button>
+    <button (click)="nextPage()" [disabled]="page === totalPages - 1">
+      Next &raquo;
+    </button>
+  </div>
+</div>

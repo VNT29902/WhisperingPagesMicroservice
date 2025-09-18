@@ -1,0 +1,58 @@
+<app-header></app-header>
+
+<section class="login_page">
+  <div class="container">
+    <div class="login-wrapper">
+      <h2>Login</h2>
+      <form (ngSubmit)="onLogin()" #loginForm="ngForm">
+        <!-- Email / Phone -->
+        <div class="input-group">
+          <i class="fas fa-user"></i>
+          <input
+            type="text"
+            name="emailOrPhone"
+            [(ngModel)]="loginInfo.emailOrPhone"
+            placeholder="Type your email or phone"
+            required
+          />
+        </div>
+
+        <!-- Password -->
+        <div class="input-group">
+          <i class="fas fa-lock"></i>
+          <input
+            type="password"
+            name="password"
+            [(ngModel)]="loginInfo.password"
+            placeholder="Type your password"
+            required
+          />
+        </div>
+
+        <!-- Forgot password -->
+        <div class="forgot-link">
+          <a href="#">Forgot password?</a>
+        </div>
+
+        <!-- Submit -->
+        <button type="submit" class="login-btn">LOGIN</button>
+
+        <!-- Social login -->
+        <p class="social-text">Or Login Using</p>
+        <div class="social-icons">
+          <a (click)="loginWithGoogle()" class="google"
+            ><i class="fab fa-google"></i
+          ></a>
+        </div>
+
+        <!-- Signup -->
+        <p class="signup-link">
+          Don’t have an account?
+          <a [routerLink]="['/signup']">SIGN UP</a>
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

@@ -1,0 +1,145 @@
+<div class="reports-page" *ngIf="!loading">
+  <div class="section-header">
+    <h1 class="section-title">📊 Reports</h1>
+    <div class="filters">
+      <input
+        type="number"
+        [(ngModel)]="year"
+        placeholder="Year"
+        min="2000"
+        max="2100"
+      />
+      <input
+        type="number"
+        [(ngModel)]="month"
+        placeholder="Month (optional)"
+        min="1"
+        max="12"
+      />
+      <button class="btn btn-primary filter-btn" (click)="applyFilters()">
+        Apply
+      </button>
+
+      <button class="btn btn-secondary" (click)="resetFilters()">Reset</button>
+    </div>
+  </div>
+  <!-- phần KPI, Charts, Table giữ nguyên -->
+
+  <!-- KPI Cards -->
+  <div class="kpi-cards" *ngIf="overview">
+    <div class="card kpi">
+      <h3>Total Sales</h3>
+      <p class="value">{{ overview.totalSales | number }}</p>
+    </div>
+    <div class="card kpi">
+      <h3>Best-Selling Book</h3>
+      <p *ngIf="overview?.bestSellingBook">
+        {{ overview.bestSellingBook.title }}
+        <span class="highlight"
+          >({{ overview.bestSellingBook.salesCount }})</span
+        >
+      </p>
+    </div>
+    <div class="card kpi">
+      <h3>Top Category</h3>
+      <p>{{ overview.topCategory }}</p>
+    </div>
+    <div class="card kpi">
+      <h3>Last Update</h3>
+      <p>{{ overview.lastUpdatedAt | date : "short" }}</p>
+    </div>
+  </div>
+
+  <!-- Charts -->
+  <div class="chart-box" *ngIf="isBrowser && monthlySales.length > 0">
+    <h3>Sales per Month ({{ year }})</h3>
+    <div
+      echarts
+      [options]="baseMonthlyOptions"
+      [merge]="monthlyChartOptions"
+      class="chart"
+    ></div>
+  </div>
+
+  <div class="chart-box" *ngIf="isBrowser && weeklySales.length > 0">
+    <h3>Sales per Week (Month {{ month }})</h3>
+    <div
+      echarts
+      [options]="baseWeeklyOptions"
+      [merge]="weeklyChartOptions"
+      class="chart"
+    ></div>
+  </div>
+
+  <div class="chart-box" *ngIf="isBrowser && topBooks.length > 0">
+    <h3>Top 5 Books</h3>
+    <div
+      echarts
+      [options]="baseTopBooksOptions"
+      [merge]="topBooksChartOptions"
+      class="chart"
+    ></div>
+  </div>
+
+  <div class="chart-box" *ngIf="isBrowser && salesByCategory.length > 0">
+    <h3>Sales by Category</h3>
+    <div
+      echarts
+      [options]="baseCategoryOptions"
+      [merge]="categoryChartOptions"
+      class="chart"
+    ></div>
+  </div>
+
+  <!-- Detail Table -->
+  <div class="table-wrapper" *ngIf="salesDetail.length > 0; else noDetail">
+    <h3>Sales Detail</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Book ID</th>
+          <th>Title</th>
+          <th>Year</th>
+          <th>Month</th>
+          <th>Week</th>
+          <th>Sales Count</th>
+          <th>Updated At</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let d of pagedSalesDetail">
+          <td>{{ d.bookId }}</td>
+          <td>{{ d.title }}</td>
+          <td>{{ d.year }}</td>
+          <td>{{ d.month }}</td>
+          <td>{{ d.week }}</td>
+          <td>{{ d.salesCount }}</td>
+          <td>{{ d.updatedAt | date : "short" }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="pagination">
+      <button
+        (click)="goToPage(currentPage - 1)"
+        [disabled]="currentPage === 1"
+      >
+        Prev
+      </button>
+
+      <span>Page {{ currentPage }} / {{ totalPages }}</span>
+
+      <button
+        (click)="goToPage(currentPage + 1)"
+        [disabled]="currentPage === totalPages"
+      >
+        Next
+      </button>
+    </div>
+  </div>
+
+  <ng-template #noDetail>
+    <p class="no-data">⚠️ Không có dữ liệu chi tiết</p>
+  </ng-template>
+</div>

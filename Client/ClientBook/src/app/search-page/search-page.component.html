@@ -1,0 +1,97 @@
+<app-header></app-header>
+
+<section class="section-wrapper product-list-page">
+  <div class="section-container product-layout">
+    <!-- Sidebar filter (KHÔNG có nhóm sản phẩm) -->
+    <aside class="filter-bar">
+      <!-- Lọc theo giá -->
+      <div class="filter-group">
+        <h3>Giá</h3>
+        <div *ngFor="let range of priceRanges">
+          <label>
+            <input
+              type="radio"
+              name="priceRange"
+              [checked]="selectedPriceRange === range"
+              (change)="togglePriceRange(range)"
+            />
+            {{ range.label }}
+          </label>
+        </div>
+      </div>
+
+      <!-- Sắp xếp -->
+      <div class="filter-group">
+        <h3>Sắp xếp</h3>
+        <select [(ngModel)]="sortOption" (change)="onFilterChange()">
+          <option value="priceAsc">Giá tăng dần</option>
+          <option value="priceDesc">Giá giảm dần</option>
+          <option value="newest">Mới nhất</option>
+          <option value="bestseller">Bán chạy</option>
+        </select>
+      </div>
+    </aside>
+
+    <!-- Product content -->
+    <div class="product-content">
+      <h2 class="section-title">Kết quả tìm kiếm cho "{{ keyword }}"</h2>
+
+      <!-- Grid -->
+      <div class="book-grid">
+        <div class="book-card" *ngFor="let bp of books">
+          <div class="book-cover-wrapper">
+            <a [routerLink]="['/books', bp.bookResponseDto.id]">
+              <img
+                [src]="bp.bookResponseDto.image"
+                [alt]="bp.bookResponseDto.title"
+              />
+            </a>
+          </div>
+          <h3 class="book-title">
+            <a [routerLink]="['/books', bp.bookResponseDto.id]">
+              {{ bp.bookResponseDto.title }}
+            </a>
+          </h3>
+          <p class="book-price">
+            <span class="discounted-price">
+              {{
+                bp.bookResponseDto.price * (1 - bp.promotionPercent / 100)
+                  | currency : "VND" : "symbol" : "1.0-0"
+              }}
+            </span>
+            <span *ngIf="bp.promotionPercent > 0" class="original-price">
+              {{
+                bp.bookResponseDto.price | currency : "VND" : "symbol" : "1.0-0"
+              }}
+            </span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <div class="pagination">
+        <button
+          class="page-btn"
+          (click)="goToPage(page - 1)"
+          [disabled]="page === 0"
+        >
+          «
+        </button>
+
+        <button class="page-btn active">
+          {{ page + 1 }} / {{ totalPages }}
+        </button>
+
+        <button
+          class="page-btn"
+          (click)="goToPage(page + 1)"
+          [disabled]="page === totalPages - 1"
+        >
+          »
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

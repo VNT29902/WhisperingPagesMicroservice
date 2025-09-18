@@ -1,0 +1,27 @@
+<div class="search-box">
+  <input
+    type="text"
+    [(ngModel)]="keyword"
+    placeholder="Tìm kiếm..."
+    (input)="onInput()"
+    (keyup.enter)="onSearch()" />
+
+  <button (click)="onSearch()">
+    <i class="fa fa-search"></i>
+  </button>
+
+  <!-- Gợi ý đặt ở đây -->
+  <div class="search-suggestions" *ngIf="suggestions.length > 0">
+    <ul>
+      <li *ngFor="let item of suggestions">
+        <a class="suggestion-item"
+           [routerLink]="['/books', item.bookResponseDto.id]"
+           (click)="clearSearch()">
+          <img [src]="item.bookResponseDto.image" 
+               [alt]="item.bookResponseDto.title" />
+          <div class="title">{{ item.bookResponseDto.title }}</div>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+
+ALTER TABLE users
+    ADD COLUMN provider VARCHAR(20) DEFAULT 'LOCAL',
+    ADD COLUMN provider_id VARCHAR(255),
+     ADD COLUMN phone VARCHAR(255);
+
+ALTER TABLE users
+    MODIFY password VARCHAR(255) NULL;

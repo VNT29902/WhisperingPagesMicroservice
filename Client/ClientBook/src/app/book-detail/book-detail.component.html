@@ -1,0 +1,71 @@
+<app-header></app-header>
+
+<section class="section-wrapper">
+  <div class="section-container" *ngIf="bookAndPromotion as b">
+    <div class="book-detail">
+      <!-- Hình ảnh -->
+      <div class="book-cover-wrapper">
+        <img [src]="b.bookResponseDto.image" [alt]="b.bookResponseDto.title" />
+      </div>
+
+      <!-- Thông tin -->
+      <div class="book-card">
+        <h1 class="book-title">{{ b.bookResponseDto.title }}</h1>
+        <p class="book-author">Tác giả: {{ b.bookResponseDto.author }}</p>
+
+        <!-- Giá và khuyến mãi -->
+        <div class="book-price">
+          <ng-container *ngIf="b.promotionPercent > 0; else normalPrice">
+            <span class="original-price">
+              {{ b.bookResponseDto.price | currency : "VND" }}
+            </span>
+            <span class="discounted-price">
+              {{
+                b.bookResponseDto.price * (1 - b.promotionPercent / 100)
+                  | currency : "VND"
+              }}
+            </span>
+            <span class="discount-badge">-{{ b.promotionPercent }}%</span>
+          </ng-container>
+          <ng-template #normalPrice>
+            <span class="normal-price">{{
+              b.bookResponseDto.price | currency : "VND"
+            }}</span>
+          </ng-template>
+        </div>
+
+        <!-- Kho -->
+        <p class="stock" [class.out-of-stock]="b.bookResponseDto.stock === 0">
+          Kho:
+          {{
+            b.bookResponseDto.stock > 0 ? b.bookResponseDto.stock : "Hết hàng"
+          }}
+        </p>
+
+        <!-- Mô tả -->
+        <p class="book-description">{{ b.bookResponseDto.description }}</p>
+
+        <!-- Nút hành động -->
+        <div class="action-buttons">
+          <app-add-to-cart-button
+            class="btn-cart"
+            [productId]="b.bookResponseDto.id"
+            [title]="b.bookResponseDto.title"
+            [image]="b.bookResponseDto.image"
+            [price]="b.bookResponseDto.price"
+          >
+          </app-add-to-cart-button>
+          <button
+            class="btn-buy-now"
+            [disabled]="b.bookResponseDto.stock === 0"
+            (click)="buyNow(b)"
+          >
+            ⚡ Mua ngay
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

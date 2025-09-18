@@ -1,0 +1,131 @@
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* === COVER WRAPPER: chứa ảnh + nút === */
+
+.book-card:hover .book-cover img {
+  transform: scale(1.02);
+}
+
+/* === ADD TO CART BUTTON === */
+
+.book-cover-wrapper:hover .add-to-cart-hover {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.add-to-cart-hover button {
+  width: 100%;
+  padding: 14px 0;
+  background-color: #ff4d4d;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.book-price .price-top {
+  display: flex;
+  align-items: center;
+  /* giá giảm + badge cùng 1 hàng */
+}
+
+/* === VIEW ALL === */
+
+.view-all-link .arrow {
+  margin-left: 10px;
+  transition: margin-left 0.3s ease;
+}
+
+.view-all-link:hover .arrow {
+  margin-left: 15px;
+}
+
+/* Thanh bao ngoài */
+
+.book-stock {
+  margin-top: 8px;
+}
+
+/* Khi gần hết hàng */
+.stock-progress.low-stock {
+  background: #f57c00;
+  /* cam cảnh báo */
+}
+
+.stock-progress.out-stock {
+  background: #e53935;
+  width: 100% !important;
+}
+
+.book-title {
+  margin: 8px 0;
+  /* bỏ toàn bộ margin */
+  font-size: 16px;
+  /* giữ nguyên size chữ */
+  line-height: 1.4;
+  /* kiểm soát khoảng cách dòng */
+}
+
+.book-card .book-title,
+.book-card .book-author,
+.book-card .book-price,
+.book-card .book-stock {
+  margin-left: 6px;
+  margin-right: 6px;
+}
+
+.book-card {
+  background-color: #faf9f4;
+  border-radius: 8px;
+  border: 1px solid #4caf50;
+  text-align: center;
+  padding: 0;
+}
+
+
+.book-cover-wrapper {
+  width: 190px;
+  height: 190px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 6px;
+  background-color: #faf9f4;
+}
+
+/* ép luôn .book-cover theo khung cha */
+.book-cover {
+  width: 100%;
+  height: 100%;
+}
+
+/* ép ảnh */
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;  /* hoặc cover nếu muốn che kín */
+  display: block;
+}
+
+
+.book-title a {
+  text-decoration: none;   /* bỏ gạch chân */
+  color: #000;             /* chữ đen */
+  font-weight: 500;        /* tuỳ chỉnh, cho chữ đậm vừa */
+  transition: color 0.3s ease;
+}
+
+.book-title a:hover {
+  color: #2e7d32;          /* màu khi hover (xanh lá đậm) */
+}
+

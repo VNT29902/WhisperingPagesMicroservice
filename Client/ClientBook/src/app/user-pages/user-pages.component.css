@@ -1,0 +1,310 @@
+/* Áp dụng cho toàn trang */
+.account_page {
+  background-color: #f2f2f2;
+  padding: 40px 0;
+}
+
+/* Container gói nội dung */
+.account_page .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+  background-color: #f7e7ce;
+  border-radius: 8px;
+  color: #333;
+  font-size: 20px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  margin-bottom: 20px;
+}
+
+.breadcrumb a {
+  margin-right: 8px;
+  color: #000;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.breadcrumb span {
+  margin-left: 8px;
+}
+
+/* Layout chính */
+.account-container {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* Sidebar */
+.sidebar {
+  min-width: 220px;
+  padding-left: 100px;
+}
+
+.sidebar h2 {
+  font-size: 25px;
+  margin-bottom: 10px;
+}
+
+.sidebar .username {
+  margin: 10px 0;
+}
+
+.sidebar .highlight {
+  color: #333;
+}
+
+.account-links {
+  list-style: none;
+  padding: 0;
+}
+
+.account-links li {
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.account-links a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Thông tin tài khoản */
+.account-info {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  flex-grow: 1;
+  padding-left: 100px;
+}
+
+.account-info h3 {
+  font-size: 25px;
+  margin-bottom: 15px;
+}
+
+.account-info p {
+  font-size: 20px;
+}
+
+.sidebar span {
+  font-size: 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.sidebar span:hover {
+  color: #ff6600;
+}
+
+/* ================================= */
+/* 🔹 Tablet <1280px */
+@media (max-width: 1280px) {
+  .account-container {
+    gap: 30px;
+    padding: 20px;
+  }
+
+  .sidebar {
+    padding-left: 40px;
+    min-width: 180px;
+  }
+
+  .account-info {
+    padding-left: 40px;
+  }
+
+  .sidebar h2 {
+    font-size: 22px;
+  }
+
+  .account-info h3 {
+    font-size: 22px;
+  }
+
+  .account-info p,
+  .sidebar span {
+    font-size: 18px;
+  }
+
+  .breadcrumb {
+    font-size: 20px;
+    min-height: 50px;
+  }
+}
+
+/* 🔹 Mobile <768px */
+@media (max-width: 768px) {
+  .account-container {
+    flex-direction: column;
+    gap: 20px;
+    padding: 16px;
+  }
+
+  .sidebar {
+    padding-left: 20px;
+    text-align: left;
+    min-width: unset;
+  }
+
+  .sidebar h2 {
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+
+  .account-links li {
+    margin: 8px 0;
+  }
+
+  .account-info {
+    padding-left: 0;
+    padding: 16px;
+    text-align: left;
+  }
+
+  .account-info h3 {
+    font-size: 20px;
+  }
+
+  .account-info p,
+  .sidebar span {
+    font-size: 20px;
+  }
+
+  .breadcrumb {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+.create-user-btn {
+  margin-top: 15px;
+  padding: 10px 18px;
+  background-color: #28a745;
+  border: none;
+  border-radius: 6px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.create-user-btn:hover {
+  background-color: #218838;
+}
+
+/* Modal overlay nền mờ */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+/* Hộp modal */
+.modal {
+  background: #fff;
+  padding: 25px 30px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 95%;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Tiêu đề */
+.modal h2 {
+  margin-bottom: 20px;
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* Nhóm form */
+.user-form .form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.user-form label {
+  margin-bottom: 5px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.user-form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border 0.2s;
+}
+
+.user-form input:focus {
+  border-color: #007bff;
+  outline: none;
+}
+
+/* Nút */
+.btn-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.cancel-btn,
+.submit-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cancel-btn {
+  background: #ccc;
+  color: #333;
+}
+
+.cancel-btn:hover {
+  background: #b3b3b3;
+}
+
+.submit-btn {
+  background: #007bff;
+  color: #fff;
+}
+
+.submit-btn:hover {
+  background: #0056b3;
+}
+
+/* Hiệu ứng */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+

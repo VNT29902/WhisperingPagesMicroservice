@@ -1,0 +1,130 @@
+<div>
+  <div class="section-header">
+    <h1 class="section-title">Orders Management</h1>
+    <div class="actions">
+      <!-- search -->
+      <input
+        type="text"
+        placeholder="Search by Order ID / User..."
+        [(ngModel)]="keyword"
+        (keyup.enter)="onFilterChange()"
+      />
+
+      <!-- date -->
+      <input type="date" [(ngModel)]="dateFrom" (change)="onFilterChange()" />
+      <input type="date" [(ngModel)]="dateTo" (change)="onFilterChange()" />
+
+
+       <!-- status -->
+      <select [(ngModel)]="selectedStatus" (change)="onFilterChange()">
+        <option value="">All Statuses</option>
+        <option value="PENDING_PAYMENT">Pending Payment</option>
+        <option value="CONFIRMED">Confirmed</option>
+        <option value="SHIPPING">Shipping</option>
+        <option value="DELIVERED">Delivered</option>
+        <option value="CANCELLED">Cancelled</option>
+      </select>
+      <!-- total amount range -->
+      <input
+        type="number"
+        placeholder="Min Total"
+        [(ngModel)]="minTotal"
+        (keyup.enter)="onFilterChange()"
+      />
+      <input
+        type="number"
+        placeholder="Max Total"
+        [(ngModel)]="maxTotal"
+        (keyup.enter)="onFilterChange()"
+      />
+
+     
+        <button class="btn btn-light" (click)="resetFilters()">Reset</button>
+
+    </div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>User</th>
+          <!-- ✅ thêm cột -->
+          <th>Created At</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let order of orders">
+          <tr>
+            <td>{{ order.orderId }}</td>
+            <td>{{ order.userName }}</td>
+            <!-- ✅ hiển thị userName -->
+            <td>{{ order.createdAt | date : "dd/MM/yyyy, HH:mm" }}</td>
+            <td>
+              <span
+                class="badge"
+                [ngClass]="{
+                  pending: order.status === 'PENDING_PAYMENT',
+                  confirmed: order.status === 'CONFIRMED',
+                  paid: order.status === 'PAID',
+                  delivered: order.status === 'DELIVERED',
+                  cancelled: order.status === 'CANCELLED'
+                }"
+              >
+                {{ order.status }}
+              </span>
+            </td>
+            <td>{{ order.totalAmount | number }}₫</td>
+
+            <td>
+              <button (click)="toggleItems(order)">
+                {{ expanded[order.orderId] ? "Hide" : "View" }} Items
+              </button>
+
+              <button
+                [routerLink]="['/dashboard/orders', order.orderId, 'view']"
+              >
+                View Details
+              </button>
+            </td>
+          </tr>
+
+          <!-- hiển thị items khi mở -->
+          <tr *ngIf="expanded[order.orderId]">
+            <td colspan="6">
+              <!-- ✅ colspan tăng lên vì có thêm cột User -->
+              <ul class="order-items">
+                <li *ngFor="let item of itemsCache[order.orderId]">
+                  <img [src]="item.image" [alt]="item.title" />
+                  {{ item.title }} (x{{ item.quantity }}) -
+                  {{ item.price | number }}₫
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <button (click)="prevPage()" [disabled]="page === 0">&laquo; Prev</button>
+    <button
+      *ngFor="let p of [].constructor(totalPages); let i = index"
+      (click)="goToPage(i)"
+      [class.active]="i === page"
+    >
+      {{ i + 1 }}
+    </button>
+    <button (click)="nextPage()" [disabled]="page === totalPages - 1">
+      Next &raquo;
+    </button>
+  </div>
+</div>
+
+<router-outlet></router-outlet>

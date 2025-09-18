@@ -1,0 +1,151 @@
+.order-card {
+  border: 1px solid #ddd;
+  margin-bottom: 24px;
+  /* 👈 Khoảng cách giữa các đơn hàng */
+  background: #fff;
+  padding: 16px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+
+
+}
+
+.container {
+  width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 20px 0;
+  /* tuỳ ý, tạo khoảng cách trên dưới */
+}
+
+.order-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 16px 0;
+  color: #222;
+  cursor: pointer !important;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  /* để khi màn nhỏ thì tự xuống hàng */
+  padding: 10px 15px;
+  border-bottom: 1px solid #e5e7eb;
+  /* xám nhạt */
+  background-color: #f9fafb;
+  /* nền xám nhẹ */
+}
+
+.status {
+  color: #333;
+}
+
+.order-item {
+  display: flex;
+  padding: 12px 0;
+  border-top: 1px solid #f0f0f0;
+}
+
+.order-item img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  margin-right: 16px;
+}
+
+.item-info {
+  width: 550px;
+  flex: 1;
+}
+
+.item-info h4 {
+  font-size: 16px;
+  margin: 0 0 6px;
+}
+
+.item-price {
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  /* ✅ Căn trái */
+  width: 445px;
+  margin-left: 20px;
+}
+
+.item-price-total {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  /* ✅ Căn phải */
+  width: 120px;
+}
+
+.order-footer {
+  padding: 10px 15px;
+  border-top: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  /* xếp dọc */
+  gap: 4px;
+  /* khoảng cách giữa các dòng */
+}
+
+.order-footer>div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.grand-total {
+  font-weight: 700;
+
+}
+
+.total-amount {
+  color: #333;
+}
+
+.actions button {
+  padding: 6px 12px;
+  margin-left: 8px;
+  border: none;
+  cursor: pointer;
+  border-radius: 3px;
+}
+
+.buy-again {
+  background-color: #333;
+  color: #fff;
+}
+
+.contact {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.container {
+  font-size: 1.3rem;
+  /* toàn bộ chữ tăng 10% */
+}
+
+.order-meta {
+  display: flex;
+  justify-content: space-between; /* căn 2 đầu */
+  align-items: center;
+  width: 100%;
+}
+
+.order-date {
+  color: #374151; /* xám đậm */
+}
+
+.order-status {
+  font-weight: 600;
+
+}

@@ -1,0 +1,41 @@
+<div class="order-detail" *ngIf="order; else loading">
+  <h2>Chi tiết đơn hàng {{ order.orderId }}</h2>
+
+  <!-- Order + Shipping chung một row -->
+  <div class="order-info-row">
+    <!-- Cột 1: Order Info -->
+    <div class="order-col">
+      <p><strong>Ngày tạo:</strong> {{ order.createdAt | date:'dd/MM/yyyy, HH:mm' }}</p>
+      <p><strong>Trạng thái:</strong> {{ order.status }}</p>
+      <p><strong>Tổng tiền:</strong> {{ order.totalAmount | number }}₫</p>
+    </div>
+
+    <!-- Cột 2: Shipping Info -->
+    <div class="order-col" *ngIf="shipping; else loadingShipping">
+      <p><strong>Người nhận:</strong> {{ shipping.fullName }}</p>
+      <p><strong>Email:</strong> {{ shipping.email }}</p>
+      <p><strong>Điện thoại:</strong> {{ shipping.phone }}</p>
+      <p><strong>Địa chỉ:</strong> {{ shipping.address }}</p>
+      <p><strong>Thanh toán:</strong> {{ shipping.paymentMethod }}</p>
+      <p><strong>Giao hàng:</strong> {{ shipping.status }}</p>
+    </div>
+  </div>
+
+  <!-- Danh sách sản phẩm -->
+  <h3>Danh sách sản phẩm</h3>
+  <ul>
+    <li *ngFor="let item of order.items">
+      <img [src]="item.image" [alt]="item.title" width="50" />
+      {{ item.title }} (x{{ item.quantity }}) - {{ item.price | number }}₫
+    </li>
+  </ul>
+</div>
+
+<!-- Loading -->
+<ng-template #loading>
+  <p>Đang tải đơn hàng...</p>
+</ng-template>
+
+<ng-template #loadingShipping>
+  <p>Đang tải thông tin giao hàng...</p>
+</ng-template>

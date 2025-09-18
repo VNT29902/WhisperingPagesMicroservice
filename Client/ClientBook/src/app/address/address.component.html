@@ -1,0 +1,72 @@
+<app-header></app-header>
+
+<section class="address-section">
+  <div class="address-container">
+    <h2>ĐỊA CHỈ CỦA BẠN</h2>
+    <button class="add-btn" (click)="openCreateAddress()">Thêm địa chỉ</button>
+
+    <div class="address-block" *ngIf="address">
+      <p>
+        <strong>Họ tên:</strong> {{ address.fullName }}
+        <span class="default-label">✔️ Địa chỉ mặc định</span>
+      </p>
+      <p>
+        <strong>Địa chỉ:</strong>
+        {{ address.street }}, {{ address.ward }}, {{ address.province }},
+        {{ address.country }}
+      </p>
+      <p><strong>Số điện thoại:</strong> {{ address.phone }}</p>
+      <a class="edit-link" (click)="openEditAddress()">Chỉnh sửa địa chỉ</a>
+      <span class="separator">|</span>
+      <a class="delete-link" (click)="deleteAddress()">Xoá địa chỉ</a>
+    </div>
+
+    <!-- FORM CHỈNH SỬA/THÊM -->
+    <div *ngIf="showForm" class="modal-overlay">
+      <div class="modal">
+        <h2>{{ mode === 'edit' ? 'Chỉnh sửa địa chỉ' : 'Thêm địa chỉ' }}</h2>
+
+        <form [formGroup]="addressForm" (ngSubmit)="submitAddress()">
+          <div class="row">
+            <input type="text" placeholder="Tên" formControlName="firstName" required />
+            <input type="text" placeholder="Họ" formControlName="lastName" required />
+          </div>
+
+          <input type="text" placeholder="Số điện thoại" formControlName="phone" required />
+
+          <!-- Quốc gia cố định -->
+          <input type="text" [value]="addressForm.get('country')?.value" disabled />
+
+          <!-- Chọn tỉnh thành và phường xã -->
+          <div class="row">
+            <select formControlName="province" required>
+              <option value="">-- Chọn tỉnh thành --</option>
+              <option *ngFor="let province of provinces" [value]="province.full_name">
+                {{ province.full_name }}
+              </option>
+            </select>
+
+            <select formControlName="ward" required>
+              <option value="">-- Chọn phường xã --</option>
+              <option *ngFor="let ward of wards" [value]="ward.full_name">
+                {{ ward.full_name }}
+              </option>
+            </select>
+          </div>
+
+          <input type="text" placeholder="Địa chỉ (số nhà, tên đường...)" formControlName="street" required />
+          <input type="text" placeholder="Ghi chú" formControlName="note" />
+
+          <div class="btn-group">
+            <button type="button" class="cancel-btn" (click)="cancel()">Hủy</button>
+            <button type="submit" class="submit-btn">
+              {{ mode === 'edit' ? 'Cập nhật địa chỉ' : 'Lưu địa chỉ' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

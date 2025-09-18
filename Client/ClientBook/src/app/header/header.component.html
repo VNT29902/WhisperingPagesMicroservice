@@ -1,0 +1,191 @@
+<header class="section-wrapper">
+  <div class="section-container">
+    <div class="header-content">
+      <!-- Logo desktop -->
+      <div class="logo desktop-only">
+        <a routerLink="/">
+          <img src="assets/images/logo_2.png" alt="logo" />
+        </a>
+      </div>
+
+      <!-- Menu desktop -->
+      <nav class="main-nav desktop-only" [class.open]="showMobileMenu">
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          >Trang chủ</a
+        >
+        <a routerLink="/products" routerLinkActive="active">Sách</a>
+        <a routerLink="/products/best-selling" routerLinkActive="active"
+          >Bán Chạy</a
+        >
+        <a routerLink="/products/latest" routerLinkActive="active">Mới Nhất</a>
+        <a routerLink="/account/purchase" routerLinkActive="active">Đơn Hàng</a>
+        <a routerLink="/cart" routerLinkActive="active">Giỏ Hàng</a>
+        <a routerLink="/about" routerLinkActive="active">Giới Thiệu</a>
+      </nav>
+
+      <!-- Search + icon desktop -->
+      <div class="right-section desktop-only">
+        <app-search-box></app-search-box>
+
+        <!-- Account -->
+        <div class="user-account-wrapper">
+          <!-- Nếu đã login -->
+          <div *ngIf="loggedIn" class="icon" (click)="toggleAccountMenu()">
+            <i class="fa fa-user"></i>
+          </div>
+
+          <!-- Nếu chưa login -->
+          <a *ngIf="!loggedIn" class="icon" [routerLink]="['/login']">
+            <i class="fa fa-user"></i>
+          </a>
+
+          <!-- Dropdown -->
+          <div class="account-dropdown" *ngIf="showAccountMenu && loggedIn">
+            <a [routerLink]="['/account']">Tài khoản</a>
+            <a [routerLink]="['/account/purchase']">Đơn hàng của tôi</a>
+            <a [routerLink]="['/account/change-pass']">Đổi mật khẩu</a>
+            <button (click)="onLogout()">Đăng xuất</button>
+            <button (click)="onLogoutAll()">Đăng xuất tất cả</button>
+          </div>
+        </div>
+
+        <!-- Cart -->
+        <a
+          class="icon cart-icon"
+          [routerLink]="loggedIn ? ['/cart'] : ['/login']"
+        >
+          <i class="fa fa-shopping-bag"></i>
+        </a>
+
+        <!-- Dashboard icon (chỉ admin mới thấy) -->
+        <a
+          *ngIf="isAdmin"
+          class="icon dashboard-icon"
+          routerLink="/dashboard"
+          title="Dashboard"
+        >
+          <i class="fa fa-tachometer"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<header class="mobile-header">
+  <!-- Icon menu trái -->
+  <div class="menu-icon" (click)="toggleSideMenu()">
+    <i class="fa" [ngClass]="showSideMenu ? 'fa-times' : 'fa-bars'"></i>
+  </div>
+
+  <!-- Logo + text giữa -->
+  <div class="logo-mobile" *ngIf="!showMobileSearch">
+    <a routerLink="/" class="logo-text">
+      <span class="title">Whispering Pages</span>
+      <span class="subtitle">Nơi sách thì thầm</span>
+    </a>
+  </div>
+
+  <!-- Ô search hiện khi bấm icon -->
+  <div class="mobile-search-box" *ngIf="showMobileSearch">
+    <input
+      type="text"
+      [(ngModel)]="keyword"
+      placeholder="Tìm kiếm sách..."
+      (input)="onSearch()"
+    />
+
+    <button type="button">
+      <i class="fa fa-search"></i>
+    </button>
+
+    <button type="button" (click)="toggleMobileSearch()">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
+
+  <!-- Gợi ý sản phẩm -->
+  <!-- Gợi ý sản phẩm -->
+  <div
+    class="mobile-search-suggestions"
+    *ngIf="results.length > 0 && showMobileSearch"
+  >
+    <ul>
+      <li *ngFor="let item of results | slice : 0 : 6">
+        <a
+          class="suggestion-item"
+          [routerLink]="['/books', item.bookResponseDto.id]"
+          (click)="toggleMobileSearch()"
+        >
+          <img
+            [src]="item.bookResponseDto.image"
+            [alt]="item.bookResponseDto.title"
+          />
+          <div class="title">{{ item.bookResponseDto.title }}</div>
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Icon search phải -->
+  <div
+    class="search-icon"
+    (click)="toggleMobileSearch()"
+    *ngIf="!showMobileSearch"
+  >
+    <i class="fa fa-search"></i>
+  </div>
+</header>
+
+<div class="mobile-side-menu" *ngIf="showSideMenu">
+  <!-- Nếu chưa đăng nhập -->
+  <div
+    *ngIf="!loggedIn"
+    class="menu-account-item"
+    [routerLink]="'/login'"
+    (click)="toggleSideMenu()"
+  >
+    <i class="fa fa-user"></i>
+    <span>Đăng nhập</span>
+  </div>
+
+  <!-- Nếu đã đăng nhập -->
+  <ng-container *ngIf="loggedIn">
+    <div
+      class="menu-account-item"
+      [routerLink]="'/account'"
+      (click)="toggleSideMenu()"
+    >
+      <i class="fa fa-user"></i>
+      <span>Tài khoản</span>
+    </div>
+
+    <div
+      class="menu-account-item"
+      [routerLink]="'/cart'"
+      (click)="toggleSideMenu()"
+    >
+      <i class="fa fa-shopping-bag"></i>
+      <span>Giỏ hàng</span>
+    </div>
+
+    <div class="menu-account-item" (click)="onLogout()">
+      <i class="fa fa-sign-out"></i>
+      <span>Đăng xuất</span>
+    </div>
+  </ng-container>
+
+  <!-- Các route link -->
+  <nav class="menu-links">
+    <a routerLink="/" routerLinkActive="active" (click)="toggleSideMenu()"
+      >Trang chủ</a
+    >
+    <a routerLink="/news" (click)="toggleSideMenu()">Tin Sách</a>
+    <a routerLink="/books" (click)="toggleSideMenu()">Whispering Book</a>
+    <a routerLink="/authors" (click)="toggleSideMenu()">Tác giả</a>
+    <a routerLink="/contests" (click)="toggleSideMenu()">Cuộc Thi</a>
+    <a routerLink="/about" (click)="toggleSideMenu()">Về Whispering Pages</a>
+  </nav>
+</div>

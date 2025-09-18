@@ -1,0 +1,143 @@
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 22px;
+  font-weight: bold;
+  text-align: left;
+  margin-right: 15px;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.table-wrapper {
+  margin-top: 12px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  margin-right: 10px;
+}
+
+.table th {
+  background: #f9f9f9;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.badge.pending { background: #ffe8a1; color: #a67c00; }
+.badge.shipping { background: #a1d8ff; color: #004c80; }
+.badge.delivered { background: #d2ffc2; color: #336600; }
+
+.pagination {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.pagination button {
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background: #b49d5b;
+  color: white;
+  border-color: #b49d5b;
+
+}
+
+.order-items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.order-items li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.order-items img {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.actions input,
+.actions select {
+  padding: 10px 14px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  min-width: 150px;
+}
+
+.actions button {
+  padding: 10px 16px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.actions .btn-light {
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+}
+
+.actions .btn-light:hover {
+  background: #e2e6ea;
+}
+
+.actions .btn-secondary {
+  background: #6c757d;
+  color: #fff;
+  border: none;
+}
+
+.actions .btn-secondary:hover {
+  background: #5a6268;
+}
+.table td button {
+  margin-right: 10px;
+}
+
+

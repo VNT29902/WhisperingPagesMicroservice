@@ -1,0 +1,70 @@
+
+/* Nếu có label riêng cho sách bán chạy */
+.best-seller-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #ff9800;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  z-index: 3;
+}
+
+/* Nếu muốn style stock-bar chỉ áp dụng cho FeaturedBooks */
+.featured-books-section .stock-progress.low-stock {
+  background: #f57c00;
+}
+.featured-books-section .stock-progress.out-stock {
+  background: #e53935;
+}
+
+.book-card {
+  background-color: #faf9f4;
+  border-radius: 8px;
+  border: 1px solid #4caf50;
+  text-align: center;
+  padding: 0;
+}
+
+.book-cover-wrapper {
+  width: 190px;
+  height: 190px;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  border-radius: 6px;
+  background-color: #faf9f4;
+}
+
+/* ép luôn .book-cover theo khung cha */
+.book-cover {
+  width: 100%;
+  height: 100%;
+}
+
+/* ép ảnh */
+.book-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;  /* hoặc cover nếu muốn che kín */
+  display: block;
+}
+
+.book-title a {
+  text-decoration: none;   /* bỏ gạch chân */
+  color: #000;             /* chữ đen */
+  font-weight: 500;        /* tuỳ chỉnh, cho chữ đậm vừa */
+  transition: color 0.3s ease;
+}
+
+.book-title a:hover {
+  color: #2e7d32;          /* màu khi hover (xanh lá đậm) */
+}

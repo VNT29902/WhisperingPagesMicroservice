@@ -1,0 +1,100 @@
+<section class="section-wrapper popular-books-section">
+  <div class="section-container">
+    <h2 class="section-title">Sách Phổ Biến</h2>
+
+    <ul class="genre-tabs">
+      <li
+        class="genre-item"
+        *ngFor="let genre of genres"
+        [class.active]="genre === selectedGenre"
+        (click)="selectGenre(genre)"
+      >
+        {{ genre }}
+      </li>
+    </ul>
+
+    <div class="book-grid">
+      <div class="book-card" *ngFor="let bp of books | slice : 0 : 8">
+        <!-- Cover + Add to cart -->
+        <div class="book-img-wrapper">
+          <a [routerLink]="['/books', bp.bookResponseDto.id]">
+            <img
+              [src]="bp.bookResponseDto.image"
+              [alt]="bp.bookResponseDto.title"
+            />
+          </a>
+
+          <app-add-to-cart-button
+            class="add-to-cart-hover"
+            [productId]="bp.bookResponseDto.id"
+            [title]="bp.bookResponseDto.title"
+            [image]="bp.bookResponseDto.image"
+            [price]="bp.bookResponseDto.price"
+          >
+          </app-add-to-cart-button>
+        </div>
+
+        <!-- Book info -->
+        <div class="book-info">
+          <h3 class="book-title" [title]="bp.bookResponseDto.title">
+            <a [routerLink]="['/books', bp.bookResponseDto.id]">
+              {{ bp.bookResponseDto.title }}
+            </a>
+          </h3>
+
+          <!-- Giá + giảm giá -->
+          <p class="book-price">
+            <span class="price-top">
+              <span class="discounted-price">
+                {{
+                  bp.bookResponseDto.price * (1 - bp.promotionPercent / 100)
+                    | currency : "VND" : "symbol" : "1.0-0"
+                }}
+              </span>
+              <span *ngIf="bp.promotionPercent > 0" class="discount-badge">
+                -{{ bp.promotionPercent }}%
+              </span>
+            </span>
+
+            <span *ngIf="bp.promotionPercent > 0" class="original-price">
+              {{ bp.bookResponseDto.price | currency : "VND" : "symbol" : "1.0-0" }}
+            </span>
+          </p>
+
+          <!-- Stock -->
+          <div class="book-stock">
+            <div class="stock-bar">
+              <div
+                class="stock-progress"
+                [style.width.%]="getStockWidth(bp)"
+                [ngClass]="{
+                  'low-stock':
+                    bp.bookResponseDto.stock < 10 && bp.bookResponseDto.stock > 0,
+                  'out-stock': bp.bookResponseDto.stock === 0
+                }"
+              ></div>
+
+              <span class="stock-label">
+                {{
+                  bp.bookResponseDto.stock === 0
+                    ? "Hết hàng"
+                    : bp.bookResponseDto.stock < 10
+                    ? "Gần hết hàng"
+                    : "Sold " + bp.bookResponseDto.saleStock
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div class="view-all-container">
+  <a [routerLink]="['/products/category', genreMap[selectedGenre]]">
+    Xem tất cả sách <span class="arrow">→</span>
+  </a>
+</div>
+
+
+  </div>
+</section>

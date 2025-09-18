@@ -1,0 +1,434 @@
+/* === Section Wrapper (áp dụng cho mọi block trên Home) === */
+
+
+/* === Responsive breakpoints === */
+$breakpoint-desktop: 1280px;  // Tablet & laptop nhỏ
+$breakpoint-mobile: 480px;    // Mobile nhỏ
+
+/* Mixin tiện dụng */
+@mixin responsive($breakpoint) {
+  @if $breakpoint == desktop {
+    @media screen and (max-width: $breakpoint-desktop) { @content; }
+  }
+  @if $breakpoint == mobile {
+    @media screen and (max-width: $breakpoint-mobile) { @content; }
+  }
+}
+
+
+html, body {
+  margin: 0 !important;
+  padding: 0;
+  width: 100%;
+  overflow-x: hidden;  
+
+}
+header.section-wrapper,
+header.mobile-header {
+  margin: 0!important;
+  padding: 0 !important;
+}
+
+/* Mobile header fix sát top */
+.mobile-header {
+  position: fixed;    /* dính lên top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+
+
+.section-wrapper {
+  background-color: #f2f2f2;
+  padding: 20px 0;
+  display: flex;
+  justify-content: center;
+  font-family: sans-serif;
+}
+
+/* === Container chung === */
+.section-container {
+  background-color: #fff;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px 40px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* === Tiêu đề chung cho section === */
+.section-title {
+  font-size: 2.5rem; /* ~40px */
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+/* === Grid chung cho sách === */
+
+
+/* === Card sách === */
+.book-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* === Cover wrapper (ảnh + hover button) === */
+.book-cover-wrapper,
+.book-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 190px;
+  height: 190px;
+  margin: 0 auto;
+}
+
+.book-cover-wrapper img,
+.book-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.book-card:hover img {
+  transform: scale(1.02);
+}
+
+/* === Add to cart hover === */
+.add-to-cart-hover {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: flex;
+  justify-content: center;
+}
+
+.book-cover-wrapper:hover .add-to-cart-hover,
+.book-img-wrapper:hover .add-to-cart-hover {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.add-to-cart-hover button {
+  width: 100%;
+  padding: 14px 0;
+  background-color: #FF4D4D;
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  border: none;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* === Thông tin sách === */
+.book-title {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.4;
+  height: 2.8em; /* 2 dòng */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 8px 6px 0;
+}
+
+.book-author {
+  color: #777;
+  font-size: 14px;
+  margin: 6px;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.book-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 6px;
+}
+
+.book-price .discounted-price {
+  color: #e60000;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.book-price .original-price {
+  color: #999;
+  font-size: 14px;
+  text-decoration: line-through;
+}
+
+.book-price .discount-badge {
+  background-color: #e60000;
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+/* === View All link chung === */
+.view-all-container {
+  margin-top: 30px;
+  text-align: center;
+  border-top: 1px solid #e8e1d1;
+  padding-top: 20px;
+}
+
+.view-all-link {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 16px;
+  color: #111;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.view-all-link:hover .arrow {
+  margin-left: 8px;
+}
+
+
+/* === Stock bar global === */
+
+.book-stock {
+  margin: 10px 8px;   /* 👈 khoảng cách top/bottom = 10px, trái/phải = 8px */
+}
+.stock-bar {
+  width: 100%;
+  height: 20px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Thanh tiến độ */
+.stock-progress {
+  height: 100%;
+  background: #4caf50;
+  transition: width 0.3s ease;
+  border-radius: 10px 0 0 10px;
+}
+
+/* Label hiển thị trên thanh */
+.stock-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;                 /* full chiều cao thanh */
+  display: flex;
+  align-items: center;          /* căn giữa theo dọc */
+  justify-content: center;      /* căn giữa theo ngang */
+  font-size: 12px;
+  font-weight: bold;
+  color: #333;                  /* chữ trắng nổi bật */
+  pointer-events: none;         /* tránh cản click */
+  z-index: 3;                   /* nổi trên .stock-progress */
+
+
+}
+
+/* Trạng thái */
+.stock-progress.low-stock {
+  background: #f57c00; /* cam */
+}
+
+.stock-progress.out-stock {
+  background: #e53935; /* đỏ */
+  width: 100% !important;
+}
+
+/* === Responsive breakpoints === */
+
+/* === Grid chung cho sách === */
+.book-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  align-items: start;
+
+  /* ✅ Mobile & Tablet: chuyển sang scroll ngang */
+  @media (max-width: 768px) {
+    display: flex;                 /* flex thay cho grid */
+    overflow-x: auto;              /* cho phép scroll ngang */
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding: 0 10px 10px;          /* có padding trái/phải */
+    -ms-overflow-style: none;      /* ẩn scrollbar IE/Edge */
+    scrollbar-width: none;         /* ẩn scrollbar Firefox */
+  }
+
+  @media (max-width: 768px) {
+    &::-webkit-scrollbar {
+      display: none; /* ẩn scrollbar Chrome */
+    }
+  }
+}
+
+/* === Card sách === */
+.book-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  @media (max-width: 768px) {
+    flex: 0 0 calc(50% - 10px);   /* 2 card vừa màn hình, có khoảng cách */
+    max-width: calc(50% - 10px);
+    scroll-snap-align: start;
+    margin: 0 5px;                /* thêm khoảng cách giữa các card */
+  }
+}
+
+
+//tablet
+
+
+.book-grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  align-items: start;
+
+  /* Mobile (≤768px) → scroll ngang với 2 sp */
+  @media (max-width: 768px) {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 12px;
+    padding-bottom: 10px;
+
+    -ms-overflow-style: none;  /* ẩn scrollbar IE/Edge */
+    scrollbar-width: none;     /* ẩn scrollbar Firefox */
+
+    &::-webkit-scrollbar {
+      display: none; /* ẩn scrollbar Chrome */
+    }
+  }
+
+  /* Tablet (768px < width < 1280px) → scroll ngang với 3 sp */
+  @media (min-width: 769px) and (max-width: 1280px) {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    gap: 16px;
+    padding-bottom: 12px;
+
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+}
+
+.book-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  
+
+  /* Mobile ≤768px → 2 sp */
+  @media (max-width: 768px) {
+    flex: 0 0 50%;      /* chiếm 50% màn hình */
+    max-width: 50%;
+    scroll-snap-align: start;
+  }
+
+  /* Tablet 769–1280px → 3 sp */
+  @media (min-width: 769px) and (max-width: 1280px) {
+    flex: 0 0 calc(100% / 3);  /* chiếm 1/3 màn hình */
+    max-width: calc(100% / 3);
+    scroll-snap-align: start;
+  }
+}
+
+/* Khi hiển thị mobile-header */
+@media (max-width: 1280px) {
+  body {
+    padding-top: 64px; /* đúng bằng chiều cao .mobile-header */
+  }
+
+  .mobile-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 64px; /* chiều cao header */
+    z-index: 1000;
+  }
+}
+
+/* Ẩn About Page trên mobile (≤768px) */
+@media (max-width: 768px) {
+  app-about-page {
+    display: none !important;
+  }
+}
+
+
+.view-all-container {
+  text-align: center; /* căn phải, nếu muốn căn giữa thì dùng center */
+  margin-top: 20px;
+}
+
+.view-all-container a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 18px;
+  background-color: #ff4d4d;  /* đỏ nổi bật */
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 25px; /* bo tròn */
+  transition: all 0.3s ease;
+}
+
+.view-all-container a .arrow {
+  transition: transform 0.3s ease;
+}
+
+.view-all-container a:hover {
+  background-color: #e63e3e; /* màu đậm hơn khi hover */
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.view-all-container a:hover .arrow {
+  transform: translateX(5px); /* mũi tên chạy qua phải */
+}
+
+
+.suggestion-item {
+  text-decoration: none; /* bỏ gạch chân */
+
+}
+
+
+
+
+
+
+

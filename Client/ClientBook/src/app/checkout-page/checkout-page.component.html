@@ -1,0 +1,165 @@
+<app-header></app-header>
+
+<section class="section-wrapper">
+  <div class="section-container grid-3">
+    <!-- grid-3 thay cho checkout-3col -->
+
+    <!-- Cột 1: Thông tin nhận hàng -->
+    <section class="col">
+      <h2>Thông tin nhận hàng</h2>
+
+      <form class="form info-form" [formGroup]="form">
+        <!-- Sổ địa chỉ -->
+        <div class="row">
+          <label>Sổ địa chỉ</label>
+          <div class="saved-address">
+            <ng-container *ngIf="displayAddress; else noAddr">
+              <p class="address-text">{{ displayAddress }} (Mặc định)</p>
+            </ng-container>
+            <ng-template #noAddr>
+              <p class="address-text empty">Chưa có địa chỉ mặc định</p>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Email</label>
+          <input type="email" formControlName="email" readonly />
+        </div>
+
+        <div class="row">
+          <label>Họ và tên</label>
+          <input type="text" formControlName="fullName" />
+        </div>
+
+        <div class="row">
+          <label>Số điện thoại (tùy chọn)</label>
+          <div class="input with-flag">
+            <input type="text" formControlName="phone" />
+            <span class="flag">🇻🇳</span>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Địa chỉ (tùy chọn)</label>
+          <input
+            type="text"
+            formControlName="street"
+            placeholder="Số nhà / đường"
+          />
+        </div>
+
+        <div class="grid-2">
+          <div class="row">
+            <label>Tỉnh/Thành</label>
+            <select formControlName="province">
+              <option value="" disabled *ngIf="!form.get('province')?.value">
+                -- Chọn tỉnh/thành --
+              </option>
+              <option *ngFor="let p of provinces" [value]="p.full_name">
+                {{ p.full_name }}
+              </option>
+            </select>
+            <small class="hint" *ngIf="!provincesLoaded"
+              >Đang tải tỉnh/thành…</small
+            >
+          </div>
+
+          <div class="row">
+            <label>Phường/Xã</label>
+            <select formControlName="ward" [disabled]="!provinces.length">
+              <option value="" disabled *ngIf="!form.get('ward')?.value">
+                -- Chọn phường/xã --
+              </option>
+              <option *ngFor="let w of wards" [value]="w.full_name">
+                {{ w.full_name }}
+              </option>
+            </select>
+
+            <small
+              class="hint"
+              *ngIf="form.get('province')?.value && !wardsLoaded"
+            >
+              Đang tải phường/xã…
+            </small>
+          </div>
+        </div>
+
+        <div class="row">
+          <label>Ghi chú (tùy chọn)</label>
+          <textarea rows="3" formControlName="note"></textarea>
+        </div>
+      </form>
+    </section>
+
+    <!-- Cột 2: Vận chuyển + Thanh toán -->
+    <section class="col">
+      <h2>Vận chuyển</h2>
+      <div class="radio-card">
+        <label class="radio">
+          <input type="radio" checked />
+          <span>Giao hàng tận nơi</span>
+          <strong class="price">40.000đ</strong>
+        </label>
+      </div>
+
+      <h2>Thanh toán</h2>
+      <div class="radio-card">
+        <label class="radio">
+          <input type="radio" />
+          <span>Thanh toán khi giao hàng (COD)</span>
+          <span class="icon-money">💵</span>
+        </label>
+      </div>
+    </section>
+
+    <!-- Cột 3: Đơn hàng -->
+    <aside class="col">
+      <h2>Đơn hàng ({{ cart?.items?.length || 0 }} sản phẩm)</h2>
+
+      <ng-container *ngIf="cart?.items?.length; else emptyCart">
+        <div class="cart-item" *ngFor="let it of cart!.items">
+          <img [src]="it.image" (error)="onImgError($event)" alt="" />
+          <div class="meta">
+            <p class="title">{{ it.title }}</p>
+            <p class="qty">SL: {{ it.quantity }}</p>
+          </div>
+          <div class="line-price">{{ it.price * it.quantity | number }}đ</div>
+        </div>
+
+        <div class="summary">
+          <div class="row">
+            <span>Tạm tính</span><strong>{{ subtotal | number }}đ</strong>
+          </div>
+          <div class="row">
+            <span>Phí vận chuyển</span
+            ><strong>{{ shippingFee | number }}đ</strong>
+          </div>
+          <div class="row total">
+            <span>Tổng cộng</span><strong>{{ total | number }}đ</strong>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button type="button" class="btn back-cart" routerLink="/cart">
+            ⬅ Quay lại giỏ hàng
+          </button>
+          <button
+            type="button"
+            class="btn place-order"
+            (click)="placeOrder()"
+            [disabled]="!form.valid || !cart?.items?.length"
+          >
+            ✅ Đặt hàng
+          </button>
+        </div>
+      </ng-container>
+
+      <ng-template #emptyCart>
+        <p>Giỏ hàng trống.</p>
+      </ng-template>
+    </aside>
+  </div>
+</section>
+
+<app-footer></app-footer>

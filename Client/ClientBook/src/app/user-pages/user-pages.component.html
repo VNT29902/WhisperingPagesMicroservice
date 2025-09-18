@@ -1,0 +1,95 @@
+<app-header></app-header>
+
+<section class="account_page">
+  <div class="container">
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+      <a routerLink="/">Trang chủ</a> ❯ <span>Trang khách hàng</span>
+    </div>
+
+    <!-- Nội dung tài khoản -->
+    <div class="account-container">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <h2>TRANG TÀI KHOẢN</h2>
+        <ul class="account-links">
+          <li routerLinkActive="active">
+            <span [routerLink]="['/account/account']">Thông tin tài khoản</span>
+          </li>
+          <li routerLinkActive="active">
+            <span [routerLink]="['/account/purchase']">Đơn hàng của bạn</span>
+          </li>
+          <li routerLinkActive="active">
+            <span [routerLink]="['/account/change-pass']">Đổi mật khẩu</span>
+          </li>
+          <li routerLinkActive="active">
+            <span [routerLink]="['/account/address']">Địa chỉ</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Thông tin -->
+      <div class="account-info" *ngIf="userInfo">
+        <h3>THÔNG TIN TÀI KHOẢN</h3>
+        <p>Họ và tên: {{ userInfo.firstName + " " + userInfo.lastName }}</p>
+        <p>Email: {{ userInfo.email }}</p>
+        <p>Phone: {{ userInfo.phone }}</p>
+
+        <!-- Nút tạo user -->
+        <button class="create-user-btn" (click)="openCreateUser()">
+          ➕ Tạo User mới
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="showCreateUserForm" class="modal-overlay">
+      <div class="modal">
+        <h2>Tạo User mới</h2>
+
+        <form
+          [formGroup]="userForm"
+          (ngSubmit)="submitCreateUser()"
+          class="user-form"
+        >
+          <div class="form-group">
+            <label>First Name</label>
+            <input type="text" formControlName="firstName" />
+          </div>
+
+          <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" formControlName="lastName" />
+          </div>
+
+          <div class="form-group">
+            <label>Email</label>
+            <input type="email" formControlName="email" [readonly]="true" />
+          </div>
+
+          <div class="form-group">
+            <label>Phone</label>
+            <input type="text" formControlName="phone" />
+          </div>
+
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" formControlName="userName" [readonly]="true" />
+          </div>
+
+          <div class="btn-group">
+            <button
+              type="button"
+              class="cancel-btn"
+              (click)="cancelCreateUser()"
+            >
+              Hủy
+            </button>
+            <button type="submit" class="submit-btn">Lưu User</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

@@ -1,0 +1,22 @@
+.import-form {
+  padding: 16px;
+  background: #f9f9f9;
+  border-top: 1px solid #ddd;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.template-link a {
+  display: inline-block;
+  margin-top: 8px;
+  color: #2980b9;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.template-link a:hover {
+  text-decoration: underline;
+}

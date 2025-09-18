@@ -1,0 +1,48 @@
+/* Layout tổng thể */
+.dashboard-layout {
+  display: flex;
+  min-height: calc(100vh - 120px); /* trừ header + footer */
+  background-color: #f5f6fa;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  background-color: #2f3640;
+  color: #fff;
+  padding: 20px 0;
+  flex-shrink: 0;
+}
+
+.sidebar-title {
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 20px;
+  margin-bottom: 16px;
+}
+
+.sidebar-nav a {
+  display: block;
+  padding: 12px 20px;
+  color: #dcdde1;
+  text-decoration: none;
+  transition: background 0.3s ease;
+}
+
+.sidebar-nav a:hover {
+  background-color: #353b48;
+  color: #fff;
+}
+
+.sidebar-nav a.active {
+  background-color: #718093;
+  color: #fff;
+  font-weight: 600;
+}
+
+/* Main content */
+.main-content {
+  flex: 1;
+  padding: 24px;
+  overflow-y: auto;
+}

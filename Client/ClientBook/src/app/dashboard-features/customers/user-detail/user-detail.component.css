@@ -1,0 +1,29 @@
+.user-detail {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.user-info p {
+  margin: 4px 0;
+}
+
+.table {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+}
+
+.badge-default {
+  background-color: #28a745;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+}

@@ -1,0 +1,51 @@
+<app-header></app-header>
+
+<!-- ✅ Section wrapper cho Purchase -->
+<section class="section-wrapper purchase-section">
+  <div class="section-container">
+    <h2 class="section-title">Đơn hàng của bạn</h2>
+
+    <div *ngFor="let order of orders" class="purchase-wrapper">
+      <h3 class="order-title">🧾 Đơn hàng {{ order.orderId }}</h3>
+      <div class="order-card">
+        <div class="order-header">
+          <div class="order-meta">
+            <span class="order-date">
+              📅 Đặt ngày: {{ order.createdAt | date : "dd/MM/yyyy, HH:mm" }}
+            </span>
+            <span class="order-status">Trạng thái: {{ order.status }}</span>
+          </div>
+        </div>
+
+        <div class="order-items">
+          <div *ngFor="let item of order.items" class="order-item">
+            <img [src]="item.image" alt="{{ item.title }}" />
+            <div class="item-info">
+              <h4>{{ item.title }}</h4>
+              <p>Phân loại: {{ item.productId }}</p>
+              <p>x{{ item.quantity }}</p>
+            </div>
+            <div class="item-price">
+              {{ item.price | currency : "VND" }}
+            </div>
+            <div class="item-price-total">
+              {{ item.price * item.quantity | currency : "VND" }}
+            </div>
+          </div>
+        </div>
+
+        <div class="order-footer">
+          <div class="total">
+            Thành tiền: {{ getTotalAmount(order) | currency : "VND" }}
+          </div>
+          <div class="shipping">Phí ship: {{ 40000 | currency : "VND" }}</div>
+          <div class="grand-total">
+            Tổng cộng: {{ getGrandTotal(order) | currency : "VND" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

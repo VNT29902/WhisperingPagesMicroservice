@@ -1,0 +1,132 @@
+/* ========== Layout ========== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.actions input,
+.actions select,
+.actions button {
+  margin-right: 8px;
+}
+
+.action-buttons {
+  flex-wrap: nowrap;
+     display: flex;     
+}
+
+/* ========== Table ========== */
+.table-wrapper {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.table thead {
+  background-color: #f5f5f5;
+}
+
+.table th,
+.table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.table th {
+  font-weight: 600;
+  color: #333;
+}
+
+/* ========== Badge (status) ========== */
+.badge {
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #fff;
+}
+
+.badge.active {
+  background-color: #28a745; /* xanh lá */
+}
+
+.badge.inactive {
+  background-color: #dc3545; /* đỏ */
+}
+
+/* ========== Buttons ========== */
+.action-buttons .btn {
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+  white-space: nowrap; /* không cho xuống dòng */
+   margin-right: 8px; 
+}
+.btn-info {
+  background-color: #17a2b8;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+}
+
+.btn-warning {
+  background-color: #ffc107;
+  color: #000;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+/* Hover effect */
+.action-buttons .btn:hover {
+  opacity: 0.9;
+}
+
+/* ========== Pagination ========== */
+.pagination {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.pagination button {
+  margin: 0 3px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.pagination button.active {
+  background-color: #007bff;
+  color: #fff;
+  border-color: #007bff;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

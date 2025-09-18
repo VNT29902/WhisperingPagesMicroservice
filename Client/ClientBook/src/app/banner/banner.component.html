@@ -1,0 +1,19 @@
+<section class="section-wrapper hero-banner" *ngIf="banners.length > 0">
+  <div class="section-container hero-container">
+    <div class="slideshow-wrapper">
+      <div class="slide-content">
+
+        <!-- Nút trái -->
+        <button class="nav-btn left" (click)="prevSlide()">&#8592;</button>
+
+        <!-- Hình ảnh banner -->
+        <div class="slide-image">
+          <img [src]="banners[currentSlide]" alt="Banner" />
+        </div>
+
+        <!-- Nút phải -->
+        <button class="nav-btn right" (click)="nextSlide()">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>

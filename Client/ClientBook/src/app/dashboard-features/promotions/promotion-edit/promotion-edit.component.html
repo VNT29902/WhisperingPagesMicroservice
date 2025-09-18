@@ -1,0 +1,53 @@
+<div class="promotion-edit">
+  <h2>Edit Promotion #{{ promoId }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+    <label>
+      Name:
+      <input type="text" formControlName="name" />
+    </label>
+
+    <label>
+      Discount Type:
+      <select formControlName="discountType">
+        <option value="PERCENT">Percent</option>
+        <option value="AMOUNT">Amount</option>
+      </select>
+    </label>
+
+    <label>
+      Discount Value:
+      <input type="number" formControlName="discountValue" />
+    </label>
+
+    <label>
+      Target Type:
+      <input type="text" formControlName="targetType" />
+    </label>
+
+    <label>
+      Target Value:
+      <input type="text" formControlName="targetValue" />
+    </label>
+
+    <label>
+      Start Date:
+      <input type="date" formControlName="startDate" />
+    </label>
+
+    <label>
+      End Date:
+      <input type="date" formControlName="endDate" />
+    </label>
+
+    <label>
+      Active:
+      <input type="checkbox" formControlName="active" />
+    </label>
+
+    <div class="actions">
+      <button type="submit" [disabled]="form.invalid">💾 Save</button>
+      <button type="button" (click)="router.navigate(['/dashboard/promotions'])">❌ Cancel</button>
+    </div>
+  </form>
+</div>
