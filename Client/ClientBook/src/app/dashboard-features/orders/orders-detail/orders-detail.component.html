@@ -7,6 +7,11 @@
     <div class="order-col">
       <p><strong>Ngày tạo:</strong> {{ order.createdAt | date:'dd/MM/yyyy, HH:mm' }}</p>
       <p><strong>Trạng thái:</strong> {{ order.status }}</p>
+      <p><strong>Tạm tính:</strong> {{ order.subtotalAmount | number }}₫</p>
+      <p *ngIf="order.discountAmount > 0">
+        <strong>Giảm giá:</strong> -{{ order.discountAmount | number }}₫
+      </p>
+      <p *ngIf="order.couponCode"><strong>Mã giảm giá:</strong> {{ order.couponCode }}</p>
       <p><strong>Tổng tiền:</strong> {{ order.totalAmount | number }}₫</p>
     </div>
 

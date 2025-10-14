@@ -36,9 +36,17 @@
 
         <div class="order-footer">
           <div class="total">
-            Thành tiền: {{ getTotalAmount(order) | currency : "VND" }}
+            Thành tiền: {{ getItemsSubtotal(order) | currency : "VND" }}
           </div>
-          <div class="shipping">Phí ship: {{ 40000 | currency : "VND" }}</div>
+          <div class="shipping">
+            Phí ship: {{ getShippingFee(order) | currency : "VND" }}
+          </div>
+          <div class="discount" *ngIf="getDiscount(order) > 0">
+            Giảm giá: -{{ getDiscount(order) | currency : "VND" }}
+          </div>
+          <div class="coupon" *ngIf="order.couponCode">
+            Mã áp dụng: {{ order.couponCode }}
+          </div>
           <div class="grand-total">
             Tổng cộng: {{ getGrandTotal(order) | currency : "VND" }}
           </div>

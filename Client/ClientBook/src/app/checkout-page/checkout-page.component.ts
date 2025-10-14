@@ -18,6 +18,8 @@ import { CartResponse } from '../models/cart-response.model';
 import { CartService } from '../services/cart.service';
 import { OrderService } from '../services/orders.service';
 import { CreateOrderRequest } from '../models/create.orders.request';
+import { CouponService } from '../services/coupon.service';
+import { CouponValidationResponse } from '../models/coupon.model';
 import { HeaderComponent } from '../header/header.component';
 import { FooterComponent } from '../footer/footer.component';
 
@@ -47,6 +49,11 @@ export class CheckoutPageComponent implements OnInit {
   provincesLoaded = false;
   wardsLoaded = true; // để ward select không bị disable ngay từ đầu
   cart: CartResponse | null = null;
+  couponMessage = '';
+  couponError = '';
+  appliedCouponCode: string | null = null;
+  appliedDiscount = 0;
+  couponLoading = false;
 
   constructor(
     private fb: FormBuilder,
@@ -54,7 +61,8 @@ export class CheckoutPageComponent implements OnInit {
     private locationService: LocationService,
     private router: Router,
     private cartService: CartService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private couponService: CouponService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -107,18 +115,20 @@ export class CheckoutPageComponent implements OnInit {
       this.loading = false;
     }
   }
- private buildForm() {
-  this.form = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    fullName: [''],
-    phone: [''],
-    street: [''],
-    province: [''],  // ✅ province luôn enable
-    ward: [''],      // ✅ ward luôn enable
-    note: [''],
-    paymentMethod: ['COD', Validators.required],
-  });
-}
+
+  private buildForm(): void {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]],
+      fullName: [''],
+      phone: [''],
+      street: [''],
+      province: [''], // ✅ province luôn enable
+      ward: [''], // ✅ ward luôn enable
+      note: [''],
+      paymentMethod: ['COD', Validators.required],
+      couponCode: [''],
+    });
+  }
 
 
   // Ghép text “Sổ địa chỉ”
@@ -130,57 +140,67 @@ export class CheckoutPageComponent implements OnInit {
       .join(', ');
   }
 
-private setupProvinceWatcher() {
-  this.form.get('province')!.valueChanges.pipe(
-    distinctUntilChanged(),
-    tap(() => {
-      this.wardsLoaded = false;
-      this.wards = [];
-      this.form.patchValue({ ward: '' });
-    }),
-    switchMap((provinceName: string) =>
-      provinceName ? this.loadWardsByProvinceName$(provinceName) : of<Ward[]>([])
-    ),
-    tap(() => (this.wardsLoaded = true))
-  )
-  .subscribe({
-    next: (list) => this.wards = list,
-    error: () => {
-      this.wards = [];
-      this.wardsLoaded = true;
-    },
-  });
-}
-
-private async bindInitialAddress(addr: ShippingAddressResponse) {
-  this.form.patchValue({
-    fullName: `${addr.recipientFirstName ?? ''} ${addr.recipientLastName ?? ''}`.trim(),
-    phone: addr.phoneNumber ?? '',
-    street: addr.street ?? '',
-    note: addr.note ?? '',
-    province: addr.province ?? '',
-  });
-
-  const provinceName = addr.province ?? '';
-  if (provinceName) {
-    try {
-      this.wardsLoaded = false;
-      this.wards = await firstValueFrom(this.loadWardsByProvinceName$(provinceName));
-
-      const wardFromDb = (addr.ward ?? '').trim();
-      const exists = this.wards.some((w) => w.full_name === wardFromDb);
-      this.form.patchValue({ ward: exists ? wardFromDb : '' });
-    } catch (e) {
-      this.wards = [];
-      this.form.patchValue({ ward: '' });
-    } finally {
-      this.wardsLoaded = true;
-    }
-  } else {
-    this.wards = [];
-    this.form.patchValue({ ward: '' });
+  private setupProvinceWatcher(): void {
+    this.form
+      .get('province')!
+      .valueChanges.pipe(
+        distinctUntilChanged(),
+        tap(() => {
+          this.wardsLoaded = false;
+          this.wards = [];
+          this.form.patchValue({ ward: '' });
+        }),
+        switchMap((provinceName: string) =>
+          provinceName
+            ? this.loadWardsByProvinceName$(provinceName)
+            : of<Ward[]>([])
+        ),
+        tap(() => (this.wardsLoaded = true))
+      )
+      .subscribe({
+        next: (list) => (this.wards = list),
+        error: () => {
+          this.wards = [];
+          this.wardsLoaded = true;
+        },
+      });
   }
-}
+
+  private async bindInitialAddress(
+    addr: ShippingAddressResponse
+  ): Promise<void> {
+    this.form.patchValue({
+      fullName: `${addr.recipientFirstName ?? ''} ${
+        addr.recipientLastName ?? ''
+      }`.trim(),
+      phone: addr.phoneNumber ?? '',
+      street: addr.street ?? '',
+      note: addr.note ?? '',
+      province: addr.province ?? '',
+    });
+
+    const provinceName = addr.province ?? '';
+    if (provinceName) {
+      try {
+        this.wardsLoaded = false;
+        this.wards = await firstValueFrom(
+          this.loadWardsByProvinceName$(provinceName)
+        );
+
+        const wardFromDb = (addr.ward ?? '').trim();
+        const exists = this.wards.some((w) => w.full_name === wardFromDb);
+        this.form.patchValue({ ward: exists ? wardFromDb : '' });
+      } catch (e) {
+        this.wards = [];
+        this.form.patchValue({ ward: '' });
+      } finally {
+        this.wardsLoaded = true;
+      }
+    } else {
+      this.wards = [];
+      this.form.patchValue({ ward: '' });
+    }
+  }
 
 
 
@@ -222,8 +242,12 @@ private async bindInitialAddress(addr: ShippingAddressResponse) {
     );
   }
   shippingFee = 40000;
+  get discountAmount() {
+    return this.appliedDiscount;
+  }
   get total() {
-    return this.subtotal + this.shippingFee;
+    const total = this.subtotal + this.shippingFee - this.discountAmount;
+    return total > 0 ? total : 0;
   }
 
   onImgError(event: Event) {
@@ -231,6 +255,66 @@ private async bindInitialAddress(addr: ShippingAddressResponse) {
   }
 
   // Button Orders
+
+  private resetCouponState() {
+    this.appliedCouponCode = null;
+    this.appliedDiscount = 0;
+    this.couponMessage = '';
+    this.couponError = '';
+  }
+
+  private translateCouponError(code: string): string {
+    const normalized = code?.toUpperCase?.() ?? '';
+    const messages: Record<string, string> = {
+      INVALID_CODE: 'Mã giảm giá không tồn tại hoặc đã hết hiệu lực.',
+      COUPON_INACTIVE: 'Mã giảm giá hiện không khả dụng.',
+      COUPON_NOT_STARTED: 'Mã giảm giá này chưa bắt đầu hiệu lực.',
+      COUPON_EXPIRED: 'Mã giảm giá đã hết hạn sử dụng.',
+      MAX_REDEMPTIONS_REACHED: 'Mã giảm giá đã được sử dụng tối đa.',
+      CUSTOMER_USAGE_EXCEEDED: 'Bạn đã sử dụng mã giảm giá này đủ số lần cho phép.',
+      MIN_SUBTOTAL_NOT_MET: 'Giá trị đơn hàng chưa đạt mức tối thiểu để áp dụng mã.',
+      NO_DISCOUNT_AVAILABLE: 'Không có ưu đãi phù hợp với đơn hàng hiện tại.',
+    };
+    return messages[normalized] ?? code;
+  }
+
+  async applyCoupon() {
+    const code = (this.form.get('couponCode')?.value ?? '').trim();
+    this.couponError = '';
+    this.couponMessage = '';
+
+    if (!code) {
+      this.resetCouponState();
+      return;
+    }
+
+    const userName = localStorage.getItem('userName') ?? 'guest';
+    this.couponLoading = true;
+    try {
+      const response: CouponValidationResponse = await firstValueFrom(
+        this.couponService.validateCoupon(userName, code, this.subtotal)
+      );
+      this.appliedCouponCode = response.code ?? code.toUpperCase();
+      this.appliedDiscount = Number(response.discountAmount ?? 0);
+      this.couponMessage = response.message ?? 'Đã áp dụng mã giảm giá';
+      this.couponError = '';
+      this.form.patchValue({ couponCode: this.appliedCouponCode });
+    } catch (err: any) {
+      this.resetCouponState();
+      const errorMessage = err?.error?.message || err?.error || 'Mã giảm giá không hợp lệ';
+      this.couponError =
+        typeof errorMessage === 'string'
+          ? this.translateCouponError(errorMessage)
+          : 'Mã giảm giá không hợp lệ';
+    } finally {
+      this.couponLoading = false;
+    }
+  }
+
+  removeCoupon() {
+    this.resetCouponState();
+    this.form.patchValue({ couponCode: '' });
+  }
 
   private splitFullName(fullName: string) {
     const parts = (fullName || '').trim().split(/\s+/);
@@ -257,7 +341,7 @@ private async bindInitialAddress(addr: ShippingAddressResponse) {
     recipientFirstName,
     recipientLastName,
     phoneNumber: f.phone,
-    email: f.email,   
+    email: f.email,
     province: f.province,
     ward: f.ward,
     street: f.street,
@@ -270,6 +354,7 @@ private async bindInitialAddress(addr: ShippingAddressResponse) {
     quantity: Number(it.quantity),
     price: Number(it.price),
   })),
+  couponCode: this.appliedCouponCode,
 } satisfies CreateOrderRequest;
 
 
