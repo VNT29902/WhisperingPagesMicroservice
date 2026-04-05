@@ -1,5 +1,5 @@
 server:
-  port: 8085
+  port: ${SERVER_PORT:8085}
 
 spring:
   application:
@@ -12,16 +12,16 @@ spring:
       timeout: 10s
       client-type: lettuce
 
-#  redis:
-#    host: ${SPRING_REDIS_HOST:redis}
-#    port: ${SPRING_REDIS_PORT:6379}
-#    timeout: 10s
-#    client-type: lettuce
-
   cloud:
     consul:
       host: ${SPRING_CLOUD_CONSUL_HOST:consul}
       port: ${SPRING_CLOUD_CONSUL_PORT:8500}
+      discovery:
+        enabled: true
+        register: true
+        health-check-path: /actuator/health
+        health-check-interval: 10s
+        prefer-ip-address: true
     gateway:
       httpclient:
         connect-timeout: 5000
@@ -30,7 +30,7 @@ spring:
       globalcors:
         corsConfigurations:
           '[/**]':
-            allowedOrigins: "http://localhost:4200"
+            allowedOrigins: ${ALLOWED_ORIGINS:http://localhost:4200}
             allowedMethods:
               - GET
               - POST
@@ -70,6 +70,17 @@ spring:
               args:
                 retries: 3
                 statuses: BAD_GATEWAY
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
 
 logging:
   level:
