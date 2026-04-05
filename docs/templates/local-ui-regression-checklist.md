@@ -1,45 +1,44 @@
-# Local UI Regression Checklist (Post-change)
+# Local UI Regression Checklist
 
-## Build info
+## Build Information
 - Branch:
-- Commit SHA:
+- Build date:
 - Tester:
-- Date:
 
-## 1) Environment bootstrap
-- [ ] Docker stack up successfully
-- [ ] Frontend accessible
-- [ ] Gateway accessible
-- [ ] Required test account/data available
+## 1. Environment
+- [ ] Docker stack starts successfully
+- [ ] Frontend reachable locally
+- [ ] Gateway reachable locally
+- [ ] Required seed data available
 
-## 2) Core customer flows
-- [ ] Register/login/logout
-- [ ] Browse by category
-- [ ] Search and open product detail
-- [ ] Add/update/remove cart items
-- [ ] Checkout and create order
+## 2. Core User Flows
+- [ ] Sign up / login / logout
+- [ ] Browse products by category
+- [ ] Search product
+- [ ] Product detail page
+- [ ] Add to cart
+- [ ] Checkout
 - [ ] View purchase history
 
-## 3) Admin flows
-- [ ] Product CRUD
+## 3. Admin Flows
+- [ ] Product management
 - [ ] Promotion management
-- [ ] Customer management
 - [ ] Order management
-- [ ] Dashboard reports load
+- [ ] Customer management
+- [ ] Report dashboards
 
-## 4) UI quality checks
-- [ ] Loading state
-- [ ] Empty state
-- [ ] Validation error state
-- [ ] API failure fallback state
-- [ ] No major console errors
+## 4. UI State Checks
+- [ ] Loading states
+- [ ] Empty states
+- [ ] Validation errors
+- [ ] API failure handling
 
-## 5) Responsive and browser checks
+## 5. Browser/Responsive
 - [ ] Desktop layout
 - [ ] Mobile layout
-- [ ] Main supported browser verified
+- [ ] Main supported browser checks
 
-## 6) Evidence
-- [ ] Screenshots/video attached
-- [ ] Bug tickets created for issues found
-- [ ] Checklist attached to PR
+## 6. Evidence
+- [ ] Screenshots attached
+- [ ] Console/network errors reviewed
+- [ ] Defects recorded (if any)

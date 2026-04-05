@@ -1,102 +1,177 @@
-# Whispering Pages - Professional Gap Analysis & Action Plan (Revised)
+# Whispering Pages - Professional Gap Analysis & Expansion Plan
 
-## 1) Mục tiêu tài liệu
-Tài liệu này chuyển gap analysis thành kế hoạch triển khai cụ thể cho team Product/Backend/Frontend/QA/DevOps, có ưu tiên, tiêu chí đo lường và đầu việc có thể thực thi ngay.
+## Purpose
+This document evaluates the current Whispering Pages website against professional book-selling platforms and defines a practical implementation roadmap.
 
-## 2) Current-state snapshot (dựa trên hệ thống hiện tại)
-### Điểm mạnh hiện có
-- Đã có luồng thương mại cốt lõi: duyệt sách, tìm kiếm, giỏ hàng, checkout, đơn hàng, tài khoản, dashboard admin.
-- Đã tách microservices (Auth, User, Product, Cart, Order, Gateway) và có Docker Compose để chạy local tích hợp.
-- Đã có khung báo cáo kinh doanh ở dashboard.
+## Current Strengths
+- End-to-end shopping flow exists: browse/search products, cart, checkout, account, and purchase history.
+- Admin modules exist for products, orders, customers, promotions, and reports.
+- Microservice architecture is already in place with Gateway, Auth, Product, Cart, Order, User services.
+- Basic reporting/analytics dashboard is available for sales tracking.
 
-### Điểm yếu cốt lõi
-- Chưa đủ tính năng chuyển đổi của website bán sách chuyên nghiệp (wishlist/reviews/recommendation).
-- Maturity về fulfillment/return/refund còn mỏng.
-- Monitoring/observability chưa đạt mức production-grade.
-- Cần chuẩn hóa tài liệu, yêu cầu và checklist phát hành.
+## Gap Analysis (Current vs Professional Baseline)
 
----
+### 1) Catalog & Product Data Depth (High Priority)
+**Current**
+- Product model focuses on title/author/category/price/stock/image/description.
 
-## 3) Gap matrix (hiện tại vs chuẩn professional)
+**Professional baseline**
+- ISBN-10/13, publisher, language, publication date, format (paperback/hardcover/ebook), edition, pages, dimensions, series information.
+- Enriched metadata for discovery and trust.
 
-| Domain | Current | Professional baseline | Gap severity | Owner chính |
-|---|---|---|---|---|
-| Catalog metadata | Basic fields | ISBN/publisher/language/format/edition/pages | High | Product + BE |
-| Discovery & conversion | Category/search/best-selling | Wishlist, reviews, recommendations, recently viewed | High | FE + BE |
-| Checkout & payment | Basic payment & order states | Payment resilience, callback/reconcile, richer statuses | High | BE |
-| Fulfillment ops | Delivered flow cơ bản | Shipment events, tracking, return/refund | High | BE + Ops |
-| Security posture | Cần chuẩn hóa secret handling | Secret manager + rotation + audit | Critical | DevOps + BE |
-| Observability | Health-level visibility | Metrics/logs/traces/SLO/alerts | Critical | DevOps |
-| QA & release safety | Có test mức cơ bản | CI gate + regression chuẩn + contract tests | High | QA + FE + BE |
-| Docs governance | Có tài liệu nền | Living docs + traceability + runbooks | Medium | Tech Lead |
+**Gap impact**
+- Weak filtering/search relevance.
+- Reduced SEO and lower buyer confidence.
+
+**Required changes**
+- Extend product schema + DTO + APIs.
+- Backfill existing products with standardized metadata.
+- Update UI filters and product detail page.
 
 ---
 
-## 4) Backlog đề xuất theo mức ưu tiên
+### 2) Merchandising, Discovery & Conversion (High Priority)
+**Current**
+- Latest/best-selling/category/search are present.
 
-## P0 - Critical foundation (2 tuần)
-1. **Secrets hardening**
-   - Externalize toàn bộ secrets khỏi source config.
-   - Rotate credentials và ban hành guideline quản lý secrets.
-   - Deliverable: security runbook + kiểm tra không còn secret cứng.
-2. **Observability baseline**
-   - Chuẩn hóa metrics/log/traces cho toàn bộ services.
-   - Dashboard: availability, latency p95, error rate, dependency health.
-   - Alert rules: service down, 5xx spike, latency spike.
-3. **Release checklist gate**
-   - Áp dụng PR checklist bắt buộc cho mọi merge.
-   - Áp dụng local UI regression checklist cho thay đổi UI.
+**Professional baseline**
+- Personalized recommendations (related books, frequently bought together).
+- Recently viewed history.
+- Wishlist / save-for-later.
+- User ratings, reviews, and Q&A.
 
-## P1 - Conversion uplift (3-4 tuần)
-1. Wishlist/save-for-later.
-2. Reviews & rating (kèm moderation policy).
-3. Recently viewed + related books (rule-based v1).
+**Gap impact**
+- Lower conversion and repeat purchase rates.
 
-## P2 - Commerce operations maturity (3-4 tuần)
-1. Mở rộng vòng đời đơn hàng (packed/shipped/out-for-delivery/failed-delivery).
-2. Return/refund workflow + admin handling.
-3. Shipment tracking timeline cho user.
-
-## P3 - Optimization at scale (3-4 tuần)
-1. Catalog enrichment + faceted filtering.
-2. Search relevance tuning.
-3. Performance/load tests + reliability drills.
+**Required changes**
+- Add Wishlist service/module.
+- Add Review domain with moderation workflow.
+- Add recommendation strategy (initially rule-based, later behavior-based).
 
 ---
 
-## 5) KPI/Success metrics (đo hiệu quả sau nâng cấp)
-- Conversion rate: +10% sau rollout P1.
-- Cart abandonment: giảm 10-15%.
-- API p95 latency: < 300ms cho core read APIs.
-- 5xx rate: < 0.5%/day trên gateway.
-- MTTR: giảm 30% nhờ observability.
-- Regression defects sau release: giảm 40%.
+### 3) Checkout, Payment & Fulfillment Maturity (High Priority)
+**Current**
+- Basic payment method support and order state progression.
+
+**Professional baseline**
+- More payment options, payment failure recovery, async callback handling.
+- Fulfillment lifecycle: packed, shipped, out-for-delivery, delivered, failed delivery.
+- Return/refund workflows with status tracking.
+
+**Gap impact**
+- Poor post-purchase transparency, difficult customer support handling.
+
+**Required changes**
+- Expand payment abstraction and reconciliation events.
+- Introduce shipment events and tracking view.
+- Add return/refund APIs and admin operations.
 
 ---
 
-## 6) Definition of Done (DoD) bắt buộc
-Một feature chỉ được coi là hoàn thành khi đáp ứng đủ:
-1. Có requirement doc với acceptance criteria rõ.
-2. Có impact analysis (UI/API/DB/Security/Monitoring).
-3. Có test evidence phù hợp (unit/integration/e2e).
-4. Có monitoring update (metrics + alerts nếu cần).
-5. Chạy local regression checklist (nếu ảnh hưởng UI/flow).
-6. Có rollout + rollback notes.
+### 4) Security & Secrets Management (Critical Priority)
+**Current**
+- Sensitive credentials and OAuth secrets are directly visible in configuration.
+
+**Professional baseline**
+- Secrets managed via environment variables and/or vault.
+- Rotation policy, audit logging, role separation.
+
+**Gap impact**
+- High risk for credential leakage and compliance violations.
+
+**Required changes**
+- Externalize all secrets.
+- Rotate credentials/keys immediately.
+- Add secure deployment and incident-response runbooks.
 
 ---
 
-## 7) Governance và nhịp vận hành
-- Weekly planning (Product + Engineering): ưu tiên backlog và release scope.
-- Weekly architecture/ops review: reliability, security, monitoring.
-- PR policy: không merge nếu thiếu requirement reference hoặc thiếu checklist evidence.
+### 5) Observability & Monitoring (Critical Priority)
+**Current**
+- Health endpoints and service registration exist.
+
+**Professional baseline**
+- Metrics + logs + traces + alerting + SLOs.
+- Service dashboards and dependency health.
+- Data pipeline/stream lag visibility where applicable.
+
+**Gap impact**
+- Slow incident detection and troubleshooting.
+
+**Required changes**
+- Standardize telemetry instrumentation (OpenTelemetry + metrics).
+- Add dashboards for latency, errors, throughput, saturation.
+- Add alerts for availability, latency, error-rate, queue lag.
 
 ---
 
-## 8) Artifacts đi kèm trong repo
-- Feature Requirement Template
-- Monitoring Checklist Template
-- Local UI Regression Checklist
-- PR Checklist Template
-- Service Status Runbook Template
+### 6) Quality Engineering & Local Regression Safety (High Priority)
+**Current**
+- Local Docker setup works for integration runtime.
 
-Các templates này là bộ chuẩn tối thiểu để team thực thi roadmap một cách nhất quán.
+**Professional baseline**
+- Automated local + CI smoke tests and regression suites.
+- Visual regression, contract testing, test data strategy.
+
+**Gap impact**
+- Higher risk of regressions after feature additions.
+
+**Required changes**
+- Define test pyramid by service and UI.
+- Add local runbooks/checklists and CI quality gates.
+- Add seeded test data and deterministic scenarios.
+
+---
+
+### 7) Documentation & Architecture Governance (Medium Priority)
+**Current**
+- Architecture exists but documentation can be expanded.
+
+**Professional baseline**
+- Living architecture docs, requirement traceability, sequence diagrams, runbooks.
+
+**Gap impact**
+- Slower onboarding and inconsistent implementation quality.
+
+**Required changes**
+- Introduce documentation templates and PR checklists.
+- Enforce Definition of Done including docs + monitoring + tests.
+
+---
+
+## Phased Roadmap
+
+### Phase 1 - Foundation Hardening (Weeks 1-2)
+- Secrets externalization + credential rotation.
+- Observability baseline dashboard + alerts.
+- Standard local test/runbook documentation.
+
+### Phase 2 - Conversion Features (Weeks 3-6)
+- Wishlist.
+- Reviews and ratings.
+- Recently viewed + related books.
+
+### Phase 3 - Commerce Maturity (Weeks 7-10)
+- Enhanced payment handling.
+- Shipment states + tracking.
+- Return/refund workflows.
+
+### Phase 4 - Optimization & Scale (Weeks 11-14)
+- Search relevance tuning + metadata enrichment.
+- Load/performance optimization.
+- Incident drills and reliability hardening.
+
+## Definition of Done (DoD) for New Features
+A feature is complete only when all are done:
+1. Requirement doc approved.
+2. API and data impacts documented.
+3. Monitoring metrics and alerts updated.
+4. Tests (unit/integration/e2e as applicable) pass.
+5. Local Docker regression checklist completed.
+6. Rollback and operational notes included.
+
+## Suggested Team Operating Cadence
+- Weekly product/engineering planning.
+- Weekly architecture + reliability review.
+- Every PR must include requirement reference and monitoring/test evidence.
