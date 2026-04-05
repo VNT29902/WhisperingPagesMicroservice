@@ -3,27 +3,29 @@ import { BookService } from '../services/book.service';
 import { BookAndPromotion } from '../models/bookAndPromotion.model';
 import { CommonModule } from '@angular/common';
 import { AddToCartButtonComponent } from '../add-to-cart-button/add-to-cart-button.component';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
+import { HOME_BESTSELLER_FALLBACK } from '../mock/home-books.mock';
 
 @Component({
   selector: 'app-bestselling',
-  imports: [CommonModule,AddToCartButtonComponent,RouterModule],
+  imports: [CommonModule, AddToCartButtonComponent, RouterModule],
   templateUrl: './bestselling.component.html',
-  styleUrl: './bestselling.component.css'
+  styleUrl: './bestselling.component.css',
 })
 export class BestsellingComponent implements OnInit {
-bestSellingBooks: BookAndPromotion[] = [];
+  bestSellingBooks: BookAndPromotion[] = [];
 
   constructor(private bookService: BookService) {}
 
   ngOnInit(): void {
     this.bookService.getBestSelling().subscribe({
       next: (data) => {
-        this.bestSellingBooks = data;
+        this.bestSellingBooks = data?.length ? data : HOME_BESTSELLER_FALLBACK;
       },
       error: (err) => {
         console.error('❌ Lỗi khi load sách bán chạy:', err);
-      }
+        this.bestSellingBooks = HOME_BESTSELLER_FALLBACK;
+      },
     });
   }
 

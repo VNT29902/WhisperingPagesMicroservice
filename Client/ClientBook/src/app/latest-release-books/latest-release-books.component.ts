@@ -4,13 +4,14 @@ import { BookAndPromotion } from '../models/bookAndPromotion.model';
 import { CommonModule } from '@angular/common';
 import { AddToCartButtonComponent } from '../add-to-cart-button/add-to-cart-button.component';
 import { RouterModule } from '@angular/router';
+import { HOME_LATEST_FALLBACK } from '../mock/home-books.mock';
 
 @Component({
   selector: 'app-latest-release-books',
   standalone: true,
-  imports: [CommonModule, AddToCartButtonComponent,RouterModule],
+  imports: [CommonModule, AddToCartButtonComponent, RouterModule],
   templateUrl: './latest-release-books.component.html',
-  styleUrl: './latest-release-books.component.css'
+  styleUrl: './latest-release-books.component.css',
 })
 export class LatestReleaseBooksComponent implements OnInit {
   newReleaseBooks: BookAndPromotion[] = [];
@@ -19,8 +20,13 @@ export class LatestReleaseBooksComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookService.getLatestBooks().subscribe({
-      next: (books) => (this.newReleaseBooks = books),
-      error: (err) => console.error('❌ Lỗi khi lấy sách mới phát hành:', err),
+      next: (books) => {
+        this.newReleaseBooks = books?.length ? books : HOME_LATEST_FALLBACK;
+      },
+      error: (err) => {
+        console.error('❌ Lỗi khi lấy sách mới phát hành:', err);
+        this.newReleaseBooks = HOME_LATEST_FALLBACK;
+      },
     });
   }
 
