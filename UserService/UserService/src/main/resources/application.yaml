@@ -1,14 +1,14 @@
 server:
-  port: 8083
+  port: ${SERVER_PORT:8083}
 
 spring:
   application:
     name: user-service
 
   datasource:
-    url: jdbc:mysql://mysql:3306/user_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
-    username: root
-    password: 290902
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://mysql:3306/user_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -21,13 +21,13 @@ spring:
         format_sql: true
 
   flyway:
-    enabled: false           # ❌ tắt nếu bạn chỉ dùng dump/init data
+    enabled: false
     baseline-on-migrate: true
 
   cloud:
     consul:
-      host: consul
-      port: 8500
+      host: ${SPRING_CLOUD_CONSUL_HOST:consul}
+      port: ${SPRING_CLOUD_CONSUL_PORT:8500}
       discovery:
         enabled: true
         register: true
@@ -39,7 +39,9 @@ management:
   endpoints:
     web:
       exposure:
-        include: health
+        include: health,info
   endpoint:
     health:
       show-details: always
+      probes:
+        enabled: true
