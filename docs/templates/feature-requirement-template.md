@@ -1,67 +1,70 @@
-# Feature Requirement Template
+# Feature Requirement Template (Execution-ready)
 
-## Metadata
-- ID:
-- Feature Name:
+## A. Metadata
+- Feature ID:
+- Feature name:
+- Requester:
 - Owner:
-- Date:
-- Status: Draft / In Review / Approved / Implemented
+- Priority: P0/P1/P2/P3
+- Target release:
+- Status: Draft / In Review / Approved / In Dev / Done
 
-## 1. Business Objective
+## B. Business Context
 - Problem statement:
-- Expected outcome:
-- KPI(s):
+- Why now:
+- Business KPI impacted:
 
-## 2. Scope
-### In Scope
+## C. Scope
+### In scope
 -
-### Out of Scope
+### Out of scope
 -
 
-## 3. User Stories
+## D. User Stories
 - As a ..., I want ..., so that ...
 
-## 4. Acceptance Criteria
+## E. Acceptance Criteria
 - [ ] AC1
 - [ ] AC2
 - [ ] AC3
 
-## 5. UX/UI Requirements
-- Affected screens/components:
-- Loading/empty/error states:
-- Accessibility requirements:
+## F. Functional Specification
+- Main flow:
+- Edge cases:
+- Error handling behavior:
 
-## 6. API Impact
+## G. Technical Impact
+### API
 - New endpoints:
-- Changed endpoints:
-- Deprecated endpoints:
-- Error handling changes:
+- Updated endpoints:
+- Contract changes:
 
-## 7. Data Impact
-- Tables/entities affected:
-- Migrations required:
-- Backfill required:
+### Data
+- Tables/entities impacted:
+- Migration needed:
+- Backfill needed:
 
-## 8. Non-Functional Requirements
-- Latency target:
-- Availability target:
-- Security constraints:
+### Security
+- AuthN/AuthZ impact:
+- Sensitive data handling:
 
-## 9. Monitoring & Alerts
-- Metrics to add/update:
-- Logs to add/update:
-- Alerts to add/update:
+### Monitoring
+- Metrics to add:
+- Logs to add:
+- Alerts to add:
 
-## 10. Testing Plan
-- Unit tests:
-- Integration tests:
-- E2E tests:
-- Regression checks:
+## H. Test Plan
+- Unit:
+- Integration:
+- E2E:
+- Regression:
 
-## 11. Rollout & Rollback
-- Feature flag plan:
+## I. Rollout Plan
+- Feature flag:
 - Rollout strategy:
-- Rollback steps:
+- Rollback strategy:
 
-## 12. Risks & Open Questions
--
+## J. Risks/Dependencies
+- Risks:
+- Dependencies:
+- Open questions:

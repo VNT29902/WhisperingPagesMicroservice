@@ -1,33 +1,33 @@
-# Pull Request Checklist
+# Pull Request Checklist (Quality Gate)
 
-## Summary
-- What changed?
-- Why changed?
+## 1) Requirement linkage
+- Requirement ID(s):
+- Scope confirmed with acceptance criteria:
 
-## Requirement Mapping
-- Related requirement ID(s):
+## 2) Change summary
+- What changed:
+- Why changed:
 
-## Impact Assessment
+## 3) Impact assessment
 - [ ] UI
 - [ ] API
 - [ ] Database
-- [ ] Monitoring
 - [ ] Security
+- [ ] Monitoring/alerts
 
-## Validation
-- [ ] Unit tests passed
-- [ ] Integration tests passed
+## 4) Validation
+- [ ] Unit tests pass
+- [ ] Integration tests pass
 - [ ] Local regression checklist completed
-- [ ] Evidence attached (logs/screenshots where relevant)
+- [ ] Evidence attached (logs/screenshots)
 
-## Observability
+## 5) Operational readiness
 - [ ] Metrics updated
 - [ ] Alerts updated
-- [ ] Dashboard updated
-
-## Deployment Safety
-- [ ] Backward compatibility assessed
+- [ ] Runbook/update notes added
 - [ ] Rollback steps documented
 
-## Notes for Reviewers
--
+## 6) Release safety
+- [ ] Backward compatibility reviewed
+- [ ] Migration/backfill plan reviewed
+- [ ] Feature flag plan (if needed)

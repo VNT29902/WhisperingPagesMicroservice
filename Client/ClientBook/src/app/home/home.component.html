@@ -1,8 +1,72 @@
 <app-header></app-header>
+
+<section class="home-hero">
+  <div class="hero-content container">
+    <div class="hero-text">
+      <span class="hero-badge">Nhà sách online hiện đại</span>
+      <h1>Khám phá hàng ngàn đầu sách hay mỗi ngày</h1>
+      <p>
+        Từ sách kỹ năng, kinh doanh, công nghệ đến văn học kinh điển.
+        Dữ liệu sách lấy trực tiếp từ database seed trong hệ thống Docker để demo gần với web chính thức.
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/products" class="btn-primary">Mua sách ngay</a>
+        <a routerLink="/products/latest" class="btn-secondary">Sách mới phát hành</a>
+      </div>
+    </div>
+
+    <div class="hero-stats">
+      <article>
+        <h3>15K+</h3>
+        <p>Đầu sách đa thể loại</p>
+      </article>
+      <article>
+        <h3>20%</h3>
+        <p>Ưu đãi trung bình mỗi tuần</p>
+      </article>
+      <article>
+        <h3>24h</h3>
+        <p>Xử lý đơn hàng nhanh</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <app-banner></app-banner>
+
+<section class="featured-books container">
+  <div class="section-header">
+    <h2>Gợi ý nổi bật hôm nay</h2>
+    <a routerLink="/products" class="link-more">Xem toàn bộ</a>
+  </div>
+
+  <div class="empty-message" *ngIf="loadFailed">
+    Không tải được dữ liệu từ backend. Vui lòng chạy đầy đủ Docker services để hiển thị danh mục sách thực tế.
+  </div>
+
+  <div class="books-grid" *ngIf="!loadFailed && featuredBooks.length">
+    <article class="book-card" *ngFor="let book of featuredBooks">
+      <div class="image-wrap">
+        <img [src]="book.bookResponseDto.image || 'assets/images/default.png'" [alt]="book.bookResponseDto.title" />
+        <span class="discount" *ngIf="book.promotionPercent">-{{ book.promotionPercent }}%</span>
+      </div>
+
+      <div class="book-content">
+        <h4>{{ book.bookResponseDto.title }}</h4>
+        <p class="author">{{ book.bookResponseDto.author }}</p>
+        <p class="category">{{ book.bookResponseDto.category }}</p>
+
+        <div class="price-row">
+          <span class="new-price">{{ getDiscountPrice(book) | number:'1.0-0' }}đ</span>
+          <span class="old-price" *ngIf="book.promotionPercent">{{ book.bookResponseDto.price | number:'1.0-0' }}đ</span>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
 <app-latest-release-books></app-latest-release-books>
 <app-bestselling></app-bestselling>
 <app-popularbook></app-popularbook>
 <app-about-page></app-about-page>
 <app-footer></app-footer>
-

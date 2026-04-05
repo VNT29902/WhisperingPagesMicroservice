@@ -1,41 +1,50 @@
-# Monitoring Checklist Template (Per Service)
+# Monitoring Checklist Template (Production-ready)
 
-## Service Information
-- Service name:
+## Service info
+- Service:
 - Owner:
+- Environment: local / staging / production
 - Date:
 
-## A) Health
-- [ ] Liveness endpoint configured
-- [ ] Readiness endpoint configured
-- [ ] Dependency checks included (DB/cache/external APIs)
+## 1) Health & Availability
+- [ ] Liveness endpoint
+- [ ] Readiness endpoint
+- [ ] Dependency health (DB, Redis, external API)
+- [ ] Startup/shutdown health behavior reviewed
 
-## B) Metrics
-- [ ] Request throughput
-- [ ] Error rate
+## 2) Metrics
+- [ ] Request rate (RPS)
+- [ ] Error rate (4xx/5xx)
 - [ ] Latency p50/p95/p99
-- [ ] Resource usage (CPU/memory)
-- [ ] DB/connection pool metrics
-- [ ] Queue/stream lag metrics (if applicable)
+- [ ] CPU/memory usage
+- [ ] DB pool saturation
+- [ ] Queue lag / stream lag (if applicable)
 
-## C) Logs
-- [ ] Correlation/trace ID in logs
-- [ ] Structured logging format
-- [ ] Sensitive fields masked
-- [ ] Actionable error context present
+## 3) Logs
+- [ ] Structured logs
+- [ ] Correlation ID / trace ID
+- [ ] Sensitive data masked
+- [ ] Error logs include actionable context
 
-## D) Tracing
+## 4) Tracing
 - [ ] Distributed tracing enabled
-- [ ] Critical operations traced
+- [ ] Upstream/downstream spans validated
+- [ ] Slow-path traces sampled and reviewable
 
-## E) Alerts
-- [ ] Availability alert
-- [ ] Error rate alert
-- [ ] Latency alert
-- [ ] Dependency failure alert
-- [ ] Queue lag alert (if applicable)
+## 5) Alerts
+- [ ] Service down
+- [ ] Error-rate spike
+- [ ] Latency threshold breach
+- [ ] Dependency failure
+- [ ] Queue/stream lag threshold breach
 
-## F) Dashboards
-- [ ] Service overview dashboard
-- [ ] Endpoint performance dashboard
-- [ ] Dependency health dashboard
+## 6) Dashboards
+- [ ] Service overview
+- [ ] Endpoint performance
+- [ ] Dependency health
+- [ ] Business KPI linkage (if applicable)
+
+## 7) Operational Readiness
+- [ ] Runbook exists
+- [ ] On-call knows alert ownership
+- [ ] Incident escalation path documented
