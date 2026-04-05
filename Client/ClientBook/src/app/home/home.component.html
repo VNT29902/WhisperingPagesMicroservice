@@ -7,7 +7,7 @@
       <h1>Khám phá hàng ngàn đầu sách hay mỗi ngày</h1>
       <p>
         Từ sách kỹ năng, kinh doanh, công nghệ đến văn học kinh điển.
-        Cập nhật xu hướng đọc mới và ưu đãi hot như các hệ thống nhà sách chuyên nghiệp.
+        Dữ liệu sách lấy trực tiếp từ database seed trong hệ thống Docker để demo gần với web chính thức.
       </p>
       <div class="hero-actions">
         <a routerLink="/products" class="btn-primary">Mua sách ngay</a>
@@ -40,7 +40,11 @@
     <a routerLink="/products" class="link-more">Xem toàn bộ</a>
   </div>
 
-  <div class="books-grid">
+  <div class="empty-message" *ngIf="loadFailed">
+    Không tải được dữ liệu từ backend. Vui lòng chạy đầy đủ Docker services để hiển thị danh mục sách thực tế.
+  </div>
+
+  <div class="books-grid" *ngIf="!loadFailed && featuredBooks.length">
     <article class="book-card" *ngFor="let book of featuredBooks">
       <div class="image-wrap">
         <img [src]="book.bookResponseDto.image || 'assets/images/default.png'" [alt]="book.bookResponseDto.title" />

@@ -4,7 +4,6 @@ import { BookAndPromotion } from '../models/bookAndPromotion.model';
 import { CommonModule } from '@angular/common';
 import { AddToCartButtonComponent } from '../add-to-cart-button/add-to-cart-button.component';
 import { RouterModule } from '@angular/router';
-import { HOME_LATEST_FALLBACK } from '../mock/home-books.mock';
 
 @Component({
   selector: 'app-latest-release-books',
@@ -21,11 +20,11 @@ export class LatestReleaseBooksComponent implements OnInit {
   ngOnInit(): void {
     this.bookService.getLatestBooks().subscribe({
       next: (books) => {
-        this.newReleaseBooks = books?.length ? books : HOME_LATEST_FALLBACK;
+        this.newReleaseBooks = books || [];
       },
       error: (err) => {
         console.error('❌ Lỗi khi lấy sách mới phát hành:', err);
-        this.newReleaseBooks = HOME_LATEST_FALLBACK;
+        this.newReleaseBooks = [];
       },
     });
   }

@@ -4,7 +4,6 @@ import { BookAndPromotion } from '../models/bookAndPromotion.model';
 import { CommonModule } from '@angular/common';
 import { AddToCartButtonComponent } from '../add-to-cart-button/add-to-cart-button.component';
 import { RouterModule } from '@angular/router';
-import { HOME_BESTSELLER_FALLBACK } from '../mock/home-books.mock';
 
 @Component({
   selector: 'app-bestselling',
@@ -20,11 +19,11 @@ export class BestsellingComponent implements OnInit {
   ngOnInit(): void {
     this.bookService.getBestSelling().subscribe({
       next: (data) => {
-        this.bestSellingBooks = data?.length ? data : HOME_BESTSELLER_FALLBACK;
+        this.bestSellingBooks = data || [];
       },
       error: (err) => {
         console.error('❌ Lỗi khi load sách bán chạy:', err);
-        this.bestSellingBooks = HOME_BESTSELLER_FALLBACK;
+        this.bestSellingBooks = [];
       },
     });
   }

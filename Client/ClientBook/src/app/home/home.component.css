@@ -131,6 +131,16 @@
   font-weight: 600;
 }
 
+.empty-message {
+  border: 1px dashed #f59e0b;
+  background: #fffbeb;
+  color: #9a6700;
+  border-radius: 12px;
+  padding: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .books-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

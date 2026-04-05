@@ -12,7 +12,6 @@ import { forkJoin } from 'rxjs';
 import { LatestReleaseBooksComponent } from '../latest-release-books/latest-release-books.component';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { HOME_FEATURED_BOOKS, HOME_LATEST_FALLBACK, HOME_BESTSELLER_FALLBACK, HOME_CATEGORY_FALLBACK } from '../mock/home-books.mock';
 
 @Component({
   selector: 'app-home',
@@ -36,7 +35,8 @@ export class HomeComponent implements OnInit {
   bestsellingBooks: BookAndPromotion[] = [];
   categoryBooks: BookAndPromotion[] = [];
 
-  featuredBooks: BookAndPromotion[] = HOME_FEATURED_BOOKS;
+  featuredBooks: BookAndPromotion[] = [];
+  loadFailed = false;
 
   constructor(private bookService: BookService) {}
 
@@ -44,18 +44,19 @@ export class HomeComponent implements OnInit {
     forkJoin({
       latest: this.bookService.getLatestBooks(),
       bestselling: this.bookService.getBestSelling(),
-      category: this.bookService.getBooksByCategory('all', 10, 0),
+      category: this.bookService.getBooksByCategory('all', 12, 0),
     }).subscribe({
       next: (result) => {
-        this.latestBooks = result.latest?.length ? result.latest : HOME_LATEST_FALLBACK;
-        this.bestsellingBooks = result.bestselling?.length ? result.bestselling : HOME_BESTSELLER_FALLBACK;
-        this.categoryBooks = result.category?.content?.length ? result.category.content : HOME_CATEGORY_FALLBACK;
+        this.latestBooks = result.latest || [];
+        this.bestsellingBooks = result.bestselling || [];
+        this.categoryBooks = result.category?.content || [];
+        this.featuredBooks = this.categoryBooks.slice(0, 6);
+        this.loadFailed = false;
       },
       error: (err) => {
-        console.error('❌ Lỗi khi lấy dữ liệu:', err);
-        this.latestBooks = HOME_LATEST_FALLBACK;
-        this.bestsellingBooks = HOME_BESTSELLER_FALLBACK;
-        this.categoryBooks = HOME_CATEGORY_FALLBACK;
+        console.error('❌ Lỗi khi lấy dữ liệu trang chủ:', err);
+        this.featuredBooks = [];
+        this.loadFailed = true;
       },
     });
   }

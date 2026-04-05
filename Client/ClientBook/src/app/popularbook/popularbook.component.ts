@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { AddToCartButtonComponent } from '../add-to-cart-button/add-to-cart-button.component';
 import { BookAndPromotion } from '../models/bookAndPromotion.model';
 import { RouterLink } from '@angular/router';
-import { HOME_CATEGORY_FALLBACK } from '../mock/home-books.mock';
 
 @Component({
   selector: 'app-popularbook',
@@ -47,12 +46,12 @@ export class PopularbookComponent implements OnInit {
 
     this.bookService.getBooksByCategory(category, 8, 0).subscribe({
       next: (res) => {
-        this.books = res?.content?.length ? res.content : HOME_CATEGORY_FALLBACK;
+        this.books = res?.content || [];
         this.cache.set(key, this.books);
       },
       error: (err) => {
         console.error('❌ Lỗi khi lấy sách:', err);
-        this.books = HOME_CATEGORY_FALLBACK;
+        this.books = [];
         this.cache.set(key, this.books);
       },
     });
