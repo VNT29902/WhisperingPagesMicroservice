@@ -40,4 +40,11 @@ export class LatestReleaseBooksComponent implements OnInit {
     if (dto.saleStock > dto.stock) return 50;
     return (dto.saleStock / dto.stock) * 100;
   }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement | null;
+    if (target) {
+      target.src = 'assets/images/default.png';
+    }
+  }
 }

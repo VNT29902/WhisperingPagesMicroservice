@@ -4,6 +4,7 @@ services:
   mysql:
     image: mysql:8.0
     container_name: mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-290902}
     ports:
@@ -36,7 +37,7 @@ services:
     image: whisperingpages/auth-service:latest
     container_name: auth-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/auth_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/auth_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME:-root}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-290902}
       GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
@@ -56,7 +57,7 @@ services:
     image: whisperingpages/cart-service:latest
     container_name: cart-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cart_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/cart_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME:-root}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-290902}
     depends_on:
@@ -73,7 +74,7 @@ services:
     image: whisperingpages/orders-service:latest
     container_name: orders-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/orders_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/orders_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME:-root}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-290902}
     depends_on:
@@ -90,7 +91,7 @@ services:
     image: whisperingpages/product-service:latest
     container_name: product-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/product_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/product_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME:-root}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-290902}
     depends_on:
@@ -106,7 +107,7 @@ services:
     image: whisperingpages/user-service:latest
     container_name: user-service
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/user_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/user_db_flyway?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME:-root}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD:-290902}
     depends_on:

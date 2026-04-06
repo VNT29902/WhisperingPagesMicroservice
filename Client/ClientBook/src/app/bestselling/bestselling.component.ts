@@ -38,4 +38,11 @@ export class BestsellingComponent implements OnInit {
   showFullTitle(title: string): void {
     alert(title);
   }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement | null;
+    if (target) {
+      target.src = 'assets/images/default.png';
+    }
+  }
 }

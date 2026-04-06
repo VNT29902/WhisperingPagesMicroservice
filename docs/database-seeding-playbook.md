@@ -50,3 +50,4 @@ Before using a new data batch, validate:
 ## 7) Notes
 - Current seed is designed for local/dev demo and category realism.
 - For production, use a governed source pipeline (ISBN, publisher, metadata normalization, copyright checks).
+- If Vietnamese text appears corrupted (mojibake), reset MySQL volume and recreate container so charset/collation settings are applied from `docker-compose.yml`.

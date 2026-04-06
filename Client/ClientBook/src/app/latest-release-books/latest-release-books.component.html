@@ -13,8 +13,9 @@
           <div class="book-cover">
             <a [routerLink]="['/books', bp.bookResponseDto.id]">
               <img
-                [src]="bp.bookResponseDto.image"
+                [src]="bp.bookResponseDto.image || 'assets/images/default.png'"
                 [alt]="bp.bookResponseDto.title"
+                (error)="onImageError($event)"
               />
             </a>
           </div>
