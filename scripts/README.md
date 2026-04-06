@@ -27,3 +27,10 @@ Import CSV books into the single catalog file.
 ./scripts/import_books_csv_to_catalog.py --csv data/books/csv/books_YYYYMMDD.csv --mode merge
 ./scripts/generate_books_seed_from_catalog.py
 ```
+
+If you want to replace all old books and only keep records from a new CSV:
+
+```bash
+./scripts/import_books_csv_to_catalog.py --csv data/books/csv/books_YYYYMMDD.csv --mode replace
+./scripts/generate_books_seed_from_catalog.py
+```

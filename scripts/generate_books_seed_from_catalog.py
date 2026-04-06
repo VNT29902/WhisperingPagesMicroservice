@@ -11,6 +11,8 @@ def normalize_text_for_search(value: str) -> str:
 
 def validate(records):
     required = {"id", "title", "author", "image", "price", "category", "stock", "description", "sales_count"}
+    if not records:
+        raise ValueError("Catalog is empty. Need at least 1 record to generate SQL.")
     ids = set()
     for idx, r in enumerate(records, start=1):
         missing = required - set(r.keys())
@@ -28,11 +30,14 @@ def esc(v: str) -> str:
 def build_sql(records):
     book_rows = []
     search_rows = []
+    id_values = []
 
     for r in records:
+        book_id = esc(str(r["id"]))
+        id_values.append(f"'{book_id}'")
         book_rows.append(
             "('{id}','{title}','{author}','{image}',{price},'{category}',{stock},'{description}',NOW(),NOW(),{sales})".format(
-                id=esc(str(r["id"])),
+                id=book_id,
                 title=esc(str(r["title"])),
                 author=esc(str(r["author"])),
                 image=esc(str(r["image"])),
@@ -45,16 +50,22 @@ def build_sql(records):
         )
         search_rows.append(
             "('{id}','{title}','{author}')".format(
-                id=esc(str(r["id"])),
+                id=book_id,
                 title=esc(normalize_text_for_search(str(r["title"]))),
                 author=esc(normalize_text_for_search(str(r["author"]))),
             )
         )
 
+    in_clause = ", ".join(id_values)
+
     return "\n".join([
         "USE product_db_flyway;",
         "",
         "-- Auto-generated from data/books/books_catalog.json",
+        "-- Keep only books that exist in the current catalog",
+        f"DELETE FROM book_search_index WHERE book_id NOT IN ({in_clause});",
+        f"DELETE FROM books WHERE id NOT IN ({in_clause});",
+        "",
         "INSERT INTO books (id, title, author, image, price, category, stock, description, created_at, updated_at, sales_count)",
         "VALUES",
         ",\n".join(book_rows),
