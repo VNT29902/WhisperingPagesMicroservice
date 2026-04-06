@@ -44,6 +44,10 @@
     Không tải được dữ liệu từ backend. Vui lòng chạy đầy đủ Docker services để hiển thị danh mục sách thực tế.
   </div>
 
+  <div class="empty-message partial" *ngIf="partialLoadFailed && !loadFailed">
+    Một số API đang lỗi/tạm chưa sẵn sàng. Dữ liệu hiển thị có thể chưa đầy đủ.
+  </div>
+
   <div class="books-grid" *ngIf="!loadFailed && featuredBooks.length">
     <article class="book-card" *ngFor="let book of featuredBooks">
       <div class="image-wrap">

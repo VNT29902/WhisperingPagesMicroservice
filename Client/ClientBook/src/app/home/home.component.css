@@ -141,6 +141,13 @@
   line-height: 1.5;
 }
 
+.empty-message.partial {
+  margin-bottom: 12px;
+  border-color: #93c5fd;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
 .books-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
