@@ -96,7 +96,7 @@ Outputs:
 You can import CSV directly into the single catalog file, no manual SQL editing needed.
 
 ```bash
-./scripts/import_books_csv_to_catalog.py --csv /path/to/your_200_books.csv --mode merge
+./scripts/import_books_csv_to_catalog.py --csv data/books/csv/books_YYYYMMDD.csv --mode merge
 ./scripts/generate_books_seed_from_catalog.py
 ```
 
@@ -104,3 +104,4 @@ Notes:
 - `--mode merge`: upsert by `id` into existing catalog.
 - `--mode replace`: replace the whole catalog with CSV content.
 - Required CSV columns: `id,title,author,image,price,category` (other columns are optional).
+- If you want to commit CSV together with repo, store it under: `data/books/csv/`.

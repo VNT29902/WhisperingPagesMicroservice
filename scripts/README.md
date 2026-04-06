@@ -24,6 +24,6 @@ Generate `mysql_init/z_seed_books_catalog.sql` from single source data file:
 Import CSV books into the single catalog file.
 
 ```bash
-./scripts/import_books_csv_to_catalog.py --csv /path/to/books.csv --mode merge
+./scripts/import_books_csv_to_catalog.py --csv data/books/csv/books_YYYYMMDD.csv --mode merge
 ./scripts/generate_books_seed_from_catalog.py
 ```
