@@ -107,6 +107,56 @@ textarea:focus {
   padding-top: 10px;
 }
 
+.coupon-box {
+  margin: 16px 0;
+}
+
+.coupon-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.coupon-actions input {
+  flex: 1;
+}
+
+.btn-apply,
+.btn-remove {
+  border: none;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-apply {
+  background-color: #0aa06e;
+  color: #fff;
+}
+
+.btn-apply[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.btn-remove {
+  background-color: #f5f5f5;
+  color: #444;
+}
+
+.coupon-message {
+  color: #0aa06e;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
+.coupon-error {
+  color: #d93025;
+  font-size: 13px;
+  margin-top: 6px;
+}
+
 .summary .row {
   display: flex;
   justify-content: space-between;

@@ -8,6 +8,8 @@ import com.example.OrderService.Entity.OrderItem;
 import com.example.OrderService.Enum.OrderStatus;
 import com.example.OrderService.Enum.PaymentMethod;
 import com.example.OrderService.Mapper.OrderItemMapper;
+import com.example.OrderService.Service.CouponService;
+import com.example.OrderService.Record.CouponApplicationResult;
 import com.example.OrderService.Record.CreateOrderRequest;
 import com.example.OrderService.Record.OrderWithItemsResponse;
 import com.example.OrderService.Repository.OrderItemRepository;
@@ -45,16 +47,24 @@ public class OrderService {
 
     private final CartClient cartClient;
 
+    private final CouponService couponService;
+
     private static final org.slf4j.Logger log =
             org.slf4j.LoggerFactory.getLogger(OrderService.class);
 
 
-    public OrderService(ShippingInfoService shippingInfoService, OrderRepository orderRepository, OrderItemRepository orderItemRepository, ProductClient productClient, CartClient cartClient) {
+    public OrderService(ShippingInfoService shippingInfoService,
+                        OrderRepository orderRepository,
+                        OrderItemRepository orderItemRepository,
+                        ProductClient productClient,
+                        CartClient cartClient,
+                        CouponService couponService) {
         this.shippingInfoService = shippingInfoService;
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.productClient = productClient;
         this.cartClient = cartClient;
+        this.couponService = couponService;
 
     }
 
@@ -70,11 +80,13 @@ public class OrderService {
 
         List<OrderItem> orderItems = OrderItemMapper.toEntityList(req.items());
 
+        BigDecimal subtotalAmount = calculateSubtotal(orderItems);
+        CouponApplicationResult couponEvaluation = couponService.evaluateCoupon(req.couponCode(), userName, subtotalAmount);
+        BigDecimal discountAmount = couponEvaluation.discountAmount();
+        BigDecimal shippingFee = SHIPPING_FEE;
+        BigDecimal totalAmount = calculateTotalAmount(subtotalAmount, shippingFee, discountAmount);
 
-        BigDecimal totalAmount = calculateTotalAmount(orderItems);
-
-
-        Order order = buildOrder(userName, method, totalAmount);
+        Order order = buildOrder(userName, method, subtotalAmount, shippingFee, discountAmount, totalAmount, couponEvaluation.normalizedCode());
 
 
         order.addItems(orderItems);
@@ -109,6 +121,8 @@ public class OrderService {
             throw ex;
         }
 
+        couponService.recordRedemption(couponEvaluation, order.getId(), userName);
+
         return order;
     }
 
@@ -126,7 +140,11 @@ public class OrderService {
                             order.getStatus(),
                             order.getUserName(),
                             order.getCreatedAt(),
+                            order.getSubtotalAmount(),
+                            order.getShippingFee(),
+                            order.getDiscountAmount(),
                             order.getTotalAmount(),
+                            order.getCouponCode(),
                             items
                     );
                 })
@@ -150,7 +168,11 @@ public class OrderService {
                             order.getStatus(),
                             order.getUserName(),
                             order.getCreatedAt(),
+                            order.getSubtotalAmount(),
+                            order.getShippingFee(),
+                            order.getDiscountAmount(),
                             order.getTotalAmount(),
+                            order.getCouponCode(),
                             items
                     );
                 })
@@ -165,23 +187,36 @@ public class OrderService {
         return paymentMethod == PaymentMethod.MOMO;
     }
 
-    private BigDecimal calculateTotalAmount(List<OrderItem> items) {
-        BigDecimal totalItemsPrice = items.stream()
+    private BigDecimal calculateSubtotal(List<OrderItem> items) {
+        return items.stream()
                 .map(i -> i.getPrice().multiply(BigDecimal.valueOf(i.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
-        return totalItemsPrice.add(SHIPPING_FEE);
+    private BigDecimal calculateTotalAmount(BigDecimal subtotal, BigDecimal shippingFee, BigDecimal discountAmount) {
+        BigDecimal total = subtotal.add(shippingFee).subtract(discountAmount);
+        return total.max(BigDecimal.ZERO);
     }
 
 
-    private Order buildOrder(String userName, PaymentMethod paymentMethod, BigDecimal totalAmount) {
+    private Order buildOrder(String userName,
+                             PaymentMethod paymentMethod,
+                             BigDecimal subtotalAmount,
+                             BigDecimal shippingFee,
+                             BigDecimal discountAmount,
+                             BigDecimal totalAmount,
+                             String couponCode) {
         String id = "ORD-" + RandomStringUtils.randomAlphanumeric(8).toUpperCase();
 
         Order order = new Order();
         order.setId(id);
         order.setUserName(userName);
         order.setPaymentMethod(paymentMethod);
+        order.setSubtotalAmount(subtotalAmount);
+        order.setShippingFee(shippingFee);
+        order.setDiscountAmount(discountAmount);
         order.setTotalAmount(totalAmount);
+        order.setCouponCode(couponCode);
         order.setCreatedAt(LocalDateTime.now());
 
         if (isOnline(paymentMethod)) {
@@ -312,7 +347,11 @@ public class OrderService {
                             order.getStatus(),
                             order.getUserName(),
                             order.getCreatedAt(),
+                            order.getSubtotalAmount(),
+                            order.getShippingFee(),
+                            order.getDiscountAmount(),
                             order.getTotalAmount(),
+                            order.getCouponCode(),
                             items
                     );
                 })

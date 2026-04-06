@@ -9,5 +9,6 @@ import java.util.List;
 public record CreateOrderRequest(
         PaymentMethod paymentMethod,
         ShippingAddressDTO shippingAddress,
-        List<OrderItemDTO> items
+        List<OrderItemDTO> items,
+        String couponCode
 ) {}

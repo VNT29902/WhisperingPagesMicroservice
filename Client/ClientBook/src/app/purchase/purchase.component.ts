@@ -31,11 +31,29 @@ export class PurchaseComponent implements OnInit {
     });
   }
 
-  getTotalAmount(order: OrderWithItemsResponse): number {
+  getItemsSubtotal(order: OrderWithItemsResponse): number {
+    if (typeof order.subtotalAmount === 'number') {
+      return order.subtotalAmount;
+    }
     return order.items.reduce((s, it) => s + Number(it.price) * it.quantity, 0);
   }
 
+  getShippingFee(order: OrderWithItemsResponse): number {
+    return typeof order.shippingFee === 'number' ? order.shippingFee : 0;
+  }
+
+  getDiscount(order: OrderWithItemsResponse): number {
+    return typeof order.discountAmount === 'number' ? order.discountAmount : 0;
+  }
+
   getGrandTotal(order: OrderWithItemsResponse): number {
-    return this.getTotalAmount(order) + 40000;
+    if (typeof order.totalAmount === 'number') {
+      return order.totalAmount;
+    }
+    return (
+      this.getItemsSubtotal(order) +
+      this.getShippingFee(order) -
+      this.getDiscount(order)
+    );
   }
 }

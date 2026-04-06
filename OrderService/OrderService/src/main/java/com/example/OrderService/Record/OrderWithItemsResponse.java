@@ -13,7 +13,11 @@ public record OrderWithItemsResponse(
 
         String userName,
         LocalDateTime createdAt,
+        BigDecimal subtotalAmount,
+        BigDecimal shippingFee,
+        BigDecimal discountAmount,
         BigDecimal totalAmount,
+        String couponCode,
         List<OrderItemResponse> items
 ) {}
 

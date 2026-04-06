@@ -127,6 +127,37 @@
           <div class="line-price">{{ it.price * it.quantity | number }}đ</div>
         </div>
 
+        <div class="coupon-box" [formGroup]="form">
+          <label for="couponCode">Mã giảm giá</label>
+          <div class="coupon-actions">
+            <input
+              id="couponCode"
+              type="text"
+              formControlName="couponCode"
+              placeholder="Nhập mã giảm giá"
+              [readonly]="couponLoading"
+            />
+            <button
+              type="button"
+              class="btn-apply"
+              (click)="applyCoupon()"
+              [disabled]="couponLoading"
+            >
+              {{ couponLoading ? 'Đang kiểm tra…' : 'Áp dụng' }}
+            </button>
+            <button
+              type="button"
+              class="btn-remove"
+              *ngIf="appliedCouponCode"
+              (click)="removeCoupon()"
+            >
+              Hủy
+            </button>
+          </div>
+          <p class="coupon-message" *ngIf="couponMessage">{{ couponMessage }}</p>
+          <p class="coupon-error" *ngIf="couponError">{{ couponError }}</p>
+        </div>
+
         <div class="summary">
           <div class="row">
             <span>Tạm tính</span><strong>{{ subtotal | number }}đ</strong>
@@ -134,6 +165,10 @@
           <div class="row">
             <span>Phí vận chuyển</span
             ><strong>{{ shippingFee | number }}đ</strong>
+          </div>
+          <div class="row" *ngIf="discountAmount > 0">
+            <span>Giảm giá</span>
+            <strong>-{{ discountAmount | number }}đ</strong>
           </div>
           <div class="row total">
             <span>Tổng cộng</span><strong>{{ total | number }}đ</strong>

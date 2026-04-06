@@ -5,6 +5,7 @@ export interface CreateOrderRequest {
   paymentMethod: PaymentMethod;
   shippingAddress: ShippingAddressRequest;
   items: OrderItemDTO[];
+  couponCode?: string | null;
 }
 
 export type PaymentMethod = 'COD' | 'MOMO';

@@ -44,9 +44,13 @@ public class OrderController {
             Order order = orderService.createOrder(userName, createOrderRequest);
             OrderResponse response = new OrderResponse(
                     order.getId(),
+                    order.getSubtotalAmount(),
+                    order.getShippingFee(),
+                    order.getDiscountAmount(),
                     order.getTotalAmount(),
                     order.getStatus(),
-                    order.getCreatedAt()
+                    order.getCreatedAt(),
+                    order.getCouponCode()
             );
             return ResponseEntity.status(HttpStatus.CREATED).body(response);
         } catch (Exception e) {
