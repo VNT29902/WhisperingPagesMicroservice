@@ -8,9 +8,9 @@ import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-latest-release-books',
   standalone: true,
-  imports: [CommonModule, AddToCartButtonComponent,RouterModule],
+  imports: [CommonModule, AddToCartButtonComponent, RouterModule],
   templateUrl: './latest-release-books.component.html',
-  styleUrl: './latest-release-books.component.css'
+  styleUrl: './latest-release-books.component.css',
 })
 export class LatestReleaseBooksComponent implements OnInit {
   newReleaseBooks: BookAndPromotion[] = [];
@@ -19,8 +19,13 @@ export class LatestReleaseBooksComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookService.getLatestBooks().subscribe({
-      next: (books) => (this.newReleaseBooks = books),
-      error: (err) => console.error('❌ Lỗi khi lấy sách mới phát hành:', err),
+      next: (books) => {
+        this.newReleaseBooks = books || [];
+      },
+      error: (err) => {
+        console.error('❌ Lỗi khi lấy sách mới phát hành:', err);
+        this.newReleaseBooks = [];
+      },
     });
   }
 
@@ -34,5 +39,12 @@ export class LatestReleaseBooksComponent implements OnInit {
     if (dto.stock < 10) return 80;
     if (dto.saleStock > dto.stock) return 50;
     return (dto.saleStock / dto.stock) * 100;
+  }
+
+  onImageError(event: Event): void {
+    const target = event.target as HTMLImageElement | null;
+    if (target) {
+      target.src = 'assets/images/default.png';
+    }
   }
 }

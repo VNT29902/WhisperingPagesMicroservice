@@ -1,0 +1,112 @@
+[
+  {
+    "id": "GB-ZYTCALFPJGYC",
+    "title": "The Google Story",
+    "author": "David A. Vise",
+    "image": "https://books.google.com/books/content?id=zyTCAlFPjgYC&printsec=frontcover&img=1&zoom=1",
+    "price": 106000,
+    "category": "kinh-doanh",
+    "stock": 51,
+    "description": "Inside the growth of Google.",
+    "sales_count": 0
+  },
+  {
+    "id": "GB-UW2QDWAAQBAJ",
+    "title": "Atomic Habits",
+    "author": "James Clear",
+    "image": "https://books.google.com/books/content?id=uW2qDwAAQBAJ&printsec=frontcover&img=1&zoom=1",
+    "price": 113000,
+    "category": "tam-ly-ky-nang",
+    "stock": 52,
+    "description": "An easy proven way to build good habits.",
+    "sales_count": 0
+  },
+  {
+    "id": "GB-7HLYDWAAQBAJ",
+    "title": "Sapiens",
+    "author": "Yuval Noah Harari",
+    "image": "https://books.google.com/books/content?id=7HlyDwAAQBAJ&printsec=frontcover&img=1&zoom=1",
+    "price": 120000,
+    "category": "lich-su",
+    "stock": 53,
+    "description": "A brief history of humankind.",
+    "sales_count": 0
+  },
+  {
+    "id": "GB-FFCJDQAAQBAJ",
+    "title": "Clean Code",
+    "author": "Robert C. Martin",
+    "image": "https://books.google.com/books/content?id=fFCjDQAAQBAJ&printsec=frontcover&img=1&zoom=1",
+    "price": 127000,
+    "category": "cong-nghe",
+    "stock": 54,
+    "description": "A handbook of agile software craftsmanship.",
+    "sales_count": 0
+  },
+  {
+    "id": "GB-S1GVAAAAYAAJ",
+    "title": "The Time Machine",
+    "author": "H. G. Wells",
+    "image": "https://books.google.com/books/content?id=s1gVAAAAYAAJ&printsec=frontcover&img=1&zoom=1",
+    "price": 134000,
+    "category": "van-hoc",
+    "stock": 55,
+    "description": "Classic science fiction novel.",
+    "sales_count": 0
+  },
+  {
+    "id": "GB-QZ2XDWAAQBAJ",
+    "title": "Thinking, Fast and Slow",
+    "author": "Daniel Kahneman",
+    "image": "https://books.google.com/books/content?id=qz2xDwAAQBAJ&printsec=frontcover&img=1&zoom=1",
+    "price": 141000,
+    "category": "tam-ly-ky-nang",
+    "stock": 56,
+    "description": "Two systems that drive the way we think.",
+    "sales_count": 0
+  },
+  {
+    "id": "GB-NNQQDWAAQBAJ",
+    "title": "Deep Work",
+    "author": "Cal Newport",
+    "image": "https://books.google.com/books/content?id=NnQqDwAAQBAJ&printsec=frontcover&img=1&zoom=1",
+    "price": 148000,
+    "category": "tam-ly-ky-nang",
+    "stock": 57,
+    "description": "Rules for focused success in a distracted world.",
+    "sales_count": 0
+  },
+  {
+    "id": "GB-T6O0EAAAQBAJ",
+    "title": "The Pragmatic Programmer",
+    "author": "David Thomas, Andrew Hunt",
+    "image": "https://books.google.com/books/content?id=t6o0EAAAQBAJ&printsec=frontcover&img=1&zoom=1",
+    "price": 155000,
+    "category": "cong-nghe",
+    "stock": 58,
+    "description": "Your journey to mastery.",
+    "sales_count": 0
+  },
+  {
+    "id": "GB-XGGZEAAAQBAJ",
+    "title": "Dune",
+    "author": "Frank Herbert",
+    "image": "https://books.google.com/books/content?id=xGgzEAAAQBAJ&printsec=frontcover&img=1&zoom=1",
+    "price": 162000,
+    "category": "van-hoc",
+    "stock": 59,
+    "description": "Epic science fiction classic.",
+    "sales_count": 0
+  },
+  {
+    "id": "GB-U8E8DWAAQBAJ",
+    "title": "Educated",
+    "author": "Tara Westover",
+    "image": "https://books.google.com/books/content?id=u8e8DwAAQBAJ&printsec=frontcover&img=1&zoom=1",
+    "price": 169000,
+    "category": "van-hoc",
+    "stock": 60,
+    "description": "A memoir by Tara Westover.",
+    "sales_count": 0
+  }
+]
