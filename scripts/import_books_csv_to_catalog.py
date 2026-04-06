@@ -10,21 +10,34 @@ REQUIRED_MIN_COLUMNS = {"id", "title", "author", "image", "price", "category"}
 CATEGORY_MAP = {
     "business": "kinh-doanh",
     "economics": "kinh-doanh",
+    "entrepreneurship": "kinh-doanh",
+    "trademark": "kinh-doanh",
     "service": "kinh-doanh",
     "customer": "kinh-doanh",
     "history": "lich-su",
     "science": "khoa-hoc",
     "technology": "cong-nghe",
     "computer": "cong-nghe",
+    "engineering": "cong-nghe",
+    "medical": "khoa-hoc",
     "manga": "manga-comic",
     "comic": "manga-comic",
     "children": "thieu-nhi",
+    "fiction": "van-hoc",
+    "literary": "van-hoc",
+    "poetry": "van-hoc",
+    "drama": "van-hoc",
+    "reference": "van-hoc",
+    "general": "van-hoc",
     "novel": "van-hoc",
     "literature": "van-hoc",
     "language": "ngoai-ngu",
+    "english": "ngoai-ngu",
+    "foreign": "ngoai-ngu",
     "art": "nghe-thuat",
     "psychology": "tam-ly-ky-nang",
     "self-help": "tam-ly-ky-nang",
+    "motivation": "tam-ly-ky-nang",
 }
 
 
@@ -46,6 +59,16 @@ def to_int(value: str, default: int) -> int:
         return int(float((value or "").strip()))
     except ValueError:
         return default
+
+
+def build_description(title: str, author: str, category: str, raw_description: str) -> str:
+    cleaned = (raw_description or "").strip()
+    if cleaned:
+        return cleaned
+    return (
+        f"{title} là đầu sách thuộc nhóm {category}, được biên soạn bởi {author}. "
+        "Dữ liệu mô tả được bổ sung tự động từ file CSV."
+    )
 
 
 def parse_csv(csv_path: Path):
@@ -70,9 +93,14 @@ def parse_csv(csv_path: Path):
                 "price": to_int(row.get("price", ""), 99000),
                 "category": normalize_category(row.get("category", "van-hoc")),
                 "stock": to_int(row.get("stock", ""), 50),
-                "description": (row.get("description") or "Imported from CSV").strip(),
                 "sales_count": to_int(row.get("sales_count") or row.get("sale_stock") or "0", 0),
             }
+            record["description"] = build_description(
+                title=record["title"],
+                author=record["author"],
+                category=record["category"],
+                raw_description=row.get("description", ""),
+            )
             records.append(record)
     return records
 
