@@ -1,20 +1,49 @@
 <app-header></app-header>
 
-<section class="home-hero">
-  <div class="container hero-layout">
-    <div class="hero-copy">
-      <span class="pill">Boimela inspired storefront</span>
-      <h1>Nhà sách trực tuyến cho người đọc hiện đại</h1>
-      <p>
-        Khám phá kho sách được tuyển chọn, giá tốt mỗi ngày và giao hàng nhanh toàn quốc.
-        Giao diện mới tập trung vào trải nghiệm mua sách: tìm nhanh, xem deal rõ ràng, quyết định mua dễ dàng.
-      </p>
+<section class="home-top">
+  <div class="container">
+    <div class="hero-layout">
+      <div class="hero-carousel">
+        <a class="hero-slide-link" [routerLink]="heroSlides[currentHeroSlide].link">
+          <img [src]="heroSlides[currentHeroSlide].image" alt="Whispering Pages promo banner" />
+        </a>
 
-      <div class="hero-actions">
-        <a routerLink="/products" class="btn btn-primary">Mua sách ngay</a>
-        <a routerLink="/products/latest" class="btn btn-ghost">Sách mới phát hành</a>
+        <button class="hero-nav prev" (click)="previousHeroSlide()" aria-label="Slide trước">❮</button>
+        <button class="hero-nav next" (click)="nextHeroSlide()" aria-label="Slide kế tiếp">❯</button>
+
+        <div class="hero-dots">
+          <button
+            *ngFor="let slide of heroSlides; let i = index"
+            [class.active]="i === currentHeroSlide"
+            (click)="goToHeroSlide(i)"
+            [attr.aria-label]="'Đi tới slide ' + (i + 1)"
+          ></button>
+        </div>
       </div>
 
+      <div class="hero-side-promos">
+        <a *ngFor="let promo of rightHeroPromos" class="hero-side-card" [routerLink]="promo.link">
+          <img [src]="promo.image" alt="Whispering Pages side promo" />
+        </a>
+      </div>
+    </div>
+
+    <div class="secondary-promo-row">
+      <a *ngFor="let promo of secondaryPromos" class="secondary-promo-card" [routerLink]="promo.link">
+        <img [src]="promo.image" alt="Whispering Pages campaign banner" />
+      </a>
+    </div>
+
+    <div class="quick-entry-grid">
+      <a *ngFor="let entry of quickEntries" class="quick-entry-item" [routerLink]="entry.link">
+        <img [src]="entry.image" [alt]="entry.label || 'Quick entry'" />
+        <span>{{ entry.label }}</span>
+      </a>
+    </div>
+
+    <div class="hero-actions">
+      <a routerLink="/products" class="btn btn-primary">Mua sách ngay</a>
+      <a routerLink="/products/latest" class="btn btn-ghost">Sách mới phát hành</a>
       <div class="hero-tags">
         <a routerLink="/products" [queryParams]="{ category: 'Kinh doanh' }">Kinh doanh</a>
         <a routerLink="/products" [queryParams]="{ category: 'Tâm lý' }">Tâm lý</a>
@@ -22,41 +51,6 @@
         <a routerLink="/products" [queryParams]="{ category: 'Văn học' }">Văn học</a>
       </div>
     </div>
-
-    <aside class="hero-highlight" *ngIf="featuredBooks.length">
-      <p class="highlight-label">Sách nổi bật hôm nay</p>
-      <div class="highlight-book">
-        <img
-          [src]="featuredBooks[0].bookResponseDto.image || 'assets/images/default.png'"
-          [alt]="featuredBooks[0].bookResponseDto.title"
-        />
-        <div>
-          <h3>{{ featuredBooks[0].bookResponseDto.title }}</h3>
-          <p>{{ featuredBooks[0].bookResponseDto.author }}</p>
-          <div class="price-row">
-            <span class="new-price">{{ getDiscountPrice(featuredBooks[0]) | number: '1.0-0' }}đ</span>
-            <span class="old-price" *ngIf="featuredBooks[0].promotionPercent">
-              {{ featuredBooks[0].bookResponseDto.price | number: '1.0-0' }}đ
-            </span>
-          </div>
-        </div>
-      </div>
-
-      <div class="mini-stats">
-        <article>
-          <strong>15K+</strong>
-          <span>Đầu sách</span>
-        </article>
-        <article>
-          <strong>24h</strong>
-          <span>Xử lý đơn</span>
-        </article>
-        <article>
-          <strong>4.9/5</strong>
-          <span>Đánh giá</span>
-        </article>
-      </div>
-    </aside>
   </div>
 </section>
 
@@ -110,8 +104,42 @@
       </div>
     </article>
   </div>
-</section>
 
+  <aside class="hero-highlight" *ngIf="featuredBooks.length">
+    <p class="highlight-label">Sách nổi bật hôm nay</p>
+    <div class="highlight-book">
+      <img
+        [src]="featuredBooks[0].bookResponseDto.image || 'assets/images/default.png'"
+        [alt]="featuredBooks[0].bookResponseDto.title"
+      />
+      <div>
+        <h3>{{ featuredBooks[0].bookResponseDto.title }}</h3>
+        <p>{{ featuredBooks[0].bookResponseDto.author }}</p>
+        <div class="price-row">
+          <span class="new-price">{{ getDiscountPrice(featuredBooks[0]) | number: '1.0-0' }}đ</span>
+          <span class="old-price" *ngIf="featuredBooks[0].promotionPercent">
+            {{ featuredBooks[0].bookResponseDto.price | number: '1.0-0' }}đ
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="mini-stats">
+      <article>
+        <strong>15K+</strong>
+        <span>Đầu sách</span>
+      </article>
+      <article>
+        <strong>24h</strong>
+        <span>Xử lý đơn</span>
+      </article>
+      <article>
+        <strong>4.9/5</strong>
+        <span>Đánh giá</span>
+      </article>
+    </div>
+  </aside>
+</section>
 <app-latest-release-books></app-latest-release-books>
 <app-bestselling></app-bestselling>
 <app-popularbook></app-popularbook>
