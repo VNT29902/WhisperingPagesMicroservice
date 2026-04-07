@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from '../header/header.component';
-import { BannerComponent } from '../banner/banner.component';
-
 import { BestsellingComponent } from '../bestselling/bestselling.component';
 import { PopularbookComponent } from '../popularbook/popularbook.component';
 import { AboutPageComponent } from '../about-page/about-page.component';
@@ -26,7 +24,6 @@ import { RouterLink } from '@angular/router';
     PopularbookComponent,
     AboutPageComponent,
     FooterComponent,
-    BannerComponent,
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],

@@ -1,38 +1,81 @@
 <app-header></app-header>
 
 <section class="home-hero">
-  <div class="hero-content container">
-    <div class="hero-text">
-      <span class="hero-badge">Nhà sách online hiện đại</span>
-      <h1>Khám phá hàng ngàn đầu sách hay mỗi ngày</h1>
+  <div class="container hero-layout">
+    <div class="hero-copy">
+      <span class="pill">Boimela inspired storefront</span>
+      <h1>Nhà sách trực tuyến cho người đọc hiện đại</h1>
       <p>
-        Từ sách kỹ năng, kinh doanh, công nghệ đến văn học kinh điển.
-        Dữ liệu sách lấy trực tiếp từ database seed trong hệ thống Docker để demo gần với web chính thức.
+        Khám phá kho sách được tuyển chọn, giá tốt mỗi ngày và giao hàng nhanh toàn quốc.
+        Giao diện mới tập trung vào trải nghiệm mua sách: tìm nhanh, xem deal rõ ràng, quyết định mua dễ dàng.
       </p>
+
       <div class="hero-actions">
-        <a routerLink="/products" class="btn-primary">Mua sách ngay</a>
-        <a routerLink="/products/latest" class="btn-secondary">Sách mới phát hành</a>
+        <a routerLink="/products" class="btn btn-primary">Mua sách ngay</a>
+        <a routerLink="/products/latest" class="btn btn-ghost">Sách mới phát hành</a>
+      </div>
+
+      <div class="hero-tags">
+        <a routerLink="/products" [queryParams]="{ category: 'Kinh doanh' }">Kinh doanh</a>
+        <a routerLink="/products" [queryParams]="{ category: 'Tâm lý' }">Tâm lý</a>
+        <a routerLink="/products" [queryParams]="{ category: 'Công nghệ' }">Công nghệ</a>
+        <a routerLink="/products" [queryParams]="{ category: 'Văn học' }">Văn học</a>
       </div>
     </div>
 
-    <div class="hero-stats">
-      <article>
-        <h3>15K+</h3>
-        <p>Đầu sách đa thể loại</p>
-      </article>
-      <article>
-        <h3>20%</h3>
-        <p>Ưu đãi trung bình mỗi tuần</p>
-      </article>
-      <article>
-        <h3>24h</h3>
-        <p>Xử lý đơn hàng nhanh</p>
-      </article>
-    </div>
+    <aside class="hero-highlight" *ngIf="featuredBooks.length">
+      <p class="highlight-label">Sách nổi bật hôm nay</p>
+      <div class="highlight-book">
+        <img
+          [src]="featuredBooks[0].bookResponseDto.image || 'assets/images/default.png'"
+          [alt]="featuredBooks[0].bookResponseDto.title"
+        />
+        <div>
+          <h3>{{ featuredBooks[0].bookResponseDto.title }}</h3>
+          <p>{{ featuredBooks[0].bookResponseDto.author }}</p>
+          <div class="price-row">
+            <span class="new-price">{{ getDiscountPrice(featuredBooks[0]) | number: '1.0-0' }}đ</span>
+            <span class="old-price" *ngIf="featuredBooks[0].promotionPercent">
+              {{ featuredBooks[0].bookResponseDto.price | number: '1.0-0' }}đ
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mini-stats">
+        <article>
+          <strong>15K+</strong>
+          <span>Đầu sách</span>
+        </article>
+        <article>
+          <strong>24h</strong>
+          <span>Xử lý đơn</span>
+        </article>
+        <article>
+          <strong>4.9/5</strong>
+          <span>Đánh giá</span>
+        </article>
+      </div>
+    </aside>
   </div>
 </section>
 
-<app-banner></app-banner>
+<section class="service-strip">
+  <div class="container strip-grid">
+    <article>
+      <h4>Miễn phí vận chuyển</h4>
+      <p>Cho đơn từ 299.000đ toàn quốc.</p>
+    </article>
+    <article>
+      <h4>Đổi trả 7 ngày</h4>
+      <p>Yên tâm khi mua online lần đầu.</p>
+    </article>
+    <article>
+      <h4>Thanh toán linh hoạt</h4>
+      <p>COD, ví điện tử và thẻ nội địa.</p>
+    </article>
+  </div>
+</section>
 
 <section class="featured-books container">
   <div class="section-header">
@@ -61,7 +104,7 @@
         <p class="category">{{ book.bookResponseDto.category }}</p>
 
         <div class="price-row">
-          <span class="new-price">{{ getDiscountPrice(book) | number:'1.0-0' }}đ</span>
+          <span class="new-price">{{ getDiscountPrice(book) | number: '1.0-0' }}đ</span>
           <span class="old-price" *ngIf="book.promotionPercent">{{ book.bookResponseDto.price | number:'1.0-0' }}đ</span>
         </div>
       </div>
