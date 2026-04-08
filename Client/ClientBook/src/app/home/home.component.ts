@@ -58,24 +58,23 @@ export class HomeComponent implements OnInit, OnDestroy {
     { image: 'https://cdn1.fahasa.com/media/magentothem/banner7/TrangUuDaiT3_Resize_840x320.png', link: '/products' },
   ];
 
-  readonly secondaryPromos: PromoItem[] = [
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-04-2026/Deli_resize_310X210.png', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-04-2026/NgoaiVanT4_Resize_310x210.png', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-04-2026/MinhLongBooks_Resize_310x210.png', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-04-2026/trangvanhoc_t4_310x210.png', link: '/products' },
+
+  readonly featuredCategories: string[] = [
+    'Fiction',
+    'Non-Fiction',
+    'Children',
+    'Education',
+    'Art & Design',
+    'Rare Finds',
   ];
 
-  readonly quickEntries: PromoItem[] = [
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-04-2026/Icon_1504_120x120_1.png', label: '15.04', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-02-2026/Icon_Sale50_120x120.png', label: 'Ưu Đãi Siêu To', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-01-2025/IconFlashSale120x120.png', label: 'Flash Sale', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/icon-menu/Icon_MaGiamGia_8px_1.png', label: 'Mã Giảm Giá', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-04-2025/Icon_AlphaBooks_120x120.png', label: 'Alpha Books', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-06-2025/Icon_TanViet_120x120.png', label: 'Tân Việt', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/icon-menu/Icon_SanPhamMoi_8px_1.png', label: 'Sản Phẩm Mới', link: '/products/latest' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-01-2024/ChoDoCu.png', label: 'Phiên Chợ Đồ Cũ', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-03-2026/IconNgoaiVan120x120.png', label: 'Ngoại Văn', link: '/products' },
-    { image: 'https://cdn1.fahasa.com/media/wysiwyg/Thang-06-2024/icon_ManngaT06.png', label: 'Manga', link: '/products' },
+  readonly iconCategories: string[] = [
+    'Sách tiếng Việt',
+    'Sách ngoại văn',
+    'Văn phòng phẩm',
+    'Quà tặng',
+    'Đồ chơi',
+    'Manga/Light novel',
   ];
 
   constructor(private bookService: BookService) {}

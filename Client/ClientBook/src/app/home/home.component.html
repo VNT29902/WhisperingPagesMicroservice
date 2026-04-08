@@ -1,145 +1,102 @@
 <app-header></app-header>
 
-<section class="home-top">
+<section class="ea-homepage">
   <div class="container">
-    <div class="hero-layout">
-      <div class="hero-carousel">
-        <a class="hero-slide-link" [routerLink]="heroSlides[currentHeroSlide].link">
-          <img [src]="heroSlides[currentHeroSlide].image" alt="Whispering Pages promo banner" />
+    <div class="hero-grid">
+      <aside class="category-panel">
+        <h3>DANH MỤC SẢN PHẨM</h3>
+        <a routerLink="/products" *ngFor="let c of featuredCategories">{{ c }}</a>
+        <a class="view-all" routerLink="/products">Xem tất cả danh mục</a>
+      </aside>
+
+      <div class="hero-main">
+        <a class="hero-slide" [routerLink]="heroSlides[currentHeroSlide].link">
+          <img [src]="heroSlides[currentHeroSlide].image" alt="Homepage banner" />
+          <div class="hero-content">
+            <p>LỄ HỘI SÁCH 2026</p>
+            <h2>Đọc Sách Là Một Nghệ Thuật</h2>
+            <span>Khám phá ngay</span>
+          </div>
         </a>
 
-        <button class="hero-nav prev" (click)="previousHeroSlide()" aria-label="Slide trước">❮</button>
-        <button class="hero-nav next" (click)="nextHeroSlide()" aria-label="Slide kế tiếp">❯</button>
+        <button class="hero-nav prev" (click)="previousHeroSlide()">❮</button>
+        <button class="hero-nav next" (click)="nextHeroSlide()">❯</button>
 
         <div class="hero-dots">
-          <button
-            *ngFor="let slide of heroSlides; let i = index"
-            [class.active]="i === currentHeroSlide"
-            (click)="goToHeroSlide(i)"
-            [attr.aria-label]="'Đi tới slide ' + (i + 1)"
-          ></button>
+          <button *ngFor="let slide of heroSlides; let i = index" [class.active]="i === currentHeroSlide" (click)="goToHeroSlide(i)"></button>
         </div>
       </div>
 
-      <div class="hero-side-promos">
-        <a *ngFor="let promo of rightHeroPromos" class="hero-side-card" [routerLink]="promo.link">
-          <img [src]="promo.image" alt="Whispering Pages side promo" />
+      <div class="hero-side">
+        <a *ngFor="let promo of rightHeroPromos" [routerLink]="promo.link" class="side-card">
+          <img [src]="promo.image" alt="promo" />
         </a>
       </div>
     </div>
 
-    <div class="secondary-promo-row">
-      <a *ngFor="let promo of secondaryPromos" class="secondary-promo-card" [routerLink]="promo.link">
-        <img [src]="promo.image" alt="Whispering Pages campaign banner" />
-      </a>
-    </div>
-
-    <div class="quick-entry-grid">
-      <a *ngFor="let entry of quickEntries" class="quick-entry-item" [routerLink]="entry.link">
-        <img [src]="entry.image" [alt]="entry.label || 'Quick entry'" />
-        <span>{{ entry.label }}</span>
-      </a>
-    </div>
-
-    <div class="hero-actions">
-      <a routerLink="/products" class="btn btn-primary">Mua sách ngay</a>
-      <a routerLink="/products/latest" class="btn btn-ghost">Sách mới phát hành</a>
-      <div class="hero-tags">
-        <a routerLink="/products" [queryParams]="{ category: 'Kinh doanh' }">Kinh doanh</a>
-        <a routerLink="/products" [queryParams]="{ category: 'Tâm lý' }">Tâm lý</a>
-        <a routerLink="/products" [queryParams]="{ category: 'Công nghệ' }">Công nghệ</a>
-        <a routerLink="/products" [queryParams]="{ category: 'Văn học' }">Văn học</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="service-strip">
-  <div class="container strip-grid">
-    <article>
-      <h4>Miễn phí vận chuyển</h4>
-      <p>Cho đơn từ 299.000đ toàn quốc.</p>
-    </article>
-    <article>
-      <h4>Đổi trả 7 ngày</h4>
-      <p>Yên tâm khi mua online lần đầu.</p>
-    </article>
-    <article>
-      <h4>Thanh toán linh hoạt</h4>
-      <p>COD, ví điện tử và thẻ nội địa.</p>
-    </article>
-  </div>
-</section>
-
-<section class="featured-books container">
-  <div class="section-header">
-    <h2>Gợi ý nổi bật hôm nay</h2>
-    <a routerLink="/products" class="link-more">Xem toàn bộ</a>
-  </div>
-
-  <div class="empty-message" *ngIf="loadFailed">
-    Không tải được dữ liệu từ backend. Vui lòng chạy đầy đủ Docker services để hiển thị danh mục sách thực tế.
-  </div>
-
-  <div class="empty-message partial" *ngIf="partialLoadFailed && !loadFailed">
-    Một số API đang lỗi/tạm chưa sẵn sàng. Dữ liệu hiển thị có thể chưa đầy đủ.
-  </div>
-
-  <div class="books-grid" *ngIf="!loadFailed && featuredBooks.length">
-    <article class="book-card" *ngFor="let book of featuredBooks">
-      <div class="image-wrap">
-        <img [src]="book.bookResponseDto.image || 'assets/images/default.png'" [alt]="book.bookResponseDto.title" />
-        <span class="discount" *ngIf="book.promotionPercent">-{{ book.promotionPercent }}%</span>
+    <section class="flash-sale" *ngIf="featuredBooks.length">
+      <div class="section-title-row">
+        <h3>⚡ FLASH SALE</h3>
+        <a routerLink="/products">Xem tất cả</a>
       </div>
 
-      <div class="book-content">
-        <h4>{{ book.bookResponseDto.title }}</h4>
-        <p class="author">{{ book.bookResponseDto.author }}</p>
-        <p class="category">{{ book.bookResponseDto.category }}</p>
+      <div class="empty-message" *ngIf="loadFailed">
+        Không tải được dữ liệu từ backend. Vui lòng chạy đầy đủ Docker services để hiển thị danh mục sách thực tế.
+      </div>
+      <div class="empty-message partial" *ngIf="partialLoadFailed && !loadFailed">
+        Một số API đang lỗi/tạm chưa sẵn sàng. Dữ liệu hiển thị có thể chưa đầy đủ.
+      </div>
 
-        <div class="price-row">
-          <span class="new-price">{{ getDiscountPrice(book) | number: '1.0-0' }}đ</span>
-          <span class="old-price" *ngIf="book.promotionPercent">{{ book.bookResponseDto.price | number:'1.0-0' }}đ</span>
+      <div class="product-row" *ngIf="!loadFailed">
+        <article class="sale-card" *ngFor="let book of featuredBooks">
+          <div class="image-wrap">
+            <img [src]="book.bookResponseDto.image || 'assets/images/default.png'" [alt]="book.bookResponseDto.title" />
+            <span class="badge" *ngIf="book.promotionPercent">-{{ book.promotionPercent }}%</span>
+          </div>
+          <h4>{{ book.bookResponseDto.title }}</h4>
+          <p class="author">{{ book.bookResponseDto.author }}</p>
+          <div class="price-row">
+            <span>{{ getDiscountPrice(book) | number: '1.0-0' }}đ</span>
+            <del *ngIf="book.promotionPercent">{{ book.bookResponseDto.price | number: '1.0-0' }}đ</del>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="rank-section" *ngIf="featuredBooks.length">
+      <div class="rank-list">
+        <div class="section-title-row">
+          <h3>BẢNG XẾP HẠNG TUẦN</h3>
+          <a routerLink="/products">Xem chi tiết</a>
         </div>
+        <article *ngFor="let book of featuredBooks.slice(0, 3); let i = index" class="rank-item">
+          <strong>{{ i + 1 | number: '2.0' }}</strong>
+          <img [src]="book.bookResponseDto.image || 'assets/images/default.png'" [alt]="book.bookResponseDto.title" />
+          <div>
+            <h4>{{ book.bookResponseDto.title }}</h4>
+            <p>{{ book.bookResponseDto.author }}</p>
+          </div>
+        </article>
       </div>
-    </article>
-  </div>
 
-  <aside class="hero-highlight" *ngIf="featuredBooks.length">
-    <p class="highlight-label">Sách nổi bật hôm nay</p>
-    <div class="highlight-book">
-      <img
-        [src]="featuredBooks[0].bookResponseDto.image || 'assets/images/default.png'"
-        [alt]="featuredBooks[0].bookResponseDto.title"
-      />
-      <div>
-        <h3>{{ featuredBooks[0].bookResponseDto.title }}</h3>
+      <aside class="rank-highlight">
+        <p>Top 1 tuần này</p>
+        <h4>{{ featuredBooks[0].bookResponseDto.title }}</h4>
         <p>{{ featuredBooks[0].bookResponseDto.author }}</p>
-        <div class="price-row">
-          <span class="new-price">{{ getDiscountPrice(featuredBooks[0]) | number: '1.0-0' }}đ</span>
-          <span class="old-price" *ngIf="featuredBooks[0].promotionPercent">
-            {{ featuredBooks[0].bookResponseDto.price | number: '1.0-0' }}đ
-          </span>
+        <div class="metrics">
+          <span>Đánh giá 4.9/5</span>
+          <span>Ưu đãi {{ getDiscountPrice(featuredBooks[0]) | number: '1.0-0' }}đ</span>
         </div>
-      </div>
-    </div>
+        <a routerLink="/products">Xem chi tiết sách top 1</a>
+      </aside>
+    </section>
 
-    <div class="mini-stats">
-      <article>
-        <strong>15K+</strong>
-        <span>Đầu sách</span>
-      </article>
-      <article>
-        <strong>24h</strong>
-        <span>Xử lý đơn</span>
-      </article>
-      <article>
-        <strong>4.9/5</strong>
-        <span>Đánh giá</span>
-      </article>
-    </div>
-  </aside>
+    <section class="category-icons">
+      <a routerLink="/products" *ngFor="let c of iconCategories">{{ c }}</a>
+    </section>
+  </div>
 </section>
+
 <app-latest-release-books></app-latest-release-books>
 <app-bestselling></app-bestselling>
 <app-popularbook></app-popularbook>
